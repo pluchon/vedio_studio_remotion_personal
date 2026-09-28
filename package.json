@@ -1,17 +1,17 @@
 {
   "name": "online_oj_video",
   "version": "1.0.0",
-  "description": "My Remotion video",
+  "description": "墨衡 OJ 项目介绍视频",
   "repository": {},
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
     "@remotion/cli": "4.0.529",
+    "@remotion/media": "4.0.529",
+    "@remotion/transitions": "4.0.529",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "remotion": "4.0.529",
-    "@remotion/tailwind-v4": "4.0.529",
-    "tailwindcss": "4.0.0"
+    "remotion": "4.0.529"
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "4.0.529",
