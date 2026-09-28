@@ -6,6 +6,9 @@ dist
 # Ignore the output video from Git but not videos you import into src/.
 out
 
+# 每期的原始素材
+refer
+
 # 截图脚本用的登录令牌
 tools/**/tokens.json
 __pycache__
