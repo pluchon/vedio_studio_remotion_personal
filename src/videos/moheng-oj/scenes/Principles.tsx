@@ -1,8 +1,8 @@
 // 设计取向：以引文的形式写下三条贯穿全项目的做法
 import React from "react";
 import { useCurrentFrame } from "remotion";
+import { enter } from "../../../shared/motion";
 import { ChapterMark } from "../components/ChapterMark";
-import { enter } from "../components/motion";
 import { Paper } from "../components/Paper";
 import { COLORS, FONTS } from "../theme";
 

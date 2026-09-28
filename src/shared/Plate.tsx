@@ -1,12 +1,16 @@
 // 图版：把页面截图装裱成一幅插图，内部有可推拉平移的镜头；叠加层统一用截图坐标（1600×900 CSS 像素）
+// 图片路径都相对 public/，如 "moheng-oj/shots/c_question.png"
 import React from "react";
 import { Img, interpolate, staticFile, useCurrentFrame } from "remotion";
-import { COLORS, EASE_IN_OUT } from "../theme";
-import { enter } from "./motion";
+import { EASE_IN_OUT, enter } from "./motion";
 
-// 截图的 CSS 尺寸（按 2 倍像素截取，实际图片是 3200×1800）
+// 截图的 CSS 尺寸（tools/shoot.mjs 按 1600×900 视口、2 倍像素截取，实际图片是 3200×1800）
 export const SHOT_W = 1600;
 export const SHOT_H = 900;
+
+// 默认的卡纸底色与圈注颜色（羊皮纸风格）
+const PLATE_COLOR = "#fbf8f1";
+const INK_COLOR = "#8b352a";
 
 // 镜头关键帧：f 为帧，x/y 为镜头中心（截图坐标），s 为放大倍数
 export type CameraKey = { f: number; x: number; y: number; s: number };
@@ -28,8 +32,9 @@ export const Plate: React.FC<{
   left?: number;
   top?: number;
   width?: number;
+  color?: string;
   children: React.ReactNode;
-}> = ({ camera, left = 96, top = 225, width = 1120, children }) => {
+}> = ({ camera, left = 96, top = 225, width = 1120, color = PLATE_COLOR, children }) => {
   const frame = useCurrentFrame();
   const height = (width * SHOT_H) / SHOT_W;
   const base = width / SHOT_W;
@@ -46,7 +51,7 @@ export const Plate: React.FC<{
         left,
         top,
         padding: 14,
-        backgroundColor: COLORS.plate,
+        backgroundColor: color,
         border: "1px solid rgba(120, 100, 80, 0.22)",
         boxShadow: "0 36px 70px -36px rgba(60, 45, 30, 0.55), 0 2px 6px rgba(60, 45, 30, 0.08)",
         ...enter(frame, 0, 26, 30),
@@ -118,7 +123,8 @@ export const InkCircle: React.FC<{
   at: number;
   hideAt?: number;
   duration?: number;
-}> = ({ cx, cy, rx, ry, at, hideAt, duration = 22 }) => {
+  color?: string;
+}> = ({ cx, cy, rx, ry, at, hideAt, duration = 22, color = INK_COLOR }) => {
   const frame = useCurrentFrame();
 
   return (
@@ -137,7 +143,7 @@ export const InkCircle: React.FC<{
         d={wobblyEllipse(cx, cy, rx, ry)}
         pathLength={1}
         fill="none"
-        stroke={COLORS.cinnabar}
+        stroke={color}
         strokeWidth={3.2}
         strokeLinecap="round"
         strokeDasharray={1}

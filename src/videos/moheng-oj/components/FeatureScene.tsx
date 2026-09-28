@@ -2,7 +2,7 @@
 import React from "react";
 import { ChapterMark } from "./ChapterMark";
 import { Paper } from "./Paper";
-import { CameraKey, Plate } from "./Plate";
+import { CameraKey, Plate } from "../../../shared/Plate";
 import { SideNote } from "./SideNote";
 
 export const FeatureScene: React.FC<{

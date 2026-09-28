@@ -1,0 +1,46 @@
+{
+  "shots": [
+    {"name": "c_login", "end": "c", "url": "/login", "login": false},
+    {"name": "b_login", "end": "b", "url": "/login", "login": false, "wait": 2500},
+    {"name": "c_question", "end": "c", "url": "/question"},
+    {"name": "c_exam", "end": "c", "url": "/exam"},
+    {"name": "c_my_exam", "end": "c", "url": "/my-exam"},
+    {"name": "c_profile", "end": "c", "url": "/user/profile", "wait": 2500},
+    {"name": "c_work", "end": "c", "url": "/question/do?questionId=1795000000000000112", "wait": 2500, "steps": [
+        {"clickText": "提交记录", "selector": ".btn-console-tab", "wait": 1500, "shot": "c_work_history"},
+        {"eval": "[...document.querySelectorAll('.history-row')].find(r => r.querySelector('.history-verdict.pass')).click()", "wait": 800},
+        {"clickText": "载入", "selector": "button", "wait": 1200},
+        {"click": ".btn-run-code", "wait": 300},
+        {"waitFor": ".result-feedback-detail", "wait": 1500, "shot": "c_work_run"}
+      ]
+    },
+    {"name": "c_appeal", "end": "c", "url": "/question/do?questionId=1795000000000000112", "wait": 2500, "steps": [
+        {"clickText": "提交记录", "selector": ".btn-console-tab", "wait": 1500},
+        {"click": ".history-appeal-link", "wait": 1500}
+      ]
+    },
+    {"name": "c_rank", "end": "c", "url": "/exam", "wait": 2000, "steps": [
+        {"clickText": "查看排名", "selector": "button", "wait": 2000}
+      ]
+    },
+    {"name": "b_overview", "end": "b", "url": "/system/overview", "wait": 2500, "steps": [
+        {"clickText": "近一个月", "selector": "button, span, div", "wait": 2500}
+      ]
+    },
+    {"name": "b_user", "end": "b", "url": "/system/user"},
+    {"name": "b_question_drawer", "end": "b", "url": "/system/question", "wait": 2000, "steps": [
+        {"eval": "document.querySelector('.el-table__row button').click()", "wait": 2500},
+        {"click": ".drawer-ai-btn", "wait": 1500, "shot": "b_ai_draft"}
+      ]
+    },
+    {"name": "b_exam_drawer", "end": "b", "url": "/system/exam", "wait": 2000, "steps": [
+        {"clickText": "添加竞赛", "selector": "button", "wait": 2000},
+        {"click": ".drawer-ai-btn", "wait": 1500, "shot": "b_exam_ai"}
+      ]
+    },
+    {"name": "b_appeal_detail", "end": "b", "url": "/system/appeal", "wait": 2000, "steps": [
+        {"eval": "[...document.querySelectorAll('.el-table__row')].find(r => r.textContent.includes('青柠')).querySelector('button').click()", "wait": 2500}
+      ]
+    }
+  ]
+}

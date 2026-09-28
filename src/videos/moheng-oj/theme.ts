@@ -1,5 +1,8 @@
 // 视频的配色、字体与时间线：配色取自墨衡两端页面（画卷风格）
-import { Easing } from "remotion";
+export { EASE_IN_OUT, EASE_OUT } from "../../shared/motion";
+
+// 本视频的素材都在 public/moheng-oj/ 下，如 asset("shots/c_question.png")
+export const asset = (path: string) => `moheng-oj/${path}`;
 
 export const COLORS = {
   ink: "#2f2a24",
@@ -49,7 +52,3 @@ export const DURATIONS = {
 const sceneCount = Object.keys(DURATIONS).length;
 export const TOTAL_DURATION =
   Object.values(DURATIONS).reduce((sum, d) => sum + d, 0) - TRANSITION * (sceneCount - 1);
-
-// 常用缓动：出现用 easeOut，镜头移动用 inOut
-export const EASE_OUT = Easing.bezier(0.16, 1, 0.3, 1);
-export const EASE_IN_OUT = Easing.bezier(0.65, 0, 0.35, 1);

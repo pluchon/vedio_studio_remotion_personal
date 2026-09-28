@@ -1,6 +1,9 @@
-// 通用动效：淡入上浮、区间淡入淡出
-import { interpolate } from "remotion";
-import { EASE_OUT } from "../theme";
+// 通用动效：缓动曲线、淡入上浮、区间淡入淡出
+import { Easing, interpolate } from "remotion";
+
+// 常用缓动：出现用 easeOut，镜头移动用 inOut
+export const EASE_OUT = Easing.bezier(0.16, 1, 0.3, 1);
+export const EASE_IN_OUT = Easing.bezier(0.65, 0, 0.35, 1);
 
 // 从 start 帧开始淡入并上浮到位
 export const enter = (frame: number, start: number, duration = 24, distance = 24) => ({

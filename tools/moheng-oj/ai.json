@@ -1,0 +1,39 @@
+{
+  "shots": [
+    {"name": "c_tutor_open", "end": "c", "url": "/question/do?questionId=1795000000000000112", "wait": 2500, "steps": [
+        {"clickText": "AI 辅导", "selector": "button", "wait": 2500},
+        {"rect": {"name": "tutor_panel", "selector": ".ai-tutor-card"}, "wait": 100}
+      ]
+    },
+    {"name": "c_tutor", "end": "c", "url": "/question/do?questionId=1795000000000000112", "wait": 2500, "steps": [
+        {"clickText": "AI 辅导", "selector": "button", "wait": 2000},
+        {"clickText": "指点迷津", "selector": "button", "wait": 2500},
+        {"waitGone": ".btn-send.is-stop", "wait": 2000}
+      ]
+    },
+    {"name": "c_review", "end": "c", "url": "/my-exam", "wait": 2000, "steps": [
+        {"click": ".review-tag", "wait": 1800, "shot": "c_review_loading"},
+        {"rect": {"name": "review_dialog", "selector": ".ai-glow-border.is-active"}, "wait": 100},
+        {"waitGone": ".ai-glow-border.is-active", "wait": 2500},
+        {"rect": {"name": "review_dialog_done", "selector": ".el-dialog"}, "wait": 100}
+      ]
+    },
+    {"name": "b_hard_bottom", "end": "b", "url": "/system/overview", "wait": 2500, "steps": [
+        {"click": ".ai-tag", "wait": 1800, "shot": "b_hard_loading"},
+        {"rect": {"name": "hard_dialog", "selector": ".ai-glow-border.is-active"}, "wait": 100},
+        {"waitGone": ".ai-glow-border.is-active", "wait": 2500, "shot": "b_hard"},
+        {"rect": {"name": "hard_dialog_done", "selector": ".el-dialog"}, "wait": 100},
+        {"eval": "(() => { const all = [...document.querySelectorAll('.el-dialog__body, .el-dialog__body *')]; const s = all.find(e => e.scrollHeight > e.clientHeight + 4 && getComputedStyle(e).overflowY !== 'visible'); if (s) s.scrollTop = s.scrollHeight })()", "wait": 1200}
+      ]
+    },
+    {"name": "b_ai_question", "end": "b", "url": "/system/question", "wait": 2000, "steps": [
+        {"clickText": "添加题目", "selector": "button", "wait": 2000},
+        {"click": ".drawer-ai-btn", "wait": 1500},
+        {"eval": "(() => { const t = document.querySelector('.ai-draft-body textarea'); t.value = '给定一个整数数组，找出其中最长严格递增子序列的长度'; t.dispatchEvent(new Event('input', { bubbles: true })) })()", "wait": 1000, "shot": "b_ai_question_typed"},
+        {"clickText": "生成草稿", "selector": "button", "wait": 1800, "shot": "b_ai_question_loading"},
+        {"rect": {"name": "ai_question_dialog", "selector": ".ai-glow-border.is-active"}, "wait": 100},
+        {"waitGone": ".ai-glow-border.is-active", "wait": 3000}
+      ]
+    }
+  ]
+}

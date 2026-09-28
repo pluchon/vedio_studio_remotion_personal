@@ -1,8 +1,8 @@
 // 片头：书桌画卷上，「墨衡」以墨色显出，随后是两句题记与拉丁箴言
 import React from "react";
 import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { COLORS, EASE_OUT, FONTS } from "../theme";
-import { enter } from "../components/motion";
+import { enter } from "../../../shared/motion";
+import { COLORS, EASE_OUT, FONTS, asset } from "../theme";
 
 export const OpeningScene: React.FC = () => {
   const frame = useCurrentFrame();
@@ -16,7 +16,7 @@ export const OpeningScene: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.paper }}>
       <Img
-        src={staticFile("art/desk.png")}
+        src={staticFile(asset("art/desk.png"))}
         style={{
           position: "absolute",
           inset: 0,

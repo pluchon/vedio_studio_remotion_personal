@@ -1,0 +1,6 @@
+{
+  "origins": { "b": "http://localhost:5173", "c": "http://localhost:5174" },
+  "cookies": { "b": "oj_b_token", "c": "oj_c_token" },
+  "tokens": "tokens.json",
+  "viewport": { "width": 1600, "height": 900, "scale": 2 }
+}

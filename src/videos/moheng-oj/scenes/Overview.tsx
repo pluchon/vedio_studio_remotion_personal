@@ -1,10 +1,10 @@
 // 概览：一句话说清是什么，两端登录页并排出现
 import React from "react";
 import { Img, interpolate, staticFile, useCurrentFrame } from "remotion";
+import { enter } from "../../../shared/motion";
 import { ChapterMark } from "../components/ChapterMark";
-import { enter } from "../components/motion";
 import { Paper } from "../components/Paper";
-import { COLORS, EASE_OUT, FONTS } from "../theme";
+import { COLORS, EASE_OUT, FONTS, asset } from "../theme";
 
 const LoginCard: React.FC<{ src: string; left: number; start: number; tilt: number; name: string; role: string }> = ({
   src,
@@ -82,8 +82,8 @@ export const OverviewScene: React.FC = () => {
       >
         学员刷题、竞赛、复盘；管理员出题、组赛、裁定申诉
       </div>
-      <LoginCard src="shots/c_login.png" left={160} start={46} tilt={-1.2} name="学员端" role="刷题与竞赛" />
-      <LoginCard src="shots/b_login.png" left={1000} start={66} tilt={1.2} name="管理端" role="出题与管理" />
+      <LoginCard src={asset("shots/c_login.png")} left={160} start={46} tilt={-1.2} name="学员端" role="刷题与竞赛" />
+      <LoginCard src={asset("shots/b_login.png")} left={1000} start={66} tilt={1.2} name="管理端" role="出题与管理" />
     </Paper>
   );
 };

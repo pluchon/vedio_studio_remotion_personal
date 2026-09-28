@@ -1,10 +1,10 @@
 // 羊皮纸底图：取自管理端首页背景，整场缓慢推近
 import React from "react";
 import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { COLORS } from "../theme";
+import { COLORS, asset } from "../theme";
 
 export const Paper: React.FC<{ src?: string; children?: React.ReactNode }> = ({
-  src = "art/paper.png",
+  src = asset("art/paper.png"),
   children,
 }) => {
   const frame = useCurrentFrame();

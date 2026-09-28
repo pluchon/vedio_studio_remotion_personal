@@ -2,7 +2,7 @@
 import React from "react";
 import { useCurrentFrame } from "remotion";
 import { COLORS, FONTS } from "../theme";
-import { enter } from "./motion";
+import { enter } from "../../../shared/motion";
 
 export const ChapterMark: React.FC<{ numeral: string; label: string }> = ({ numeral, label }) => {
   const frame = useCurrentFrame();

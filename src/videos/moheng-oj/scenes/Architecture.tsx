@@ -1,8 +1,8 @@
 // 架构：像星图一样依次画出两端、网关、五个业务服务与它们之间的调用，最后是底层基础设施
 import React from "react";
 import { interpolate, useCurrentFrame } from "remotion";
+import { enter } from "../../../shared/motion";
 import { ChapterMark } from "../components/ChapterMark";
-import { enter } from "../components/motion";
 import { Paper } from "../components/Paper";
 import { COLORS, EASE_IN_OUT, EASE_OUT, FONTS } from "../theme";
 

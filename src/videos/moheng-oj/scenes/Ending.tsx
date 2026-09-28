@@ -1,8 +1,8 @@
 // 片尾：回到书桌画卷，署名、技术栈与仓库地址，最后淡出
 import React from "react";
 import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { COLORS, EASE_OUT, FONTS } from "../theme";
-import { enter } from "../components/motion";
+import { enter } from "../../../shared/motion";
+import { COLORS, EASE_OUT, FONTS, asset } from "../theme";
 
 export const EndingScene: React.FC = () => {
   const frame = useCurrentFrame();
@@ -11,7 +11,7 @@ export const EndingScene: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.paper }}>
       <Img
-        src={staticFile("art/desk.png")}
+        src={staticFile(asset("art/desk.png"))}
         style={{
           position: "absolute",
           inset: 0,

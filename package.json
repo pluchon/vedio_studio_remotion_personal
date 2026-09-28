@@ -1,7 +1,7 @@
 {
-  "name": "online_oj_video",
+  "name": "video-studio",
   "version": "1.0.0",
-  "description": "墨衡 OJ 项目介绍视频",
+  "description": "公用的 Remotion 视频工作室：项目介绍和自己想做的视频都放在这里，共用一份依赖与通用组件",
   "repository": {},
   "license": "UNLICENSED",
   "private": true,
@@ -14,11 +14,14 @@
     "remotion": "4.0.529"
   },
   "devDependencies": {
+    "@remotion/bundler": "4.0.529",
     "@remotion/eslint-config-flat": "4.0.529",
+    "@remotion/renderer": "4.0.529",
     "@types/react": "19.2.7",
     "@types/web": "0.0.166",
     "eslint": "9.19.0",
     "prettier": "3.8.1",
+    "puppeteer-core": "24.43.1",
     "typescript": "5.9.3"
   },
   "scripts": {

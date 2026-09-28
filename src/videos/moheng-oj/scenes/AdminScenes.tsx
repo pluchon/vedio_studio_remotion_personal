@@ -1,7 +1,8 @@
 // 管理端各功能场景（坐标均为截图 CSS 像素，截图视口 1600×900）
 import React from "react";
+import { GlowRing, InkCircle, Shot } from "../../../shared/Plate";
 import { FeatureScene } from "../components/FeatureScene";
-import { GlowRing, InkCircle, Shot } from "../components/Plate";
+import { asset } from "../theme";
 
 const CHAPTER = { numeral: "IV", chapter: "管理端" };
 
@@ -18,7 +19,7 @@ export const DashboardScene: React.FC = () => (
     ]}
     plate={
       <>
-        <Shot src="shots/b_overview.png" />
+        <Shot src={asset("shots/b_overview.png")} />
         <InkCircle cx={1464} cy={626} rx={62} ry={22} at={166} />
       </>
     }
@@ -38,11 +39,11 @@ export const HardAnalysisScene: React.FC = () => (
     ]}
     plate={
       <>
-        <Shot src="shots/b_hard_loading.png" />
+        <Shot src={asset("shots/b_hard_loading.png")} />
         <GlowRing x={460} y={257} w={680} h={386} from={10} to={98} radius={6} />
-        <Shot src="shots/b_hard.png" inAt={88} />
+        <Shot src={asset("shots/b_hard.png")} inAt={88} />
         <InkCircle cx={1075} cy={222} rx={64} ry={19} at={112} hideAt={160} />
-        <Shot src="shots/b_hard_bottom.png" inAt={165} />
+        <Shot src={asset("shots/b_hard_bottom.png")} inAt={165} />
         <InkCircle cx={686} cy={474} rx={74} ry={20} at={190} />
       </>
     }
@@ -63,10 +64,10 @@ export const AiQuestionScene: React.FC = () => (
     ]}
     plate={
       <>
-        <Shot src="shots/b_ai_question_typed.png" />
-        <Shot src="shots/b_ai_question_loading.png" inAt={45} fade={8} />
+        <Shot src={asset("shots/b_ai_question_typed.png")} />
+        <Shot src={asset("shots/b_ai_question_loading.png")} inAt={45} fade={8} />
         <GlowRing x={520} y={308} w={560} h={283} from={48} to={128} radius={6} />
-        <Shot src="shots/b_ai_question.png" inAt={120} />
+        <Shot src={asset("shots/b_ai_question.png")} inAt={120} />
       </>
     }
   />
@@ -87,7 +88,7 @@ export const AppealJudgeScene: React.FC = () => (
     ]}
     plate={
       <>
-        <Shot src="shots/b_appeal_detail.png" />
+        <Shot src={asset("shots/b_appeal_detail.png")} />
         <InkCircle cx={673} cy={304} rx={292} ry={22} at={62} hideAt={112} />
         <InkCircle cx={564} cy={388} rx={22} ry={20} at={122} />
       </>

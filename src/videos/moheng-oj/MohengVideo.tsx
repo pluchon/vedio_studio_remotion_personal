@@ -4,7 +4,7 @@ import { Audio } from "@remotion/media";
 import { TransitionSeries, linearTiming } from "@remotion/transitions";
 import { fade } from "@remotion/transitions/fade";
 import { interpolate, staticFile, useVideoConfig } from "remotion";
-import { DURATIONS, TRANSITION } from "./theme";
+import { DURATIONS, TRANSITION, asset } from "./theme";
 import { OpeningScene } from "./scenes/Opening";
 import { OverviewScene } from "./scenes/Overview";
 import { ArchitectureScene } from "./scenes/Architecture";
@@ -57,7 +57,7 @@ export const MohengVideo: React.FC = () => {
         ])}
       </TransitionSeries>
       <Audio
-        src={staticFile("audio/bgm.wav")}
+        src={staticFile(asset("audio/bgm.wav"))}
         volume={(f) =>
           interpolate(f, [0, 2 * fps, durationInFrames - 4 * fps, durationInFrames], [0, 0.9, 0.9, 0], {
             extrapolateLeft: "clamp",
