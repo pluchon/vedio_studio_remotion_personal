@@ -5,9 +5,17 @@ import { EASE_OUT, FONTS } from "../theme";
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
-// 单个字的浮现：由虚到实、略微上浮
-const inkIn = (frame: number, start: number, duration = 12) => {
-  const p = interpolate(frame, [start, start + duration], [0, 1], { ...clamp, easing: EASE_OUT });
+// 单个字的浮现：由虚到实、略微上浮；wind 为被风从左边吹进来、打着旋落定
+const inkIn = (frame: number, start: number, duration = 12, wind = false) => {
+  const p = interpolate(frame, [start, start + (wind ? duration * 1.8 : duration)], [0, 1], { ...clamp, easing: EASE_OUT });
+  if (wind) {
+    return {
+      opacity: p,
+      filter: `blur(${(1 - p) * 4}px)`,
+      translate: `${(1 - p) * -70}px ${(1 - p) * -18}px`,
+      rotate: `${(1 - p) * -24}deg`,
+    };
+  }
   return { opacity: p, filter: `blur(${(1 - p) * 5}px)`, translate: `0px ${(1 - p) * 8}px` };
 };
 
@@ -26,8 +34,9 @@ export const Caption: React.FC<{
   enSize?: number;
   align?: "left" | "center";
   stagger?: number;
+  wind?: boolean;
   style?: React.CSSProperties;
-}> = ({ zh, en = [], at, out, color, enColor, size = 56, enSize = 26, align = "left", stagger = 2.5, style }) => {
+}> = ({ zh, en = [], at, out, color, enColor, size = 56, enSize = 26, align = "left", stagger = 2.5, wind = false, style }) => {
   const frame = useCurrentFrame();
   const fadeOut = out === undefined ? 1 : interpolate(frame, [out, out + 14], [1, 0], clamp);
   const enAt = at + writeDuration(zh, stagger) - 4;
@@ -37,7 +46,7 @@ export const Caption: React.FC<{
     const chars = [...line].map((ch, j) => {
       const start = cursor + j * stagger;
       return (
-        <span key={j} style={{ display: "inline-block", whiteSpace: "pre", ...inkIn(frame, start) }}>
+        <span key={j} style={{ display: "inline-block", whiteSpace: "pre", ...inkIn(frame, start, 12, wind) }}>
           {ch}
         </span>
       );

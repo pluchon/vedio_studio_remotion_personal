@@ -30,19 +30,67 @@ export const NIGHT = {
   paper: "#f6f1e7",
 };
 
+// 白天（第二则 · 海）：天蓝、海青、沙色，字用暖墨色
+export const DAY = {
+  paper: "#fff1d6",
+  sky: "#cfe8f1",
+  skyHigh: "#a9d3e6",
+  sea: "#3a9cc2",
+  seaDeep: "#236f98",
+  sand: "#f0dcb8",
+  sandWet: "#d9bf93",
+  foam: "#fffdf6",
+  gold: "255, 232, 160",
+  ink: "#3b3833",
+  inkSoft: "rgba(59, 56, 51, 0.62)",
+  sunset: "#f1b88f",
+};
+
+// 傍晚（第三则 · 暮色）：取自 city_walk 那张的色卡（雾灰、桥体灰、暮色棕、夕阳粉、剪影黑）
+export const DUSK = {
+  skyTop: "#9aa3b2",
+  skyMid: "#d6c4b9",
+  skyLow: "#efbf9f",
+  fog: "#d9d2c8",
+  bridge: "#b3a79a",
+  brown: "#8a7b6e",
+  pink: "#e7b8a2",
+  silhouette: "#2f2d2d",
+  ink: "#2f2b29",
+  inkSoft: "rgba(47, 43, 41, 0.62)",
+  cream: "#f6eee2",
+  lamp: "#ffd9a0",
+};
+
+// 家（片头、尾声）：台灯下的一页日记
+export const HOME = {
+  room: "#141210",
+  paper: "#efe5d1",
+  ink: "#3b3129",
+  inkSoft: "rgba(59, 49, 41, 0.6)",
+  lamp: "255, 214, 150",
+  seal: "#a33a2c",
+};
+
 // 配乐：花暦 裁到 1:30.6（下一句唢呐在 1:30.73 进来），末尾 1.6 秒淡出
 export const MUSIC = asset("audio/hanagoyomi.mp3");
-export const MUSIC_FRAMES = Math.round(90.6 * FPS);
+export const MUSIC_SEC = 90.6;
+export const MUSIC_FRAMES = Math.round(MUSIC_SEC * FPS);
 
 // 节拍网格：第一拍在 2.94 秒，每拍 0.7316 秒，四拍一小节（由音头自相关测得）
 const FIRST_BEAT_SEC = 2.94;
 const BEAT_SEC = 0.7316;
 export const beatFrame = (n: number) => Math.round((FIRST_BEAT_SEC + n * BEAT_SEC) * FPS);
+const secToBeat = (sec: number) => (sec - FIRST_BEAT_SEC) / BEAT_SEC;
 
-// 各章节在配乐里的起止拍
+// 各章节在配乐里的起止拍（按响度与高频能量量出的段落：第 44~56 拍稀疏的停顿，56~76 拍唢呐①，88~105 拍唢呐②）
 export type Chapter = { fromBeat: number; toBeat: number };
 export const CHAPTERS = {
+  opening: { fromBeat: secToBeat(0), toBeat: 4 },
   cat: { fromBeat: 4, toBeat: 40 },
+  sea: { fromBeat: 40, toBeat: 76 },
+  dusk: { fromBeat: 76, toBeat: 106 },
+  ending: { fromBeat: 106, toBeat: secToBeat(MUSIC_SEC) },
 } satisfies Record<string, Chapter>;
 
 export const chapterFrom = (c: Chapter) => beatFrame(c.fromBeat);
