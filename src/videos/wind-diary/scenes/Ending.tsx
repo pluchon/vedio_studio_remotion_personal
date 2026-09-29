@@ -2,7 +2,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { Caption } from "../components/Caption";
-import { Grain } from "../components/Grain";
+import { Grain } from "../../../shared/Grain";
 import { HomeDesk } from "../components/HomeDesk";
 import { Polaroid } from "../components/Polaroid";
 import { CHAPTERS, EASE_IN_OUT, EASE_OUT, FONTS, HOME, asset, chapterDuration } from "../theme";

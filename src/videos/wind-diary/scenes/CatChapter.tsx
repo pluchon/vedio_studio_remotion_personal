@@ -3,7 +3,7 @@ import React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { Caption } from "../components/Caption";
 import { ChapterHeader } from "../components/ChapterHeader";
-import { Grain } from "../components/Grain";
+import { Grain } from "../../../shared/Grain";
 import { Polaroid } from "../components/Polaroid";
 import { Asphalt } from "./cat/Asphalt";
 import { Checklist } from "./cat/Checklist";

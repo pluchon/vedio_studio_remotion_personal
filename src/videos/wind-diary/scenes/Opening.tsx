@@ -2,9 +2,9 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import { Caption } from "../components/Caption";
-import { Grain } from "../components/Grain";
+import { Grain } from "../../../shared/Grain";
 import { HomeDesk } from "../components/HomeDesk";
-import { WindLines } from "../components/WindLines";
+import { WindLines } from "../../../shared/WindLines";
 import { CHAPTERS, HOME, beatFrame, chapterDuration } from "../theme";
 
 // 片头从第 0 帧开始，本地帧即全片帧
