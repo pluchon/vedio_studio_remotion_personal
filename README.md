@@ -30,17 +30,17 @@ src/
    │  ├─ Compositions.tsx   # 成片 CloudSky 与窗边、云的旅程、天空、黄昏、后来各段
    │  ├─ theme.ts           # 配色、配乐的实测乐句点与各段起止秒数
    │  └─ components/ scenes/  # Cloud.tsx 用一团团叠起来的云做形变（水汽、积云、羊、龙）
-   └─ looking-up/           # 我们一直在仰望 · 人类文明与星辰大海（5 分钟，制作中）
-      ├─ Compositions.tsx   # 成片 LookingUp 与序、七卷、跋各段
-      ├─ theme.ts           # 宣纸与星空两套配色、宋体、配乐乐句点与各卷起止秒数
-      ├─ components/        # 史书版式：宣纸、版框版心、竖排字幕、纪年、朱印、翻页
-      ├─ three/             # 3D：星空、昼夜地球（three.js）
-      └─ scenes/
+   └─ looking-up/           # 我们一直在仰望 · 人类文明探索史（5 分钟，32 幕）
+      ├─ Compositions.tsx   # 成片 LookingUp 与每一幕的单独预览
+      ├─ theme.ts           # 墨、海报、深空三套配色，宋体，配乐乐句点与每一幕的起止秒数
+      ├─ components/        # 年份地点标 Locator、旁白字幕、逐行跳出的记录 Rows、编年 Ticker、宣纸、纸上的星
+      ├─ three/             # 3D：昼夜地球、平涂行星、旅行者号、韦布、点云、深空背景（three.js）
+      └─ scenes/            # 按年代换画法：ink 铜版画 → poster 复古海报 → deep 写实深空 → light 光与回路
 public/
 ├─ moheng-oj/               # 截图、底图、配乐
 ├─ wind-diary/              # 照片、字体、配乐
 ├─ cloud-sky/               # 照片、字体、配乐
-└─ looking-up/              # 铜版画插图、史料图版、3D 贴图、字体、配乐
+└─ looking-up/              # 铜版画与海报插图、史料图版、3D 贴图、字体、配乐
 refer/                      # 用户给的原始素材，每期一个文件夹（不入库）
 tools/
 ├─ shoot.mjs                # 批量截图（puppeteer-core + 本机 Chrome）

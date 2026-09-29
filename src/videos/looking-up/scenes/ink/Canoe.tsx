@@ -64,7 +64,7 @@ export const Canoe: React.FC = () => {
           </g>
         )}
       </svg>
-      <Mist tone="ink" height={220} />
+      <Mist tone="ink" height={260} />
       <Locator year="约三千年前" place="南太平洋" at={t(41.7)} tone="ink" />
       <Subtitle zh={["海上的舟，循着一颗星驶向看不见的岸。"]} en={["A canoe followed a single star toward a shore it could not see."]} at={t(41.9)} out={t(45.8)} tone="ink" />
       <Grain opacity={0.05} vignette={0.2} />

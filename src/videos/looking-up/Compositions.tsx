@@ -6,11 +6,33 @@ import { AbsoluteFill, Composition, Folder, Sequence, interpolate, staticFile, u
 import { withMusic } from "../../shared/preview";
 import { Bone } from "./scenes/ink/Bone";
 import { Canoe } from "./scenes/ink/Canoe";
+import { Chronicle } from "./scenes/ink/Chronicle";
+import { Kepler } from "./scenes/ink/Kepler";
+import { Lens } from "./scenes/ink/Lens";
+import { Newton } from "./scenes/ink/Newton";
+import { Omens } from "./scenes/ink/Omens";
 import { Primal } from "./scenes/ink/Primal";
 import { Prologue } from "./scenes/ink/Prologue";
 import { Stones } from "./scenes/ink/Stones";
-import { pending } from "./scenes/Pending";
-import { Galileo1610 } from "./styleframes/Galileo1610";
+import { Coda } from "./scenes/ink/Coda";
+import { Network } from "./scenes/light/Network";
+import { Silicon } from "./scenes/light/Silicon";
+import { Unknown } from "./scenes/Unknown";
+import { Calendar } from "./scenes/poster/Calendar";
+import { Jupiter, Recede, Saturn } from "./scenes/poster/Flyby";
+import { Galaxies } from "./scenes/poster/Galaxies";
+import { Galileo } from "./scenes/poster/Galileo";
+import { Landing } from "./scenes/poster/Landing";
+import { Launch } from "./scenes/poster/Launch";
+import { Record } from "./scenes/poster/Record";
+import { Sputnik } from "./scenes/poster/Sputnik";
+import { Deepfield } from "./scenes/deep/Deepfield";
+import { Dot } from "./scenes/deep/Dot";
+import { Forge } from "./scenes/deep/Forge";
+import { Helio } from "./scenes/deep/Helio";
+import { Home } from "./scenes/deep/Home";
+import { Turn } from "./scenes/deep/Turn";
+import { WebbScene } from "./scenes/deep/WebbScene";
 import { FPS, HEIGHT, MUSIC, SEGMENTS, Segment, TOTAL_FRAMES, WIDTH, segDuration, segFrom } from "./theme";
 
 const VOLUME = 0.85;
@@ -31,35 +53,33 @@ const PARTS: Part[] = [
   { id: "LookingUp-Bone", name: "墨 · 约四万年前", segment: SEGMENTS.bone, Scene: Bone, fade: 12 },
   { id: "LookingUp-Stones", name: "墨 · 约五千年前", segment: SEGMENTS.stones, Scene: Stones, fade: 10 },
   { id: "LookingUp-Canoe", name: "墨 · 约三千年前", segment: SEGMENTS.canoe, Scene: Canoe, fade: 10 },
-  {
-    id: "LookingUp-Chronicle",
-    name: "墨 · 公元前 613 年",
-    segment: SEGMENTS.chronicle,
-    Scene: pending("墨 · 公元前 613 年 · 鲁国", ["史官在竹简上写下「秋七月，有星孛入于北斗」", "天上一道彗星划进北斗；敦煌星图作档案插页"]),
-    fade: 10,
-  },
-  { id: "LookingUp-Omens", name: "墨 · 美索不达米亚", segment: SEGMENTS.omens, Scene: pending("墨 · 约三千年前 · 美索不达米亚", ["塔顶的祭司读星象，星星连成神的轮廓"]), fade: 10 },
-  { id: "LookingUp-Kepler", name: "墨 · 1576~1609", segment: SEGMENTS.kepler, Scene: pending("墨 · 1576 汶岛 → 1609 布拉格", ["第谷的观测点一夜夜积起来，开普勒的椭圆穿过所有点"]), fade: 10 },
-  { id: "LookingUp-Newton", name: "墨 · 1687", segment: SEGMENTS.newton, Scene: pending("墨 · 1687 · 伦敦", ["苹果落下；抛出的石头越飞越远，绕成轨道，月亮就在这条线上"]), fade: 10 },
-  { id: "LookingUp-Lens", name: "墨 · 1609", segment: SEGMENTS.lens, Scene: pending("墨 · 1609 · 帕多瓦", ["屏息：弗拉马利翁版画里的人探出天穹"]), fade: 10 },
-  { id: "LookingUp-Galileo", name: "海报 · 1610", segment: SEGMENTS.galileo, Scene: Galileo1610, fade: 8 },
-  {
-    id: "LookingUp-Poster",
-    name: "海报 · 1924~1977",
-    segment: SEGMENTS.poster,
-    Scene: pending("海报 · 1924 → 1980", ["1924 威尔逊山：银河之外的千亿星系", "宇宙日历：一百三十八亿年压成一年", "1957 屋顶上看卫星的人", "1969 土星五号升空 → 电视前的一家人", "1977 旅行者号与金唱片 → 1979 木星 → 1980 土星"]),
-    fade: 10,
-  },
-  {
-    id: "LookingUp-Deep",
-    name: "深空 · 1990~2021",
-    segment: SEGMENTS.deep,
-    Scene: pending("深空 · 1990 → 此刻", ["1990 暗淡蓝点", "2012 日球层顶", "2021 韦布展开 → 2022 第一张深空场", "恒星锻造铁与钙 → 地球夜面"]),
-    fade: 10,
-  },
-  { id: "LookingUp-Light", name: "光 · 1879~2026", segment: SEGMENTS.light, Scene: pending("光 · 1947 → 2026", ["屏息里擦亮一粒电火花", "沙 → 硅 → 回路", "定位标越翻越快，地球夜面被灯火织满", "光很亮，影子也很深"]), fade: 10 },
-  { id: "LookingUp-Unknown", name: "未知", segment: SEGMENTS.unknown, Scene: pending("未知 · 2026 → ？", ["年份跳成「？」，星空里多出一点不是星星的光", "Opus 5.5 的三句"]), fade: 10 },
-  { id: "LookingUp-Coda", name: "跋", segment: SEGMENTS.coda, Scene: pending("跋 · 今天", ["屋顶上仰望的人，星一颗颗点亮", "而我们依旧在仰望"]), fade: 10 },
+  { id: "LookingUp-Chronicle", name: "墨 · 公元前 613 年", segment: SEGMENTS.chronicle, Scene: Chronicle, fade: 10 },
+  { id: "LookingUp-Omens", name: "墨 · 美索不达米亚", segment: SEGMENTS.omens, Scene: Omens, fade: 10 },
+  { id: "LookingUp-Kepler", name: "墨 · 1576~1609", segment: SEGMENTS.kepler, Scene: Kepler, fade: 10 },
+  { id: "LookingUp-Newton", name: "墨 · 1687", segment: SEGMENTS.newton, Scene: Newton, fade: 10 },
+  { id: "LookingUp-Lens", name: "墨 · 1609", segment: SEGMENTS.lens, Scene: Lens, fade: 10 },
+  // 从白光里显出颜色
+  { id: "LookingUp-Galileo", name: "海报 · 1610", segment: SEGMENTS.galileo, Scene: Galileo, fade: 12 },
+  { id: "LookingUp-Galaxies", name: "海报 · 1924", segment: SEGMENTS.galaxies, Scene: Galaxies, fade: 10 },
+  { id: "LookingUp-Calendar", name: "海报 · 宇宙日历", segment: SEGMENTS.calendar, Scene: Calendar, fade: 10 },
+  { id: "LookingUp-Sputnik", name: "海报 · 1957", segment: SEGMENTS.sputnik, Scene: Sputnik, fade: 8 },
+  { id: "LookingUp-Launch", name: "海报 · 1969 升空", segment: SEGMENTS.launch, Scene: Launch, fade: 8 },
+  { id: "LookingUp-Landing", name: "海报 · 1969 登月", segment: SEGMENTS.landing, Scene: Landing, fade: 8 },
+  { id: "LookingUp-Record", name: "海报 · 1977", segment: SEGMENTS.record, Scene: Record, fade: 8 },
+  { id: "LookingUp-Jupiter", name: "海报 · 1979", segment: SEGMENTS.jupiter, Scene: Jupiter, fade: 10 },
+  { id: "LookingUp-Saturn", name: "海报 · 1980", segment: SEGMENTS.saturn, Scene: Saturn, fade: 12 },
+  { id: "LookingUp-Recede", name: "海报褪色", segment: SEGMENTS.recede, Scene: Recede, fade: 12 },
+  { id: "LookingUp-Turn", name: "深空 · 1990 转身", segment: SEGMENTS.turn, Scene: Turn, fade: 10 },
+  { id: "LookingUp-Dot", name: "深空 · 暗淡蓝点", segment: SEGMENTS.dot, Scene: Dot, fade: 10 },
+  { id: "LookingUp-Helio", name: "深空 · 2012", segment: SEGMENTS.helio, Scene: Helio, fade: 10 },
+  { id: "LookingUp-Webb", name: "深空 · 2021", segment: SEGMENTS.webb, Scene: WebbScene, fade: 10 },
+  { id: "LookingUp-Deepfield", name: "深空 · 2022", segment: SEGMENTS.deepfield, Scene: Deepfield, fade: 10 },
+  { id: "LookingUp-Forge", name: "深空 · 恒星", segment: SEGMENTS.forge, Scene: Forge, fade: 10 },
+  { id: "LookingUp-Home", name: "深空 · 地球", segment: SEGMENTS.home, Scene: Home, fade: 10 },
+  { id: "LookingUp-Silicon", name: "光 · 火花与硅", segment: SEGMENTS.silicon, Scene: Silicon, fade: 0 },
+  { id: "LookingUp-Network", name: "光 · 编年", segment: SEGMENTS.network, Scene: Network, fade: 10 },
+  { id: "LookingUp-Unknown", name: "未知", segment: SEGMENTS.unknown, Scene: Unknown, fade: 12 },
+  { id: "LookingUp-Coda", name: "跋", segment: SEGMENTS.coda, Scene: Coda, fade: 20 },
 ];
 
 // 成片：每一幕从它的起点开始，并多留下一幕叠化所需的帧数垫在底下

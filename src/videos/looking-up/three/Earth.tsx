@@ -50,6 +50,13 @@ const FRAGMENT = /* glsl */ `
   }
 `;
 
+// 经纬度 → 地球（未转动时）上的坐标，和贴图的等距圆柱投影对齐
+export const latLon = (lat: number, lon: number, r: number): [number, number, number] => {
+  const a = (lat * Math.PI) / 180;
+  const b = (lon * Math.PI) / 180;
+  return [Math.cos(a) * Math.cos(b) * r, Math.sin(a) * r, -Math.cos(a) * Math.sin(b) * r];
+};
+
 // 外面一层稍大的壳，只画朝向太阳一侧的蓝色光晕
 const HALO = 1.07;
 const HALO_VERTEX = /* glsl */ `
@@ -85,7 +92,9 @@ export const Earth: React.FC<{
   sunDir: [number, number, number];
   nightGain?: number;
   cloudShift?: number;
-}> = ({ day, night, clouds, radius, spin, sunDir, nightGain = 1.6, cloudShift = 0 }) => {
+  // 跟着地球一起转的东西（光缆弧线等），坐标按世界单位写，用 latLon() 算位置
+  children?: React.ReactNode;
+}> = ({ day, night, clouds, radius, spin, sunDir, nightGain = 1.6, cloudShift = 0, children }) => {
   const sun = useMemo(() => new THREE.Vector3(...sunDir).normalize(), [sunDir]);
   const uniforms = useMemo(
     () => ({
@@ -114,10 +123,13 @@ export const Earth: React.FC<{
 
   return (
     <group>
-      <mesh rotation={[0.41, spin, 0]} scale={radius}>
-        <sphereGeometry args={[1, 128, 96]} />
-        <shaderMaterial vertexShader={VERTEX} fragmentShader={FRAGMENT} uniforms={uniforms} />
-      </mesh>
+      <group rotation={[0.41, spin, 0]}>
+        <mesh scale={radius}>
+          <sphereGeometry args={[1, 128, 96]} />
+          <shaderMaterial vertexShader={VERTEX} fragmentShader={FRAGMENT} uniforms={uniforms} />
+        </mesh>
+        {children}
+      </group>
       <mesh scale={radius * HALO}>
         <sphereGeometry args={[1, 96, 64]} />
         <shaderMaterial

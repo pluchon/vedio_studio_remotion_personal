@@ -97,7 +97,7 @@ export const Bone: React.FC = () => {
       >
         骨上的刻痕，也许记着月亮的圆缺
       </div>
-      <Mist tone="ink" height={240} />
+      <Mist tone="ink" />
       <Locator year="约四万年前" place="非洲南部 · 莱邦博山" at={t(28.2)} tone="ink" />
       <Subtitle
         zh={["我们学会用星辰丈量一切：数日子，分四季，辨方向。"]}

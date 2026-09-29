@@ -1,16 +1,18 @@
-// 风格样帧 · 1610 帕多瓦：照参考图的路子——年份地点标、扁平色块、画面里正在发生的事。
+// 海报 · 1610 帕多瓦：颜色涌进来。照参考图的路子——年份地点标、扁平色块、画面里正在发生的事。
 // 伽利略一夜一夜画下木星身边的小星（像参考图里一行行跳动的二进制），画到第五夜，四颗卫星认出来了；
 // 右边镜筒里的木星是 3D，平涂成同一套复古配色
 import { ThreeCanvas } from "@remotion/three";
 import React from "react";
 import { AbsoluteFill, interpolate, random, useCurrentFrame } from "remotion";
-import { Caption, inkIn } from "../../../shared/Caption";
-import { Grain } from "../../../shared/Grain";
-import { Locator } from "../components/Locator";
-import { CameraRig } from "../three/CameraRig";
-import { RetroPlanet } from "../three/RetroPlanet";
-import { useTextures } from "../three/useTextures";
-import { EASE_IN_OUT, EASE_OUT, FONTS, RETRO, asset } from "../theme";
+import { inkIn } from "../../../../shared/Caption";
+import { Grain } from "../../../../shared/Grain";
+import { Mist } from "../../components/Ink";
+import { Locator } from "../../components/Locator";
+import { Subtitle } from "../../components/Subtitle";
+import { CameraRig } from "../../three/CameraRig";
+import { RetroPlanet } from "../../three/RetroPlanet";
+import { useTextures } from "../../three/useTextures";
+import { EASE_IN_OUT, EASE_OUT, FONTS, RETRO, asset } from "../../theme";
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
@@ -161,7 +163,7 @@ const Night: React.FC<{ index: number; at: number }> = ({ index, at }) => {
   );
 };
 
-export const Galileo1610: React.FC = () => {
+export const Galileo: React.FC = () => {
   const frame = useCurrentFrame();
   const tex = useTextures(TEXTURES);
   const push = interpolate(frame, [0, 272], [0, 1], { ...clamp, easing: EASE_IN_OUT });
@@ -221,22 +223,8 @@ export const Galileo1610: React.FC = () => {
         = 四颗卫星
       </div>
       <Locator year="1610" place="帕多瓦 · 意大利" at={4} />
-      {/* 底部一层薄雾，托住字幕 */}
-      <AbsoluteFill style={{ background: `linear-gradient(to bottom, rgba(249, 240, 217, 0) 72%, rgba(249, 240, 217, 0.85) 100%)` }} />
-      <Caption
-        zh={["木星身边多出了四颗卫星，天空从此不再是一块穹顶。"]}
-        en={["Four moons appeared beside Jupiter; the sky was no longer a dome."]}
-        at={96}
-        font={FONTS.song}
-        enFont={FONTS.latin}
-        color={RETRO.ink}
-        enColor={RETRO.inkSoft}
-        size={40}
-        enSize={22}
-        align="center"
-        stagger={2.2}
-        style={{ left: 0, right: 0, top: 918 }}
-      />
+      <Mist tone="retro" height={260} />
+      <Subtitle zh={["木星身边多出了四颗卫星，天空从此不再是一块穹顶。"]} en={["Four moons appeared beside Jupiter; the sky was no longer a dome."]} at={96} tone="retro" />
       <Grain opacity={0.09} vignette={0.16} />
     </AbsoluteFill>
   );

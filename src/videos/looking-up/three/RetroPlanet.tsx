@@ -25,10 +25,15 @@ const FRAGMENT = /* glsl */ `
   uniform vec3 night;
   uniform float lo;
   uniform float hi;
+  uniform float bands;
   varying vec2 vUv;
   varying vec3 vNormalW;
   void main() {
     float l = 0.75;
+    if (bands > 0.0) {
+      // 没有贴图的气态行星：按纬度叠两组正弦，平涂出宽窄不一的色带
+      l = 0.52 + 0.22 * sin(vUv.y * bands * 3.1416) + 0.1 * sin(vUv.y * bands * 7.3 + 1.0);
+    }
     if (useMap > 0.5) {
       // 取模糊一些的那层 mipmap，平涂出来是成片的色带而不是碎点
       vec3 t = texture2D(map, vUv, 2.5).rgb;
@@ -57,7 +62,9 @@ export const RetroPlanet: React.FC<{
   sunDir: [number, number, number];
   // 贴图明暗的取值范围，决定分档落在哪里
   range?: [number, number];
-}> = ({ map, palette, night, radius, position = [0, 0, 0], spin = 0, tilt = 0, sunDir, range = [0.3, 0.85] }) => {
+  // 没有贴图时按纬度画几条色带
+  bands?: number;
+}> = ({ map, palette, night, radius, position = [0, 0, 0], spin = 0, tilt = 0, sunDir, range = [0.3, 0.85], bands = 0 }) => {
   const uniforms = useMemo(
     () => ({
       map: { value: map ?? null },
@@ -71,8 +78,9 @@ export const RetroPlanet: React.FC<{
       night: { value: rgb(night) },
       lo: { value: range[0] },
       hi: { value: range[1] },
+      bands: { value: bands },
     }),
-    [map, palette, night, range],
+    [map, palette, night, range, bands],
   );
   uniforms.sunDir.value.set(...sunDir).normalize();
 

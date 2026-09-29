@@ -63,7 +63,7 @@ export const Stones: React.FC = () => {
       >
         夏至 · 日出
       </div>
-      <Mist tone="ink" height={220} />
+      <Mist tone="ink" height={260} />
       <Locator year="约五千年前" place="英格兰 · 巨石阵" at={t(37.2)} tone="ink" />
       <Subtitle zh={["石头垒成的圈，对准日出的方向。"]} en={["Circles of stone, aligned to where the sun rises."]} at={t(37.5)} out={t(41.3)} tone="ink" />
       <Grain opacity={0.05} vignette={0.2} />
