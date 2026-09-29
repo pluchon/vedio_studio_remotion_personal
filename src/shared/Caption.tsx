@@ -6,7 +6,7 @@ import { EASE_OUT } from "./motion";
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
 // 单个字的浮现：由虚到实、略微上浮；wind 为被风从左边吹进来、打着旋落定
-const inkIn = (frame: number, start: number, duration = 12, wind = false) => {
+export const inkIn = (frame: number, start: number, duration = 12, wind = false) => {
   const p = interpolate(frame, [start, start + (wind ? duration * 1.8 : duration)], [0, 1], { ...clamp, easing: EASE_OUT });
   if (wind) {
     return {

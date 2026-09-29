@@ -26,14 +26,21 @@ src/
    │  ├─ Compositions.tsx   # 成片 WindDiary 与片头、三则、尾声各章
    │  ├─ theme.ts           # 各章配色、霞鹜文楷、配乐节拍网格与章节起止拍
    │  └─ components/ scenes/
-   └─ cloud-sky/            # 云走过的地方，天空都记得 · 日常生活（77 秒）
-      ├─ Compositions.tsx   # 成片 CloudSky 与窗边、云的旅程、天空、黄昏、后来各段
-      ├─ theme.ts           # 配色、配乐的实测乐句点与各段起止秒数
-      └─ components/ scenes/  # Cloud.tsx 用一团团叠起来的云做形变（水汽、积云、羊、龙）
+   ├─ cloud-sky/            # 云走过的地方，天空都记得 · 日常生活（77 秒）
+   │  ├─ Compositions.tsx   # 成片 CloudSky 与窗边、云的旅程、天空、黄昏、后来各段
+   │  ├─ theme.ts           # 配色、配乐的实测乐句点与各段起止秒数
+   │  └─ components/ scenes/  # Cloud.tsx 用一团团叠起来的云做形变（水汽、积云、羊、龙）
+   └─ looking-up/           # 我们一直在仰望 · 人类文明与星辰大海（5 分钟，制作中）
+      ├─ Compositions.tsx   # 成片 LookingUp 与序、七卷、跋各段
+      ├─ theme.ts           # 宣纸与星空两套配色、宋体、配乐乐句点与各卷起止秒数
+      ├─ components/        # 史书版式：宣纸、版框版心、竖排字幕、纪年、朱印、翻页
+      ├─ three/             # 3D：星空、昼夜地球（three.js）
+      └─ scenes/
 public/
 ├─ moheng-oj/               # 截图、底图、配乐
 ├─ wind-diary/              # 照片、字体、配乐
-└─ cloud-sky/               # 照片、字体、配乐
+├─ cloud-sky/               # 照片、字体、配乐
+└─ looking-up/              # 铜版画插图、史料图版、3D 贴图、字体、配乐
 refer/                      # 用户给的原始素材，每期一个文件夹（不入库）
 tools/
 ├─ shoot.mjs                # 批量截图（puppeteer-core + 本机 Chrome）
@@ -50,6 +57,7 @@ npm run dev                                        # 打开 Studio 预览
 npx remotion render MohengOJ out/moheng-oj.mp4     # 渲染成片
 npx remotion render WindDiary out/wind-diary.mp4
 npx remotion render CloudSky out/cloud-sky.mp4
+npx remotion render LookingUp out/looking-up.mp4 --gl=angle   # 有 3D 画面，要走显卡
 npm run lint                                       # ESLint + 类型检查
 ```
 
@@ -72,7 +80,7 @@ npm run lint                                       # ESLint + 类型检查
 
 D 宫五声音阶的拨弦、铺底加低音，经 FFmpeg 混响并归一到 -16 LUFS，需要 PATH 上有 ffmpeg。
 
-**静帧自查**：`node tools/stills.mjs <输出目录> MohengOJ-Tutor:150 MohengOJ:1800`
+**静帧自查**：`node tools/stills.mjs <输出目录> MohengOJ-Tutor:150 MohengOJ:1800`，有 3D 画面时加 `--gl=angle`
 
 ## 墨衡 OJ 的截图流程
 
