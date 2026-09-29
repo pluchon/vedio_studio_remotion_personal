@@ -1,6 +1,7 @@
 import "./index.css";
 import React from "react";
 import { CloudSkyCompositions } from "./videos/cloud-sky/Compositions";
+import { LookingUpCompositions } from "./videos/looking-up/Compositions";
 import { MohengOJCompositions } from "./videos/moheng-oj/Compositions";
 import { WindDiaryCompositions } from "./videos/wind-diary/Compositions";
 
@@ -11,6 +12,7 @@ export const RemotionRoot: React.FC = () => {
       <MohengOJCompositions />
       <WindDiaryCompositions />
       <CloudSkyCompositions />
+      <LookingUpCompositions />
     </>
   );
 };
