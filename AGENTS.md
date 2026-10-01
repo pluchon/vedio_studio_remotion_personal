@@ -6,7 +6,7 @@
 
 公用的 Remotion 视频工作室（Remotion 4.0.529，React 19，rspack 打包）。所有视频都在这一个工程里做，共用一份依赖。内容不限于项目介绍，也有用户自己的想法。第一个视频是墨衡 OJ 的 120 秒介绍（`src/videos/moheng-oj/`，成片 ID `MohengOJ`）。
 
-本地 git 仓库，没有远端。
+远端是 GitHub 上的公开仓库 `pluchon/vedio_studio_remotion_personal`（`main` 分支）。因为公开，有版权的配乐（`public/**/*.mp3`）、个人照片（`public/*/photos/`）和登录令牌都不入库，提交邮箱用 GitHub 的 noreply 邮箱。
 
 ## 目录约定
 

@@ -1,4 +1,6 @@
-# video-studio
+# vedio_studio_remotion_personal
+
+用代码生成视频的仓库，记录每一次想法。
 
 公用的 Remotion 视频工作室。无论是项目介绍还是自己的想法，视频都放在这一个工程里，共用一份依赖（Remotion 4.0.529）和通用组件，不必每次重装一遍。
 
@@ -92,28 +94,17 @@ D 宫五声音阶的拨弦、铺底加低音，经 FFmpeg 混响并归一到 -16
 
 **静帧自查**：`node tools/stills.mjs <输出目录> MohengOJ-Tutor:150 MohengOJ:1800`，有 3D 画面时加 `--gl=angle`
 
-## 墨衡 OJ 的截图流程
+## 不入库的素材
 
-先在本地启动墨衡 OJ 两端和后端，然后：
+下面这些不在仓库里，克隆后要自己放到对应位置，相关视频才能完整渲染：
 
-```bash
-python tools/moheng-oj/tokens.py                                               # 登录，令牌写入 tools/moheng-oj/tokens.json（不入库）
-node tools/shoot.mjs tools/moheng-oj/site.json tools/moheng-oj/pages.json public/moheng-oj/shots
-node tools/shoot.mjs tools/moheng-oj/site.json tools/moheng-oj/ai.json public/moheng-oj/shots
-python tools/moheng-oj/cleanup.py "2026-09-28 11:37:00"                         # 填开拍 ai.json 前记下的时间
-```
+| 路径 | 内容 |
+| --- | --- |
+| `public/wind-diary/audio/hanagoyomi.mp3` | 《风经过的地方》配乐 |
+| `public/cloud-sky/audio/chill-out.mp3` | 《云走过的地方》配乐 |
+| `public/looking-up/audio/if-i-should-return.mp3` | 《我们一直在仰望》配乐 |
+| `public/horizon/audio/cornfield-chase.mp3` | 《光到不了的地方》配乐 |
+| `public/wind-diary/photos/`、`public/cloud-sky/photos/` | 两期日常视频用到的照片 |
+| `public/horizon/data/local.bin` | 由 2MRS 星表生成，做法见 `tools/horizon/README.md` |
 
-`ai.json` 会真实调用 AI，写入辅导会话、赛后复盘、难题分析缓存和当日次数。开拍前记下时间，拍完用 `cleanup.py` 按这个时间删掉。
-
-## 《光到不了的地方》的数据
-
-恒星、星系的位置来自公开的星表与巡天，原始文件放在 `refer/光速_时间/`（不入库），用 `python tools/horizon/build_data.py` 转成视频读的二进制：
-
-| 文件 | 来源 | 说明 |
-| --- | --- | --- |
-| `stars.bin` | HYG v4.4（CC BY-SA 4.0） | 约 11 万颗恒星的三维位置、亮度、颜色 |
-| `local.bin` | 2MASS Redshift Survey（Huchra 等，2012） | 4.3 万个近邻星系。其使用条款不允许再分发，所以这个文件不入库，需要自己下载星表后生成 |
-| `cosmos.bin` | SDSS DR18 | 抽样的 37 万个星系、25 万个类星体 |
-| `wall.bin` | SDSS DR18 | 斯隆长城所在天区的 11.8 万个星系 |
-
-微波背景图来自 ESA/Planck Collaboration。银河系和本星系群没有外部视角的实测数据，是按测量结果重建的。
+配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，星表与巡天数据的署名见 `tools/horizon/README.md`。

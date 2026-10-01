@@ -15,3 +15,7 @@ __pycache__
 
 # 2MRS 的使用条款不允许再分发，由 tools/horizon/build_data.py 从 refer/ 生成
 public/horizon/data/local.bin
+
+# 仓库是公开的：有版权的配乐和个人照片不入库（墨衡 OJ 的 bgm.wav 是 tools/music.py 合成的，照常入库）
+public/**/*.mp3
+public/*/photos/
