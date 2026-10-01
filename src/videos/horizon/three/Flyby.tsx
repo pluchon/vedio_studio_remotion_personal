@@ -4,7 +4,7 @@ import React from "react";
 import { interpolate } from "remotion";
 import * as THREE from "three";
 import { Voyager } from "../../looking-up/three/Voyager";
-import { FPS, Shot, T, rightFor } from "../theme";
+import { FPS, Shot, T } from "../theme";
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const START = T.voyager - 0.9;
@@ -22,7 +22,7 @@ export const flybyPosition = (frame: number, shot: Shot) => {
   return shot.dir
     .clone()
     .addScaledVector(forward, ahead)
-    .addScaledVector(rightFor(shot.dir), -5.5)
+    .addScaledVector(shot.right, -5.5)
     .addScaledVector(shot.up, 2.2);
 };
 
@@ -36,7 +36,7 @@ export const VoyagerPass: React.FC<{ frame: number; shot: Shot }> = ({ frame, sh
   const roll = new THREE.Quaternion().setFromAxisAngle(forward, 0.9 + p * 0.5);
   const quaternion = roll.multiply(aim);
   const sun = forward.clone().multiplyScalar(4000);
-  const fill = shot.dir.clone().multiplyScalar(40).addScaledVector(rightFor(shot.dir), -30).addScaledVector(shot.up, 24);
+  const fill = shot.dir.clone().multiplyScalar(40).addScaledVector(shot.right, -30).addScaledVector(shot.up, 24);
   return (
     <>
       <ambientLight intensity={0.05} />

@@ -12,3 +12,6 @@ refer
 # 截图脚本用的登录令牌
 tools/**/tokens.json
 __pycache__
+
+# 2MRS 的使用条款不允许再分发，由 tools/horizon/build_data.py 从 refer/ 生成
+public/horizon/data/local.bin

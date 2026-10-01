@@ -1,21 +1,19 @@
-// 第四期（光速与事件视界）：目前只有样片
+// 《光到不了的地方》：光速、宇宙膨胀与事件视界。全片一个镜头，配乐不裁剪，结尾多留几秒无声
 import React from "react";
 import { Audio } from "@remotion/media";
 import { Composition, Folder } from "remotion";
-import { Proto } from "./Proto";
-import { FPS, HEIGHT, T, WIDTH, assetUrl } from "./theme";
+import { Film } from "./Film";
+import { FPS, HEIGHT, TOTAL_FRAMES, WIDTH, assetUrl } from "./theme";
 
-const PROTO_FRAMES = Math.round(T.end * FPS);
-
-const ProtoWithMusic: React.FC = () => (
+const FilmWithMusic: React.FC = () => (
   <>
-    <Proto />
-    <Audio src={assetUrl("audio/cornfield-chase.mp3")} volume={0.85} />
+    <Film />
+    <Audio src={assetUrl("audio/cornfield-chase.mp3")} volume={0.9} />
   </>
 );
 
 export const HorizonCompositions: React.FC = () => (
   <Folder name="Horizon">
-    <Composition id="Horizon-Proto" component={ProtoWithMusic} durationInFrames={PROTO_FRAMES} fps={FPS} width={WIDTH} height={HEIGHT} />
+    <Composition id="Horizon" component={FilmWithMusic} durationInFrames={TOTAL_FRAMES} fps={FPS} width={WIDTH} height={HEIGHT} />
   </Folder>
 );

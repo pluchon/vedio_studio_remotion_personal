@@ -36,17 +36,26 @@ src/
       ├─ components/        # 年份地点标 Locator、旁白字幕、逐行跳出的记录 Rows、编年 Ticker、宣纸、纸上的星
       ├─ three/             # 3D：昼夜地球、平涂行星、旅行者号、韦布、点云、深空背景（three.js）
       └─ scenes/            # 按年代换画法：ink 铜版画 → poster 复古海报 → deep 写实深空 → light 光与回路
+   └─ horizon/              # 光到不了的地方 · 光速、宇宙膨胀与事件视界（132 秒，一个镜头）
+      ├─ Compositions.tsx   # 成片 Horizon
+      ├─ Film.tsx           # 整片的总装：各层何时出现、标注、旁白、读数
+      ├─ theme.ts           # 取景地与天球方向、镜头一路的距离和朝向（时间点落在配乐重音上）、读数的写法
+      ├─ cosmology.ts       # 按普朗克 2018 参数积分出的距离、回溯时间和三条界线
+      ├─ Coda.tsx           # 尾声：斯隆长城
+      └─ three/             # 真实星表的恒星、巡天的星系点云、重建的银河系与本星系群、地球月球太阳、微波背景、辉光与拖影后期
 public/
 ├─ moheng-oj/               # 截图、底图、配乐
 ├─ wind-diary/              # 照片、字体、配乐
 ├─ cloud-sky/               # 照片、字体、配乐
-└─ looking-up/              # 铜版画与海报插图、史料图版、3D 贴图、字体、配乐
+├─ looking-up/              # 铜版画与海报插图、史料图版、3D 贴图、字体、配乐
+└─ horizon/                 # 开头的生成片段、贴图、配乐，以及 data/ 下由星表和巡天数据转成的二进制
 refer/                      # 用户给的原始素材，每期一个文件夹（不入库）
 tools/
 ├─ shoot.mjs                # 批量截图（puppeteer-core + 本机 Chrome）
 ├─ stills.mjs               # 批量渲染静帧，自查画面用
 ├─ music.py                 # 纯 Python 合成配乐
-└─ moheng-oj/               # 墨衡 OJ 的截图清单、登录与清理脚本
+├─ moheng-oj/               # 墨衡 OJ 的截图清单、登录与清理脚本
+└─ horizon/                 # build_data.py：把 refer/光速_时间/ 里的星表和巡天数据转成 public/horizon/data/
 ```
 
 ## 常用命令
@@ -58,6 +67,7 @@ npx remotion render MohengOJ out/moheng-oj.mp4     # 渲染成片
 npx remotion render WindDiary out/wind-diary.mp4
 npx remotion render CloudSky out/cloud-sky.mp4
 npx remotion render LookingUp out/looking-up.mp4 --gl=angle   # 有 3D 画面，要走显卡
+npx remotion render Horizon out/horizon.mp4 --gl=angle
 npm run lint                                       # ESLint + 类型检查
 ```
 
@@ -94,3 +104,16 @@ python tools/moheng-oj/cleanup.py "2026-09-28 11:37:00"                         
 ```
 
 `ai.json` 会真实调用 AI，写入辅导会话、赛后复盘、难题分析缓存和当日次数。开拍前记下时间，拍完用 `cleanup.py` 按这个时间删掉。
+
+## 《光到不了的地方》的数据
+
+恒星、星系的位置来自公开的星表与巡天，原始文件放在 `refer/光速_时间/`（不入库），用 `python tools/horizon/build_data.py` 转成视频读的二进制：
+
+| 文件 | 来源 | 说明 |
+| --- | --- | --- |
+| `stars.bin` | HYG v4.4（CC BY-SA 4.0） | 约 11 万颗恒星的三维位置、亮度、颜色 |
+| `local.bin` | 2MASS Redshift Survey（Huchra 等，2012） | 4.3 万个近邻星系。其使用条款不允许再分发，所以这个文件不入库，需要自己下载星表后生成 |
+| `cosmos.bin` | SDSS DR18 | 抽样的 37 万个星系、25 万个类星体 |
+| `wall.bin` | SDSS DR18 | 斯隆长城所在天区的 11.8 万个星系 |
+
+微波背景图来自 ESA/Planck Collaboration。银河系和本星系群没有外部视角的实测数据，是按测量结果重建的。

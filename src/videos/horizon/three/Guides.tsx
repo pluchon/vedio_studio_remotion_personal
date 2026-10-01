@@ -78,9 +78,9 @@ export const Marks: React.FC<{ marks: Mark[]; shot: Shot; font: string }> = ({ m
           <div key={i} style={{ position: "absolute", left: x, top: y, opacity, color: COLORS.cream }}>
             {m.dot && <div style={{ position: "absolute", left: -3, top: -3, width: 6, height: 6, borderRadius: 3, background: COLORS.cream }} />}
             <div style={{ position: "absolute", left: flip ? -46 : 46, top: -14, width: 1, height: 28, background: COLORS.rule, opacity: 0.8 }} />
-            <div style={{ position: "absolute", ...side, top: -19, whiteSpace: "nowrap", fontFamily: font, fontSize: 22, letterSpacing: "0.18em" }}>{m.name}</div>
+            <div style={{ position: "absolute", ...side, top: -22, whiteSpace: "nowrap", fontFamily: font, fontSize: 25, letterSpacing: "0.18em" }}>{m.name}</div>
             {m.note && (
-              <div style={{ position: "absolute", ...side, top: 10, whiteSpace: "nowrap", fontFamily: font, fontSize: 15, letterSpacing: "0.12em", color: COLORS.soft }}>{m.note}</div>
+              <div style={{ position: "absolute", ...side, top: 16, whiteSpace: "nowrap", fontFamily: font, fontSize: 19, letterSpacing: "0.12em", color: "rgba(239, 230, 210, 0.78)" }}>{m.note}</div>
             )}
           </div>
         );

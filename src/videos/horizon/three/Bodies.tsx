@@ -312,3 +312,61 @@ export const Shell: React.FC<{ center: THREE.Vector3; radius: number; strength: 
     </mesh>
   );
 };
+
+const BACKDROP_VERTEX = /* glsl */ `
+  varying vec3 vDir;
+  void main() {
+    vDir = position;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const BACKDROP_FRAGMENT = /* glsl */ `
+  uniform sampler2D map;
+  uniform vec3 pole;
+  uniform vec3 center;
+  uniform vec3 side;
+  uniform float strength;
+  uniform float shift;
+  varying vec3 vDir;
+  void main() {
+    // 普朗克的全天图是银道坐标的等距圆柱投影：银心在正中，银经往左增大
+    vec3 d = normalize(vDir);
+    float b = asin(clamp(dot(d, pole), -1.0, 1.0));
+    float l = atan(dot(d, side), dot(d, center));
+    vec3 tex = texture2D(map, vec2(0.5 - l / 6.2831853, 0.5 + b / 3.1415927)).rgb;
+    // 原图是伪彩色，压一压饱和度，只留下那层斑驳
+    float lum = dot(tex, vec3(0.3, 0.5, 0.2));
+    vec3 col = mix(vec3(lum), tex, 0.38) * vec3(1.0, 0.84, 0.7) * (0.35 + 0.65 * lum);
+    // 时间快进：这层光也被越拉越红、越来越暗
+    col = mix(col, vec3(lum) * vec3(0.9, 0.2, 0.1), smoothstep(1.0, 6.0, shift)) / pow(shift, 0.9);
+    gl_FragColor = vec4(col * strength, 1.0);
+  }
+`;
+
+// 最早的光：一层包在最外面的球壳，贴的是普朗克卫星测到的微波背景。只画内壁，从外面看过去是一颗球
+export const Backdrop: React.FC<{ map: THREE.Texture; radius: number; strength: number; shift?: number; pole: THREE.Vector3; center: THREE.Vector3; side: THREE.Vector3 }> = ({
+  map,
+  radius,
+  strength,
+  shift = 1,
+  pole,
+  center,
+  side,
+}) => {
+  if (strength <= 0) return null;
+  return (
+    <mesh scale={radius} renderOrder={-8}>
+      <sphereGeometry args={[1, 96, 64]} />
+      <shaderMaterial
+        vertexShader={BACKDROP_VERTEX}
+        fragmentShader={BACKDROP_FRAGMENT}
+        uniforms={{ map: { value: map }, pole: { value: pole }, center: { value: center }, side: { value: side }, strength: { value: strength }, shift: { value: shift } }}
+        side={THREE.BackSide}
+        transparent
+        depthWrite={false}
+        depthTest={false}
+      />
+    </mesh>
+  );
+};
