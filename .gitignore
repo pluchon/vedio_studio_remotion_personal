@@ -19,3 +19,5 @@ public/horizon/data/local.bin
 # 仓库是公开的：有版权的配乐和个人照片不入库（墨衡 OJ 的 bgm.wav 是 tools/music.py 合成的，照常入库）
 public/**/*.mp3
 public/*/photos/
+# 从网上摘的动漫片段同样不入库，由 tools/moe/prepare.py 在本机生成
+public/moe/clips/

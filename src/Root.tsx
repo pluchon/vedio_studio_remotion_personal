@@ -3,6 +3,7 @@ import React from "react";
 import { CloudSkyCompositions } from "./videos/cloud-sky/Compositions";
 import { HorizonCompositions } from "./videos/horizon/Compositions";
 import { LookingUpCompositions } from "./videos/looking-up/Compositions";
+import { MoeCompositions } from "./videos/moe/Compositions";
 import { MohengOJCompositions } from "./videos/moheng-oj/Compositions";
 import { RainCompositions } from "./videos/rain/Compositions";
 import { WindDiaryCompositions } from "./videos/wind-diary/Compositions";
@@ -17,6 +18,7 @@ export const RemotionRoot: React.FC = () => {
       <LookingUpCompositions />
       <HorizonCompositions />
       <RainCompositions />
+      <MoeCompositions />
     </>
   );
 };
