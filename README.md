@@ -4,6 +4,16 @@
 
 公用的 Remotion 视频工作室。无论是项目介绍还是自己的想法，视频都放在这一个工程里，共用一份依赖（Remotion 4.0.529）和通用组件，不必每次重装一遍。
 
+## 已有的视频
+
+| 期 | 成片 ID | 片名 | 时长 | 用到的做法 |
+| --- | --- | --- | --- | --- |
+| 1 | `WindDiary` | 风经过的地方 | 约 90 秒 | 2D 程序化画面、手写式字幕、拍立得 |
+| 2 | `CloudSky` | 云走过的地方，天空都记得 | 77 秒 | 一团团叠起来的云与形变 |
+| 3 | `LookingUp` | 我们一直在仰望 | 5 分钟 | 按年代换画法，three.js 3D |
+| 4 | `Horizon` | 光到不了的地方 | 132 秒 | 一个镜头跨二十多个数量级，真实星表与巡天数据 |
+| 5 | `Rain` | 一场雨 | 30 秒 | 画面由配乐波形驱动，噪声、路径动画、弹簧，首尾循环 |
+
 ## 目录
 
 ```
@@ -45,12 +55,20 @@ src/
       ├─ cosmology.ts       # 按普朗克 2018 参数积分出的距离、回溯时间和三条界线
       ├─ Coda.tsx           # 尾声：斯隆长城
       └─ three/             # 真实星表的恒星、巡天的星系点云、重建的银河系与本星系群、地球月球太阳、微波背景、辉光与拖影后期
+   └─ rain/                 # 一场雨 · 一个镜头跟着一滴雨，从窗玻璃落进水洼（30 秒，首尾相接可循环）
+      ├─ Compositions.tsx   # 成片 Rain
+      ├─ score.ts           # 从配乐波形里读出每个音的起点、轻重、低音占比，以及逐帧的响度
+      ├─ plan.ts            # 由曲子里雨下大、换气、重新起音三个时刻推出水滴和镜头的走位
+      ├─ theme.ts           # 配色与整张竖长画面的布景尺寸
+      ├─ parts/             # 窗外失焦的街灯与雨丝、像透镜一样映着窗外的水珠
+      └─ scenes/            # Glass 窗玻璃到窗台，Yard 屋檐、灯笼、枝叶和水洼
 public/
 ├─ moheng-oj/               # 截图、底图、配乐
 ├─ wind-diary/              # 照片、字体、配乐
 ├─ cloud-sky/               # 照片、字体、配乐
 ├─ looking-up/              # 铜版画与海报插图、史料图版、3D 贴图、字体、配乐
-└─ horizon/                 # 开头的生成片段、贴图、配乐，以及 data/ 下由星表和巡天数据转成的二进制
+├─ horizon/                 # 开头的生成片段、贴图、配乐，以及 data/ 下由星表和巡天数据转成的二进制
+└─ rain/                    # 配乐（画面全部由代码画，没有图片）
 refer/                      # 用户给的原始素材，每期一个文件夹（不入库）
 tools/
 ├─ shoot.mjs                # 批量截图（puppeteer-core + 本机 Chrome）
@@ -70,6 +88,7 @@ npx remotion render WindDiary out/wind-diary.mp4
 npx remotion render CloudSky out/cloud-sky.mp4
 npx remotion render LookingUp out/looking-up.mp4 --gl=angle   # 有 3D 画面，要走显卡
 npx remotion render Horizon out/horizon.mp4 --gl=angle
+npx remotion render Rain out/rain.mp4
 npm run lint                                       # ESLint + 类型检查
 ```
 
@@ -104,6 +123,7 @@ D 宫五声音阶的拨弦、铺底加低音，经 FFmpeg 混响并归一到 -16
 | `public/cloud-sky/audio/chill-out.mp3` | 《云走过的地方》配乐 |
 | `public/looking-up/audio/if-i-should-return.mp3` | 《我们一直在仰望》配乐 |
 | `public/horizon/audio/cornfield-chase.mp3` | 《光到不了的地方》配乐 |
+| `public/rain/audio/su.mp3` | 《一场雨》配乐。画面是从这首曲子的波形里算出来的，换一首曲子雨也会跟着变 |
 | `public/wind-diary/photos/`、`public/cloud-sky/photos/` | 两期日常视频用到的照片 |
 | `public/horizon/data/local.bin` | 由 2MRS 星表生成，做法见 `tools/horizon/README.md` |
 
