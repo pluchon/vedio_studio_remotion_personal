@@ -1,0 +1,2 @@
+# vedio_studio_remotion_personal
+纯代码无任何视频的视频生成仓库项目，记录每一次想法
