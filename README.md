@@ -14,6 +14,7 @@
 | 4 | `Horizon` | 光到不了的地方 | 132 秒 | 一个镜头跨二十多个数量级，真实星表与巡天数据 |
 | 5 | `Rain` | 一场雨 | 30 秒 | 画面由配乐波形驱动，噪声、路径动画、弹簧，首尾循环 |
 | 6 | `Moe` | 萌系手帐 | 82 秒 | 手帐底图里嵌动漫镜头，换镜头跟着配乐的起音，一格一格动的步进动画 |
+| 7 | `Amazon` | 亚马逊河 | 82 秒 | 真实高程、河网和卫星底图铺成的三维地图，着色器算光影、雾和河面，亮线沿河道画到入海口 |
 
 ## 目录
 
@@ -69,6 +70,14 @@ src/
       ├─ Film.tsx           # 整片的总装：底图、卡片里的镜头、拍立得、花瓣、小人
       ├─ plan.ts            # 从配乐的起音里挑换镜头的时刻，小人的姿势和走位，步进与线条抖动
       └─ theme.ts           # 卡片位置、配乐分段、合集里每个镜头的起止
+   └─ amazon/               # 亚马逊河 · 像看地图一样往下看，亮线从安第斯山沿河道画到大西洋，到有名的地方停一停（82 秒）
+      ├─ Compositions.tsx   # 成片 Amazon，以及这趟旅程的时间表和旁白
+      ├─ Film.tsx           # 整片的总装：地面、河网、大气，叠上地名、旁白、读数和水系小图
+      ├─ plan.ts            # 主河道这条线怎么走、镜头怎么跟
+      ├─ sites.ts           # 标在地图上的城市、支流和停靠点
+      ├─ Places.tsx Chart.tsx Overlay.tsx   # 地名、右上角同步勾勒的水系小图、旁白和读数
+      ├─ theme.ts           # 数据范围、经纬度和球面的换算、机位
+      └─ three/             # 着色器：按高程起伏的地面（山影、云、晨雾、河面）、河网的线、大气
 public/
 ├─ moheng-oj/               # 截图、底图、配乐
 ├─ wind-diary/              # 照片、字体、配乐
@@ -76,7 +85,8 @@ public/
 ├─ looking-up/              # 铜版画与海报插图、史料图版、3D 贴图、字体、配乐
 ├─ horizon/                 # 开头的生成片段、贴图、配乐，以及 data/ 下由星表和巡天数据转成的二进制
 ├─ rain/                    # 配乐（画面全部由代码画，没有图片）
-└─ moe/                     # 手帐底图、Q 版小人的八个姿势；配乐和动漫片段不入库
+├─ moe/                     # 手帐底图、Q 版小人的八个姿势；配乐和动漫片段不入库
+└─ amazon/                  # 低清的世界底图；高程、河网、卫星底图和配乐不入库，由脚本生成
 refer/                      # 用户给的原始素材，每期一个文件夹（不入库）
 tools/
 ├─ shoot.mjs                # 批量截图（puppeteer-core + 本机 Chrome）
@@ -84,7 +94,8 @@ tools/
 ├─ music.py                 # 纯 Python 合成配乐
 ├─ moheng-oj/               # 墨衡 OJ 的截图清单、登录与清理脚本
 ├─ horizon/                 # build_data.py：把 refer/光速_时间/ 里的星表和巡天数据转成 public/horizon/data/
-└─ moe/                     # prepare.py：把 refer/二次元萌系/ 里的底图、姿势、片段和配乐整理到 public/moe/
+├─ moe/                     # prepare.py：把 refer/二次元萌系/ 里的底图、姿势、片段和配乐整理到 public/moe/
+└─ amazon/                  # build_data.py：把 refer/亚马逊河/ 里的高程、河网和卫星底图整理到 public/amazon/，说明见其 README
 ```
 
 ## 常用命令
@@ -99,6 +110,7 @@ npx remotion render LookingUp out/looking-up.mp4 --gl=angle   # 有 3D 画面，
 npx remotion render Horizon out/horizon.mp4 --gl=angle
 npx remotion render Rain out/rain.mp4
 npx remotion render Moe out/moe.mp4 --color-space=bt709   # 高调的画面要用标准色彩范围，否则不少播放器里会发白
+npx remotion render Amazon out/amazon.mp4 --gl=angle --color-space=bt709 --concurrency=2   # 贴图很大，同时开的页面别太多
 npm run lint                                       # ESLint + 类型检查
 ```
 
@@ -136,6 +148,8 @@ D 宫五声音阶的拨弦、铺底加低音，经 FFmpeg 混响并归一到 -16
 | `public/rain/audio/su.mp3` | 《一场雨》配乐。画面是从这首曲子的波形里算出来的，换一首曲子雨也会跟着变 |
 | `public/moe/audio/senko.mp3`、`public/moe/clips/` | 萌系手帐的配乐和动漫片段，由 `tools/moe/prepare.py` 从自备的素材生成 |
 | `public/wind-diary/photos/`、`public/cloud-sky/photos/` | 两期日常视频用到的照片 |
+| `public/amazon/audio/green-to-blue.mp3` | 《亚马逊河》配乐 |
+| `public/amazon/data/`、`public/amazon/textures/land.jpg` | 高程、河网和卫星底图，由 `tools/amazon/build_data.py` 生成，原始文件的下载地址见 `tools/amazon/README.md` |
 | `public/horizon/data/local.bin` | 由 2MRS 星表生成，做法见 `tools/horizon/README.md` |
 
-配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，星表与巡天数据的署名见 `tools/horizon/README.md`。
+配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，星表与巡天数据的署名见 `tools/horizon/README.md`，高程、河网与卫星底图的署名见 `tools/amazon/README.md`。

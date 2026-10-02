@@ -1,5 +1,6 @@
 import "./index.css";
 import React from "react";
+import { AmazonCompositions } from "./videos/amazon/Compositions";
 import { CloudSkyCompositions } from "./videos/cloud-sky/Compositions";
 import { HorizonCompositions } from "./videos/horizon/Compositions";
 import { LookingUpCompositions } from "./videos/looking-up/Compositions";
@@ -19,6 +20,7 @@ export const RemotionRoot: React.FC = () => {
       <HorizonCompositions />
       <RainCompositions />
       <MoeCompositions />
+      <AmazonCompositions />
     </>
   );
 };

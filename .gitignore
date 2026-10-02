@@ -21,3 +21,6 @@ public/**/*.mp3
 public/*/photos/
 # 从网上摘的动漫片段同样不入库，由 tools/moe/prepare.py 在本机生成
 public/moe/clips/
+# 亚马逊河的高程、河网和卫星底图体积大，由 tools/amazon/build_data.py 在本机生成
+public/amazon/data/
+public/amazon/textures/land.jpg
