@@ -7,7 +7,9 @@
   "private": true,
   "dependencies": {
     "@react-three/fiber": "9.8.1",
+    "@remotion/captions": "4.0.529",
     "@remotion/cli": "4.0.529",
+    "@remotion/install-whisper-cpp": "4.0.529",
     "@remotion/media": "4.0.529",
     "@remotion/media-utils": "4.0.529",
     "@remotion/noise": "4.0.529",

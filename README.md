@@ -15,6 +15,7 @@
 | 5 | `Rain` | 一场雨 | 30 秒 | 画面由配乐波形驱动，噪声、路径动画、弹簧，首尾循环 |
 | 6 | `Moe` | 萌系手帐 | 82 秒 | 手帐底图里嵌动漫镜头，换镜头跟着配乐的起音，一格一格动的步进动画 |
 | 7 | `Amazon` | 亚马逊河 | 82 秒 | 真实高程、河网和卫星底图铺成的三维地图，着色器算光影、雾和河面，亮线沿河道画到入海口 |
+| 8 | `Hanzi` | 汉字的演变 | 88 秒 | 人声念白加逐字字幕，八个字从甲骨文一路化成楷书，字形之间靠「离笔画边缘的距离」互相变 |
 
 ## 目录
 
@@ -78,6 +79,14 @@ src/
       ├─ Places.tsx Chart.tsx Overlay.tsx   # 地名、右上角同步勾勒的水系小图、旁白和读数
       ├─ theme.ts           # 数据范围、经纬度和球面的换算、机位
       └─ three/             # 着色器：按高程起伏的地面（山影、云、晨雾、河面）、河网的线、大气
+   └─ hanzi/                # 汉字的演变 · 跟着一段念白，日、山、水等八个字从甲骨文变到楷书（88 秒）
+      ├─ Compositions.tsx   # 成片 Hanzi
+      ├─ Film.tsx           # 整片的总装：每个字在什么时候、什么位置、变到哪一种字体
+      ├─ Ink.tsx            # 一个墨写的字：混合两个字形的距离表，让一个化成另一个
+      ├─ glyphs.ts          # 载入字形数据，把两个字拼进一格
+      ├─ script.ts          # 念白的时间表，拆成一个字一条的字幕
+      ├─ Subtitles.tsx Strip.tsx Sketch.tsx   # 逐字字幕、顶上的年代线、朱砂色的简图
+      └─ theme.ts           # 配色、字体、五种字体的名字和年代
 public/
 ├─ moheng-oj/               # 截图、底图、配乐
 ├─ wind-diary/              # 照片、字体、配乐
@@ -86,7 +95,8 @@ public/
 ├─ horizon/                 # 开头的生成片段、贴图、配乐，以及 data/ 下由星表和巡天数据转成的二进制
 ├─ rain/                    # 配乐（画面全部由代码画，没有图片）
 ├─ moe/                     # 手帐底图、Q 版小人的八个姿势；配乐和动漫片段不入库
-└─ amazon/                  # 低清的世界底图；高程、河网、卫星底图和配乐不入库，由脚本生成
+├─ amazon/                  # 低清的世界底图；高程、河网、卫星底图和配乐不入库，由脚本生成
+└─ hanzi/                   # 字形数据、配乐和念白都不入库，由脚本生成或自己录
 refer/                      # 用户给的原始素材，每期一个文件夹（不入库）
 tools/
 ├─ shoot.mjs                # 批量截图（puppeteer-core + 本机 Chrome）
@@ -95,7 +105,8 @@ tools/
 ├─ moheng-oj/               # 墨衡 OJ 的截图清单、登录与清理脚本
 ├─ horizon/                 # build_data.py：把 refer/光速_时间/ 里的星表和巡天数据转成 public/horizon/data/
 ├─ moe/                     # prepare.py：把 refer/二次元萌系/ 里的底图、姿势、片段和配乐整理到 public/moe/
-└─ amazon/                  # build_data.py：把 refer/亚马逊河/ 里的高程、河网和卫星底图整理到 public/amazon/，说明见其 README
+├─ amazon/                  # build_data.py：把 refer/亚马逊河/ 里的高程、河网和卫星底图整理到 public/amazon/，说明见其 README
+└─ hanzi/                   # build_glyphs.mjs 生成字形数据，music.py 合成配乐，whisper.mjs 在本机转写念白，说明见其 README
 ```
 
 ## 常用命令
@@ -111,6 +122,7 @@ npx remotion render Horizon out/horizon.mp4 --gl=angle
 npx remotion render Rain out/rain.mp4
 npx remotion render Moe out/moe.mp4 --color-space=bt709   # 高调的画面要用标准色彩范围，否则不少播放器里会发白
 npx remotion render Amazon out/amazon.mp4 --gl=angle --color-space=bt709 --concurrency=2   # 贴图很大，同时开的页面别太多
+npx remotion render Hanzi out/hanzi.mp4 --color-space=bt709
 npm run lint                                       # ESLint + 类型检查
 ```
 
@@ -150,6 +162,8 @@ D 宫五声音阶的拨弦、铺底加低音，经 FFmpeg 混响并归一到 -16
 | `public/wind-diary/photos/`、`public/cloud-sky/photos/` | 两期日常视频用到的照片 |
 | `public/amazon/audio/green-to-blue.mp3` | 《亚马逊河》配乐 |
 | `public/amazon/data/`、`public/amazon/textures/land.jpg` | 高程、河网和卫星底图，由 `tools/amazon/build_data.py` 生成，原始文件的下载地址见 `tools/amazon/README.md` |
+| `public/hanzi/audio/voice.mp3` | 《汉字的演变》的念白，朋友录的 |
+| `public/hanzi/data/`、`public/hanzi/audio/bgm.wav` | 字形数据和配乐，由 `tools/hanzi/` 下的脚本生成，做法见 `tools/hanzi/README.md` |
 | `public/horizon/data/local.bin` | 由 2MRS 星表生成，做法见 `tools/horizon/README.md` |
 
-配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，星表与巡天数据的署名见 `tools/horizon/README.md`，高程、河网与卫星底图的署名见 `tools/amazon/README.md`。
+配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，星表与巡天数据的署名见 `tools/horizon/README.md`，高程、河网与卫星底图的署名见 `tools/amazon/README.md`，古文字字形的来源见 `tools/hanzi/README.md`。
