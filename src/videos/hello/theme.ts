@@ -25,16 +25,28 @@ export const C = {
   lilac: "#AE96EC",
   lilacDeep: "#8A70D2",
   sky: "#84BDF3",
-  mouth: "#7B2D2B",
-  tongue: "#F58A8A",
+  pink: "#F8A9C0",
+  leaf: "#8FD08A",
+  leafDeep: "#5FB07A",
+  wood: "#D9A66B",
+  night: "#2B2347",
 };
 
 // 拉丁字母和数字用 Fredoka，中文落到站酷快乐体
 export const FONT_ZH = "HelloKuaiLe";
 export const FONT_EN = "HelloFredoka";
 export const FONT_MONO = "HelloMono";
+// 颜文字里的片假名、希腊字母、符号，由一款圆体的日文字体来画
+export const FONT_KAO = "HelloKao";
 export const TEXT = `"${FONT_EN}", "${FONT_ZH}", sans-serif`;
 export const MONO = `"${FONT_MONO}", "${FONT_ZH}", monospace`;
+export const KAO = `"${FONT_KAO}", "${FONT_EN}", sans-serif`;
 
 // 地面的高度：小家伙的脚踩在这条线上
 export const GROUND = 800;
+
+// 地面是一道弧：给一个横坐标，返回那里的坡顶有多高（摆树、摆花时用）
+export const floorY = (x: number) =>
+  GROUND +
+  520 -
+  560 * Math.sqrt(Math.max(0, 1 - ((x - WIDTH / 2) / 1500) ** 2));

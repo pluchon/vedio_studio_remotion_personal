@@ -71,13 +71,39 @@ export const PAGES: TikTokPage[] = createTikTokStyleCaptions({
   combineTokensWithinMilliseconds: 600000,
 }).pages;
 
-// 这一刻说话的劲头：说着话时每个字颠一下，标点处停
-export const talkAt = (lines: Line[], t: number) => {
-  const line = lines.find((l) => t >= l.at && t < lineEnd(l));
+// 这一刻说话的劲头：说着话时身体一下一下地点，一秒三下左右，开口和收声都是渐变的
+export const talkAt = (t: number) => {
+  const line = LINES.find((l) => t >= l.at - 0.05 && t < lineEnd(l) + 0.12);
   if (!line) return 0;
-  const index = Math.floor((t - line.at) / PACE);
-  const char = [...line.text][index];
-  if (!char || char === " " || "，。？！、：；".includes(char)) return 0;
-  const phase = ((t - line.at) % PACE) / PACE;
-  return 0.3 + 0.7 * Math.sin(phase * Math.PI);
+  const fade = Math.min(
+    1,
+    (t - line.at + 0.05) / 0.16,
+    (lineEnd(line) + 0.12 - t) / 0.16,
+  );
+  return (
+    Math.max(0, fade) *
+    (0.5 - 0.5 * Math.cos((t - line.at) * Math.PI * 2 * 3.1))
+  );
 };
+
+// 字幕条和对话框是同一个东西：开场时对话框落下来变成字幕条，结尾时字幕条再变回对话框
+export const HANDOFF = { fly: 4.5, box: STARTS[STARTS.length - 1] + 5.3 };
+
+// 字幕条提前多久为下一句话腾出宽度
+export const LEAD = 0.35;
+
+// 字幕条连续留在画面上的一段：两句话隔得不远就不收起来
+export type Span = { from: number; to: number; first: number; last: number };
+export const SPANS: Span[] = [];
+LINES.forEach((line, i) => {
+  const from = line.at - LEAD;
+  const tail = SPANS[SPANS.length - 1];
+  if (tail && from - tail.to < 1.7) {
+    tail.to = lineGone(line);
+    tail.last = i;
+  } else {
+    SPANS.push({ from, to: lineGone(line), first: i, last: i });
+  }
+});
+SPANS[0].from = HANDOFF.fly;
+SPANS[SPANS.length - 1].to = TOTAL + 10;

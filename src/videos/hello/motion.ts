@@ -94,3 +94,47 @@ export const hop = (t: number, at: number, seconds: number, height: number) => {
   const squash = 0.26 * Math.exp(-after * 7) * Math.cos(after * 22);
   return { p: 1, lift: 0, squash };
 };
+
+// 在 [from, to] 这段时间里为 1，两头各用 fade 秒过渡
+export const during = (t: number, from: number, to: number, fade = 0.25) =>
+  ramp(t, from, from + fade) - ramp(t, to - fade, to);
+
+// 关键帧：一串 [时刻, 值]，相邻两个之间用缓动过渡
+export const track = (
+  t: number,
+  keys: [number, number][],
+  easing: (v: number) => number = EASE.inOut,
+) => {
+  if (t <= keys[0][0]) return keys[0][1];
+  for (let i = 1; i < keys.length; i++) {
+    if (t <= keys[i][0]) {
+      const [t0, v0] = keys[i - 1];
+      const [t1, v1] = keys[i];
+      return mix(v0, v1, easing((t - t0) / (t1 - t0)));
+    }
+  }
+  return keys[keys.length - 1][1];
+};
+
+// 镜头：z 是放大倍数（不小于 1），(fx, fy) 是放大时保持不动的那个点；sx、sy 是整个画面震一下的位移
+export type Cam = {
+  z: number;
+  fx: number;
+  fy: number;
+  sx?: number;
+  sy?: number;
+};
+export const WIDE: Cam = { z: 1, fx: 960, fy: 540 };
+export const camMix = (a: Cam, b: Cam, p: number): Cam => ({
+  z: mix(a.z, b.z, p),
+  fx: mix(a.fx, b.fx, p),
+  fy: mix(a.fy, b.fy, p),
+  sx: mix(a.sx ?? 0, b.sx ?? 0, p),
+  sy: mix(a.sy ?? 0, b.sy ?? 0, p),
+});
+
+// 重重落下、盖章的那一下：画面抖几下很快停住。返回位移的像素数
+export const jolt = (t: number, at: number, power = 1) =>
+  t < at || t > at + 0.5
+    ? 0
+    : Math.sin((t - at) * 70) * 7 * power * Math.exp(-(t - at) * 9);

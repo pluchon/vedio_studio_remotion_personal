@@ -1,7 +1,7 @@
-// 字体：三个文件都载入并加进页面后才开始画，量字宽（measureText、fitText）才是准的
+// 字体：四个文件都载入并加进页面后才开始画，量字宽（measureText、fitText）才是准的
 import { useEffect, useState } from "react";
 import { cancelRender, continueRender, delayRender } from "remotion";
-import { asset, FONT_EN, FONT_MONO, FONT_ZH } from "./theme";
+import { asset, FONT_EN, FONT_KAO, FONT_MONO, FONT_ZH } from "./theme";
 
 let loading: Promise<void> | null = null;
 
@@ -17,6 +17,10 @@ const load = () => {
     new FontFace(FONT_MONO, `url('${asset("fonts/JetBrainsMono.ttf")}')`, {
       weight: "100 800",
     }).load(),
+    new FontFace(
+      FONT_KAO,
+      `url('${asset("fonts/MPLUSRounded1c-Bold.ttf")}')`,
+    ).load(),
   ]).then((faces) => {
     faces.forEach((face) => document.fonts.add(face));
   });

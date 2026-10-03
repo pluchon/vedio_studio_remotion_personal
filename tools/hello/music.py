@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""《你好，我是 Claude》的声音：游戏机风格的芯片音乐，加上小家伙「叽叽」的说话声。
+"""《你好，我是 Claude》的声音：游戏机风格的芯片音乐，加上小家伙开口时的一小声「叽咕」。
 
 和前几期的拨弦、钢琴、马林巴都不一样：这里只有方波、三角波和噪声三种最简单的波形，
-像老式游戏机那样一个音一个音地排。各段的起止和每个字的时刻都读自 src/videos/hello/script.json，
+像老式游戏机那样一个音一个音地排。各段的起止和每句话的时刻都读自 src/videos/hello/script.json，
 所以改了台词以后重新跑一遍就能对上。
 
 用法：python tools/hello/music.py
@@ -332,6 +332,9 @@ def compose() -> None:
     sparkle(4.95)
     end = section(4.95, THEME_A[:4])
     fill(end, s[1] + 0.15)
+    # 树、花、云、太阳一样一样弹起来
+    for k in range(6):
+        blip(4.9 + k * 0.1, ["A4", "C#5", "E5", "A5", "C#6", "E6"][k], gain=0.13, duty=0.5)
     ding(8.75)
     boing(10.75)
     sparkle(11.2, 0.2)
@@ -344,6 +347,7 @@ def compose() -> None:
     buzz(s[1] + 1.95)
     thud(s[1] + 3.1, 0.5)
     whoosh(s[1] + 3.3, 2.6, 0.12)
+    ding(s[1] + 6.35, "A5", "E6", 0.2)
     for k in range(3):
         blip(s[1] + 7.5 + k * 0.16, ["E5", "D5", "C#5"][k], gain=0.2)
     ding(s[1] + 9.7)
@@ -357,10 +361,14 @@ def compose() -> None:
     at = s[2] + 0.15
     end = section(at, THEME_B + THEME_B[:2], bass="walk", beat=LIGHT)
     fill(end, s[3] + 0.15)
-    for k, moment in enumerate([3.2, 5.3, 8.2, 10.5, 12.8, 14.6]):
-        ding(s[2] + moment + 0.15, "E6", ["A6", "B6", "C#7", "D7", "E7", "F#7"][k], 0.2)
+    for k, moment in enumerate([3.3, 5.5, 8.4, 10.7, 13.0, 14.5]):
+        blip(s[2] + moment + 0.15, "E5", 0.09, slide=5, gain=0.18, duty=0.5)
+    # 学会的本事飞进顶上的格子：一格比一格高
+    for k, moment in enumerate([4.3, 7.2, 9.5, 11.9, 13.6, 15.4]):
+        ding(s[2] + moment + 0.55, "E6", ["A6", "B6", "C#7", "D7", "E7", "F#7"][k], 0.2)
     for k in range(6):
-        blip(s[2] + 16.55 + k * 0.2, ["A4", "B4", "C#5", "E5", "F#5", "A5"][k], gain=0.24, duty=0.5)
+        blip(s[2] + 16.65 + k * 0.2, ["A4", "B4", "C#5", "E5", "F#5", "A5"][k], gain=0.24, duty=0.5)
+    sparkle(s[2] + 17.65)
 
     # 一家四口：底下的鼓和低音不停，上面的旋律一人一句，各有各的声音
     at = s[3] + 0.15
@@ -392,7 +400,11 @@ def compose() -> None:
     at = s[4] + 0.15
     end = section(at, THEME_A + THEME_A[:2], shift=2, beat=BUSY)
     fill(end, s[5] + 0.15, up=False)
+    for k in range(9):
+        tick(s[4] + 0.85 + k * 0.12, 0.2)
+    thud(s[4] + 2.0, 0.5)
     blip(s[4] + 3.05, "E6", 0.1, slide=5)
+    sparkle(s[4] + 7.0, 0.2)
     for k in range(5):
         thud(s[4] + 5.15 + k * 0.3 + 0.35, 0.45)
     for moment in [10.0, 10.8, 11.4]:
@@ -400,6 +412,7 @@ def compose() -> None:
             tick(s[4] + moment + k * 0.08, 0.3)
     for k, moment in enumerate([13.15, 13.85, 14.75, 15.45, 16.05]):
         ding(s[4] + moment, "E6", ["A6", "B6", "C#7", "E7", "A7"][k], 0.2)
+    sparkle(s[4] + 16.05, 0.2)
     sparkle(s[4] + 18.25)
 
     # 老实交代：鼓停了，只留长低音、很轻的分解和弦和一条慢旋律
@@ -414,21 +427,30 @@ def compose() -> None:
     blip(s[5] + 11.5, "A5", 0.1, slide=4, gain=0.2, duty=0.5)
     put("sfx", s[5] + 13.7, tone(freq("E5"), 0.18, "tri", shape="pluck"), 0.26)
     put("sfx", s[5] + 13.9, tone(freq("G#5"), 0.4, "tri", shape="pluck", slide=1), 0.26)
+    ding(s[5] + 17.4, "A5", "E6", 0.22)
 
     # 这支片子：先只有「敲键盘」似的分解和弦，再一层一层加回低音、鼓和旋律
     at = s[6] + 0.15
     layers = [(False, True, False, True)] * 2 + [(False, True, True, True)] * 2 + [(True, True, True, True)] * 4
     end = section(at, THEME_B, bass="walk", layers=layers)
     fill(end, s[7] + 0.15)
-    for k in range(10):
-        blip(s[6] + 9.7 + k * 0.1, ["A4", "B4", "C#5", "D5", "E5", "F#5", "G#5", "A5", "B5", "C#6"][k], gain=0.2, duty=0.5)
-    ding(s[6] + 13.2)
+    whoosh(s[6] + 9.7, 0.6, 0.22)
+    for k, moment in enumerate([10.3, 10.6, 11.25, 11.55]):
+        ding(s[6] + moment, "E6", ["A6", "B6", "C#7", "E7"][k], 0.2)
+    buzz(s[6] + 10.95, 0.3)
+    boing(s[6] + 13.25)
+    ding(s[6] + 13.55, "E6", "A7", 0.24)
+    sparkle(s[6] + 13.8)
 
     # 结尾：主题一的后四小节，落在主音上，再往上撒一串亮晶晶的音
     at = s[7] + 0.15
     end = section(at, THEME_A[4:])
     sparkle(s[7] + 2.5)
+    for moment in [2.6, 3.0, 3.45, 8.2, 8.5]:
+        put("sfx", s[7] + moment, noise(0.3, 3, 0.09), 0.3)
+        sparkle(s[7] + moment + 0.05, 0.16)
     blip(s[7] + 5.3, "E5", slide=5)
+    sparkle(s[7] + 6.5, 0.2)
     for name, pan in (("A3", 0.0), ("E4", -0.4), ("A4", 0.4), ("C#5", 0.0)):
         put("lead", end, tone(freq(name), 1.6, "pulse", 0.5, "pluck"), 0.22, pan)
     sparkle(end + 0.1, 0.3)
@@ -436,32 +458,30 @@ def compose() -> None:
 
 
 # ---------- 说话声 ----------
-VOICE_SCALE = ["A4", "B4", "C#5", "E5", "F#5", "A5"]
-QUIET = set("，。？！、：； ")
+# 每句话开口时的一小声：三个很短的音。几种走向轮着用，免得句句一样
+CHIRPS = [
+    ["A4", "C#5", "E5"],
+    ["E5", "C#5", "E5"],
+    ["C#5", "E5", "A5"],
+    ["E5", "A4", "C#5"],
+    ["A4", "E5", "C#5"],
+]
 
 
 def speak() -> None:
-    """每个字一声短促的「叽」：音高在几个音之间上下走，问句结尾往上扬，句尾往下落。"""
+    """每句话只在开口的那一刻响一小声「叽咕」；问句的最后一个音往上扬。"""
+    count = 0
     for index, chapter in enumerate(script["chapters"]):
         for line in chapter["lines"]:
-            chars = list(line["text"])
-            where = 2
-            for i, char in enumerate(chars):
-                if char in QUIET:
-                    continue
-                where = max(0, min(len(VOICE_SCALE) - 1, where + random.choice([-1, -1, 0, 1, 1])))
-                left = len(chars) - i
-                rising = "？" in chars[i:i + 4]
-                if left <= 3 and not rising:
-                    where = max(0, where - 1)
-                if rising:
-                    where = min(len(VOICE_SCALE) - 1, where + 1)
-                at = STARTS[index] + line["at"] + i * PACE
-                # 拉丁字母和数字念得更短更高一点
-                latin = ord(char) < 128
-                sound = tone(freq(VOICE_SCALE[where], 12 if latin else 0), 0.06 if latin else 0.075,
-                             "pulse", 0.5, "stab", slide=3 if rising else 1.5)
-                put("voice", at, sound, 0.5)
+            notes = CHIRPS[count % len(CHIRPS)]
+            asking = "？" in line["text"]
+            at = STARTS[index] + line["at"]
+            for i, name in enumerate(notes):
+                last = i == len(notes) - 1
+                sound = tone(freq(name), 0.09 if last else 0.065, "pulse", 0.5, "stab",
+                             slide=5 if asking and last else 1.5)
+                put("voice", at + i * 0.07, sound, 0.5)
+            count += 1
 
 
 # ---------- 出声 ----------

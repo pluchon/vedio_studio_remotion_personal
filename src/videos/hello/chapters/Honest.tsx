@@ -1,12 +1,24 @@
-// 老实交代：灯暗下来，只留一束光。会出错、不记得上一回、有没有感受自己也不确定，但不骗人
+// 老实交代：灯暗下来，只留一束光，天上一弯打瞌睡的月亮。会出错、不记得上一回、有没有感受自己也不确定，但不骗人
 import { noise2D } from "@remotion/noise";
 import { SkiaCanvas } from "@remotion/skia";
 import { Fill, Shader, Skia } from "@shopify/react-native-skia";
 import React from "react";
 import { random } from "remotion";
-import { Pose, REST } from "../Buddy";
-import { clamp, EASE, mix, pop, ramp } from "../motion";
-import { Mark, Pop, sticker } from "../stickers";
+import { headTop, Pose, REST } from "../Buddy";
+import { Emote, Kao, Twinkles } from "../emotes";
+import {
+  Cam,
+  clamp,
+  during,
+  EASE,
+  mix,
+  pop,
+  ramp,
+  track,
+  jolt,
+} from "../motion";
+import { At, Cloud, Fireflies, Moon } from "../scenery";
+import { Mark, Pop, sticker, Tag } from "../stickers";
 import { C, GROUND, HEIGHT, TEXT, WIDTH } from "../theme";
 
 const T = {
@@ -53,18 +65,12 @@ half4 main(float2 p) {
 }`);
 
 export const pose = (t: number): Pose => {
-  const proud =
-    ramp(t, T.sign + 0.2, T.sign + 0.5) -
-    ramp(t, T.wrong - 0.05, T.wrong + 0.05);
-  const oops =
-    ramp(t, T.wrong, T.wrong + 0.1) - ramp(t, T.check - 0.3, T.check);
-  const left =
-    ramp(t, T.chat, T.chat + 0.3) - ramp(t, T.bookOut, T.bookOut + 0.4);
-  const up =
-    ramp(t, T.heart, T.heart + 0.4) -
-    ramp(t, T.heartOut - 0.3, T.heartOut + 0.2);
-  const right =
-    ramp(t, T.sign, T.sign + 0.3) - ramp(t, T.signOut - 0.2, T.signOut + 0.2);
+  const proud = during(t, T.sign + 0.2, T.wrong + 0.05, 0.2);
+  const oops = during(t, T.wrong, T.check, 0.2);
+  const left = during(t, T.chat, T.bookOut + 0.4, 0.35);
+  const up = during(t, T.heart, T.heartOut + 0.2, 0.4);
+  const right = during(t, T.sign, T.signOut + 0.2, 0.3);
+  const vow = ramp(t, T.vow + 0.5, T.vow + 0.9);
   return {
     ...REST,
     x: ME_X,
@@ -72,18 +78,39 @@ export const pose = (t: number): Pose => {
     lookY: -0.4 * right - 0.3 * left - 0.9 * up,
     squash: 0.08 * oops * Math.exp(-(t - T.wrong) * 3),
     tilt:
-      oops * Math.sin((t - T.wrong) * 26) * 4 * Math.exp(-(t - T.wrong) * 4),
-    wave: proud,
+      oops * Math.sin((t - T.wrong) * 26) * 4 * Math.exp(-(t - T.wrong) * 4) +
+      up * Math.sin(t * 1.4) * 4,
+    wave: proud + vow * 0.65,
     mood:
       proud > 0.5 || (t > T.book + 0.3 && t < T.bookOut)
         ? "happy"
-        : oops > 0.5 && t < T.wrong + 0.7
+        : oops > 0.5 && t < T.wrong + 0.9
           ? "wow"
-          : oops > 0.5 || (t > T.fade && t < T.book)
-            ? "flat"
-            : "smile",
+          : oops > 0.5
+            ? "squint"
+            : t > T.fade && t < T.book
+              ? "sad"
+              : up > 0.5
+                ? "think"
+                : "smile",
   };
 };
+
+// 镜头：整段慢慢往里推，最后那句话推得最近
+export const camera = (t: number): Cam => ({
+  z: track(t, [
+    [0.5, 1],
+    [T.vow - 0.3, 1.05],
+    [T.vow + 1.6, 1.2],
+  ]),
+  fx: 960,
+  fy: track(t, [
+    [T.vow - 0.3, 600],
+    [T.vow + 1.6, 660],
+  ]),
+  sx: jolt(t, T.wrong, 1.4),
+  sy: jolt(t, T.vow + 0.9, 0.5),
+});
 
 // 聊天气泡：说完就散成小点飘走
 const Bubbles: React.FC<{ t: number }> = ({ t }) => {
@@ -103,11 +130,13 @@ const Bubbles: React.FC<{ t: number }> = ({ t }) => {
               style={{
                 position: "absolute",
                 left: item.x - item.w / 2,
-                top: item.y - 44,
+                top: item.y - 44 + Math.sin(t * 2 + i) * 4,
                 width: item.w,
                 height: 88,
                 opacity: 1 - gone,
-                transform: `scale(${pop(t, T.chat + i * 0.16) * (1 - 0.15 * gone)})`,
+                transform: `translateX(${(1 - pop(t, T.chat + i * 0.16, 0.8)) * -300}px) scale(${
+                  (0.6 + 0.4 * pop(t, T.chat + i * 0.16)) * (1 - 0.15 * gone)
+                })`,
                 ...sticker(44, item.mine ? C.coralLight : C.white),
               }}
             >
@@ -122,7 +151,7 @@ const Bubbles: React.FC<{ t: number }> = ({ t }) => {
               />
             </div>
             {gone > 0 && gone < 1
-              ? Array.from({ length: 12 }, (_, k) => (
+              ? Array.from({ length: 14 }, (_, k) => (
                   <div
                     key={k}
                     style={{
@@ -187,6 +216,17 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
           height: "100%",
         }}
       >
+        <At x={300} y={250} s={pop(t, 0.5, 0.8)}>
+          <Moon t={t} />
+        </At>
+        <g opacity={0.5}>
+          <At x={1560} y={240} s={0.8}>
+            <Cloud t={t} fill="#4A4078" seed={1} />
+          </At>
+          <At x={700} y={170} s={0.55}>
+            <Cloud t={t} fill="#4A4078" seed={2} />
+          </At>
+        </g>
         <ellipse
           cx={WIDTH / 2}
           cy={GROUND + 520}
@@ -195,17 +235,45 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
           fill="#2B2347"
         />
         <ellipse
+          cx={WIDTH / 2}
+          cy={GROUND + 520}
+          rx={1496}
+          ry={556}
+          fill="none"
+          stroke="#4A4078"
+          strokeWidth={6}
+        />
+        <ellipse
           cx={ME_X}
           cy={GROUND + 14}
           rx={mix(430, 330, tight)}
           ry={mix(74, 58, tight)}
           fill={C.lemon}
-          opacity={0.42 * open}
+          opacity={0.36 * open}
         />
+        <ellipse
+          cx={ME_X}
+          cy={GROUND + 12}
+          rx={mix(250, 210, tight)}
+          ry={mix(42, 36, tight)}
+          fill="#FFF3B8"
+          opacity={0.3 * open}
+        />
+        <Fireflies t={t} count={16} top={260} bottom={720} />
       </svg>
 
       {/* 一块写着错答案的牌子：先是自信的勾，再被盖上叉 */}
-      <Pop t={t} at={T.sign} out={T.signOut} x={1440 + shake} y={430} turn={4}>
+      <Pop
+        t={t}
+        at={T.sign}
+        out={T.signOut}
+        x={1440 + shake}
+        y={430}
+        turn={4}
+        from={[520, -80]}
+        to={[300, 400]}
+        float={5}
+      >
         <div
           style={{
             padding: "26px 54px 30px",
@@ -219,7 +287,15 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
           </div>
         </div>
       </Pop>
-      <Pop t={t} at={T.sign + 0.5} out={T.wrong} x={1690} y={320} turn={10}>
+      <Pop
+        t={t}
+        at={T.sign + 0.5}
+        out={T.wrong}
+        x={1690}
+        y={320}
+        turn={10}
+        to={[0, 0]}
+      >
         <Mark ok />
       </Pop>
       {t >= T.wrong && t < T.signOut + 0.3 ? (
@@ -228,7 +304,10 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
             position: "absolute",
             left: 1690,
             top: 320,
-            transform: `translate(-50%, -50%) rotate(-12deg) scale(${(3 - 2 * Math.min(1, slam)) * (1 - ramp(t, T.signOut, T.signOut + 0.25))})`,
+            transform: `translate(-50%, -50%) rotate(-12deg) scale(${
+              (3 - 2 * Math.min(1, slam)) *
+              (1 - ramp(t, T.signOut, T.signOut + 0.25))
+            })`,
             opacity: clamp(slam * 3),
           }}
         >
@@ -238,13 +317,13 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
       {/* 放大镜扫过去 */}
       {t >= T.check && t < T.signOut + 0.3 ? (
         <svg
-          width={220}
-          height={220}
+          width={260}
+          height={260}
           viewBox="0 0 220 220"
           style={{
             position: "absolute",
-            left: mix(1180, 1560, sweep) - 90,
-            top: 400 - Math.sin(sweep * Math.PI) * 50 - 90,
+            left: mix(1180, 1540, sweep) - 100,
+            top: 400 - Math.sin(sweep * Math.PI) * 50 - 100,
             transform: `scale(${pop(t, T.check) - ramp(t, T.signOut, T.signOut + 0.25)})`,
           }}
         >
@@ -274,6 +353,14 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
             stroke={C.ink}
             strokeWidth={12}
           />
+          <path
+            d="M 50 70 Q 60 44 88 40"
+            stroke={C.white}
+            strokeWidth={8}
+            strokeLinecap="round"
+            fill="none"
+            opacity={0.8}
+          />
         </svg>
       ) : null}
       <Pop
@@ -281,25 +368,29 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
         at={T.check + 0.5}
         out={T.signOut}
         x={1440}
-        y={640}
+        y={650}
         turn={-4}
         bounce={1.2}
       >
-        <div
-          style={{
-            padding: "12px 36px",
-            fontSize: 54,
-            ...sticker(36, C.lemon),
-          }}
-        >
+        <Tag fill={C.lemon} size={54}>
           请再核对一遍
-        </div>
+        </Tag>
       </Pop>
 
       <Bubbles t={t} />
 
       {/* 一个本子 */}
-      <Pop t={t} at={T.book} out={T.bookOut} x={500} y={440} turn={-5}>
+      <Pop
+        t={t}
+        at={T.book}
+        out={T.bookOut}
+        x={500}
+        y={440}
+        turn={-5}
+        from={[-460, -60]}
+        to={[-200, 420]}
+        float={6}
+      >
         <div
           style={{
             width: 400,
@@ -326,7 +417,7 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
           <div style={{ fontSize: 44, fontWeight: 700, color: C.coral }}>
             MEMORY.md
           </div>
-          {["上次聊到哪了", "他喜欢什么样的", "别再犯的错"].map((line, i) => (
+          {["上次聊到哪了", "你喜欢什么样的", "别再犯的错"].map((line, i) => (
             <div
               key={line}
               style={{
@@ -349,6 +440,7 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
         out={T.heartOut}
         x={ME_X + noise2D("heart-x", t * 0.5, 0) * 26}
         y={330 + noise2D("heart-y", 0, t * 0.5) * 18}
+        to={[0, -160]}
       >
         <svg width={230} height={210} viewBox="0 0 230 210">
           <path
@@ -375,6 +467,109 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
           </text>
         </svg>
       </Pop>
+
+      {/* 最后那句话：举起手，旁边盖一个「说真话」的章 */}
+      <Pop t={t} at={T.vow + 0.9} x={ME_X + 330} y={500} turn={12} bounce={1.5}>
+        <div
+          style={{
+            width: 190,
+            height: 190,
+            borderRadius: 95,
+            border: `8px solid ${C.lemon}`,
+            color: C.lemon,
+            fontFamily: TEXT,
+            fontSize: 50,
+            lineHeight: 1.15,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            boxSizing: "border-box",
+          }}
+        >
+          说
+          <br />
+          真话
+        </div>
+      </Pop>
+      <svg
+        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <Twinkles
+          t={t}
+          at={T.vow + 1.0}
+          out={99}
+          x={ME_X + 330}
+          y={500}
+          spread={150}
+          count={5}
+          seed="vow"
+        />
+      </svg>
+    </>
+  );
+};
+
+export const Front: React.FC<{ t: number }> = ({ t }) => {
+  const me = pose(t);
+  return (
+    <>
+      <Kao
+        t={t}
+        at={T.sign + 0.6}
+        out={T.wrong - 0.05}
+        x={me.x - 20}
+        y={headTop(me) - 70}
+        text="(￣▽￣)"
+      />
+      <Kao
+        t={t}
+        at={T.wrong + 0.1}
+        out={T.wrong + 1.4}
+        x={me.x - 20}
+        y={headTop(me) - 70}
+        text="Σ(ﾟДﾟ)"
+      />
+      <Emote
+        t={t}
+        at={T.wrong + 0.5}
+        out={T.check + 0.6}
+        x={me.x + 200}
+        y={headTop(me) + 30}
+        kind="sweat"
+        size={70}
+      />
+      <Kao
+        t={t}
+        at={T.fade + 0.4}
+        out={T.book - 0.1}
+        x={me.x + 20}
+        y={headTop(me) - 70}
+        text="(´・ω・｀)"
+      />
+      <Kao
+        t={t}
+        at={T.book + 0.5}
+        out={T.bookOut}
+        x={me.x + 20}
+        y={headTop(me) - 70}
+        text="(*´▽｀*)"
+      />
+      <Kao
+        t={t}
+        at={T.heart + 0.8}
+        out={T.heartOut}
+        x={me.x + 260}
+        y={headTop(me) + 30}
+        text="(・_・?)"
+        turn={8}
+      />
     </>
   );
 };

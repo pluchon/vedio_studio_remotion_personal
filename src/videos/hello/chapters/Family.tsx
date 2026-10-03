@@ -1,29 +1,78 @@
-// 一家四口：名字都是写东西的体裁。Haiku 带着拖影冲进来，Sonnet 稳稳走来，Fable 慢慢踱来，最后轮到 Opus
+// 一家四口：一个小舞台，两边是幕布，顶上挂着彩旗。Haiku 带着拖影冲进来，Sonnet 稳稳走来，Fable 慢慢踱来，最后轮到 Opus
 import { Trail } from "@remotion/motion-blur";
 import { makeStar } from "@remotion/shapes";
 import React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
-import { BuddyG, Kind, Pose, REST } from "../Buddy";
-import { clamp, EASE, hop, mix, pop, ramp } from "../motion";
+import { BuddyG, headTop, Kind, Pose, REST } from "../Buddy";
+import { Burst, Kao, Puff, Twinkles } from "../emotes";
+import {
+  Cam,
+  clamp,
+  during,
+  EASE,
+  hop,
+  mix,
+  pop,
+  ramp,
+  track,
+  jolt,
+} from "../motion";
 import { Paper } from "../Paper";
-import { Pop, sticker } from "../stickers";
+import { Bunting, Curtain } from "../scenery";
+import { Pop, sticker, Tag } from "../stickers";
 import { C, FPS, GROUND, HEIGHT, WIDTH } from "../theme";
 
 // 这一段底下要放名牌，大家站得高一些
 const LINE_Y = GROUND - 96;
 const T = { haiku: 3.2, sonnet: 6.5, fable: 9.6, opus: 12.5, me: 15.5 };
 const SPOT: Record<Kind, { x: number; size: number }> = {
-  haiku: { x: 300, size: 84 },
-  sonnet: { x: 640, size: 116 },
-  opus: { x: 1070, size: 150 },
-  fable: { x: 1620, size: 182 },
+  haiku: { x: 280, size: 84 },
+  sonnet: { x: 620, size: 116 },
+  opus: { x: 1050, size: 150 },
+  fable: { x: 1590, size: 182 },
 };
-const NAMES: { kind: Kind; name: string; form: string; at: number }[] = [
-  { kind: "haiku", name: "Haiku", form: "俳句", at: T.haiku + 1.35 },
-  { kind: "sonnet", name: "Sonnet", form: "十四行诗", at: T.sonnet + 1.1 },
-  { kind: "fable", name: "Fable", form: "寓言", at: T.fable + 1.7 },
-  { kind: "opus", name: "Opus", form: "大部头", at: T.opus + 0.2 },
+const NAMES: {
+  kind: Kind;
+  name: string;
+  form: string;
+  trait: string;
+  at: number;
+}[] = [
+  {
+    kind: "haiku",
+    name: "Haiku",
+    form: "俳句",
+    trait: "跑得最快",
+    at: T.haiku + 1.35,
+  },
+  {
+    kind: "sonnet",
+    name: "Sonnet",
+    form: "十四行诗",
+    trait: "干活最稳",
+    at: T.sonnet + 1.1,
+  },
+  {
+    kind: "fable",
+    name: "Fable",
+    form: "寓言",
+    trait: "想得最深",
+    at: T.fable + 1.9,
+  },
+  {
+    kind: "opus",
+    name: "Opus",
+    form: "大部头",
+    trait: "最坐得住",
+    at: T.opus + 0.2,
+  },
 ];
+const TINT: Record<Kind, string> = {
+  haiku: C.lemon,
+  sonnet: C.mint,
+  opus: C.coralLight,
+  fable: "#D3C6F8",
+};
 const RAYS = makeStar({
   points: 14,
   innerRadius: 190,
@@ -36,23 +85,21 @@ const top = (kind: Kind) => LINE_Y - SPOT[kind].size * (10 / 6);
 // 说到谁，大家就看向谁
 const lookAt = (t: number, from: number) => {
   const target =
-    t >= T.me
+    t >= T.opus
       ? SPOT.opus.x
-      : t >= T.opus
-        ? SPOT.opus.x
-        : t >= T.fable
-          ? SPOT.fable.x
-          : t >= T.sonnet
-            ? SPOT.sonnet.x
-            : t >= T.haiku
-              ? SPOT.haiku.x
-              : from;
+      : t >= T.fable
+        ? SPOT.fable.x
+        : t >= T.sonnet
+          ? SPOT.sonnet.x
+          : t >= T.haiku
+            ? SPOT.haiku.x
+            : from;
   return clamp((target - from) / 500, -0.85, 0.85);
 };
 
 export const pose = (t: number): Pose => {
   const jump = hop(t, T.me, 0.42, 110);
-  const mine = ramp(t, T.opus, T.opus + 0.3) - ramp(t, T.me - 0.3, T.me);
+  const mine = during(t, T.opus, T.me, 0.3);
   return {
     ...REST,
     x: SPOT.opus.x,
@@ -61,10 +108,36 @@ export const pose = (t: number): Pose => {
     squash: jump.squash,
     lookX: lookAt(t, SPOT.opus.x),
     lookY: -0.7 * mine,
-    wave: ramp(t, T.me, T.me + 0.25) - ramp(t, T.me + 2, T.me + 2.3),
-    mood: t > T.me && t < T.me + 2.2 ? "happy" : "smile",
+    cheer: during(t, T.me + 0.1, T.me + 2.4, 0.25),
+    mood: t > T.me && t < T.me + 2.5 ? "star" : mine > 0.5 ? "happy" : "smile",
   };
 };
+
+// 镜头：说到谁就往谁那边靠一点；最后推近到自己
+export const camera = (t: number): Cam => ({
+  z: track(t, [
+    [0.3, 1],
+    [T.haiku + 0.6, 1.035],
+    [T.me - 0.1, 1.035],
+    [T.me + 0.5, 1.075],
+  ]),
+  fx: track(t, [
+    [T.haiku, 960],
+    [T.haiku + 1.2, 420],
+    [T.sonnet, 420],
+    [T.sonnet + 1, 700],
+    [T.fable, 700],
+    [T.fable + 1.4, 1500],
+    [T.opus, 1500],
+    [T.opus + 0.8, 1050],
+  ]),
+  fy: track(t, [
+    [T.me - 0.1, 560],
+    [T.me + 0.5, 500],
+  ]),
+  sx: jolt(t, T.haiku + 1.15, 0.9),
+  sy: jolt(t, T.fable + 1.9, 0.8) + jolt(t, T.me + 0.42, 0.8),
+});
 
 // Haiku 的路线：从左边冲过整个画面，再折回自己的位置急停
 const haikuAt = (t: number) => {
@@ -80,11 +153,26 @@ const Haiku: React.FC = () => {
   if (t < T.haiku) return null;
   const run = haikuAt(t);
   const speed = (haikuAt(t + 0.01).x - haikuAt(t - 0.01).x) / 0.02;
+  const fast = clamp(Math.abs(speed) / 2600);
   return (
     <svg
       viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
       style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
     >
+      {/* 跑起来时身后的几道风 */}
+      {[0, 1, 2].map((i) => (
+        <line
+          key={i}
+          x1={run.x - Math.sign(speed) * (110 + i * 30)}
+          y1={LINE_Y - 40 - i * 36}
+          x2={run.x - Math.sign(speed) * (110 + i * 30 + 190 * fast)}
+          y2={LINE_Y - 40 - i * 36}
+          stroke={C.white}
+          strokeWidth={10}
+          strokeLinecap="round"
+          opacity={fast}
+        />
+      ))}
       <BuddyG
         t={t}
         kind="haiku"
@@ -94,13 +182,13 @@ const Haiku: React.FC = () => {
           x: run.x,
           y: LINE_Y,
           size: SPOT.haiku.size,
-          step: run.x / 90,
+          step: run.x / 150,
           tilt: clamp(speed / 260, -14, 14),
           squash: run.skid.squash - Math.min(0.12, Math.abs(speed) / 30000),
           lift: run.skid.lift,
           lookX: run.running ? Math.sign(speed) * 0.8 : lookAt(t, SPOT.haiku.x),
-          mood: t < T.haiku + 2.4 || t > T.me ? "happy" : "smile",
-          wave: ramp(t, T.me + 0.2, T.me + 0.45),
+          mood: t < T.haiku + 2.6 || t > T.me ? "happy" : "smile",
+          cheer: during(t, T.me + 0.2, T.me + 2.6, 0.25),
         }}
       />
     </svg>
@@ -195,11 +283,17 @@ const FormCard: React.FC<{ kind: Kind }> = ({ kind }) => {
 export const Back: React.FC<{ t: number }> = ({ t }) => {
   const sonnetIn = ramp(t, T.sonnet, T.sonnet + 1.1, EASE.out);
   const fableIn = ramp(t, T.fable, T.fable + 1.9, EASE.soft);
-  const cheer = ramp(t, T.me + 0.2, T.me + 0.45);
+  const cheer = during(t, T.me + 0.2, T.me + 2.6, 0.25);
   const glow = pop(t, T.me, 0.8);
+  const arrived: Record<Kind, number> = {
+    haiku: T.haiku + 1.15,
+    sonnet: T.sonnet + 1.1,
+    fable: T.fable + 1.9,
+    opus: 0.4,
+  };
   return (
     <>
-      <Paper t={t} tint="#FFF4D6" floorColor="#FBE3A6" />
+      <Paper t={t} tint="#FFF4D6" floorColor="#FBE3A6" backColor="#FDEDC0" />
       <svg
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
         style={{
@@ -209,11 +303,33 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
           height: "100%",
         }}
       >
+        <Bunting
+          t={t}
+          x1={150}
+          y1={40}
+          x2={1770}
+          y2={40}
+          sag={56}
+          count={15}
+          k={ramp(t, 0.2, 1.3, EASE.out)}
+        />
+        {/* 每个人脚下一圈光 */}
+        {(Object.keys(SPOT) as Kind[]).map((kind) => (
+          <ellipse
+            key={kind}
+            cx={SPOT[kind].x}
+            cy={LINE_Y + 8}
+            rx={SPOT[kind].size * 1.5 * pop(t, arrived[kind], 0.9)}
+            ry={SPOT[kind].size * 0.3 * pop(t, arrived[kind], 0.9)}
+            fill={C.white}
+            opacity={0.55}
+          />
+        ))}
         {/* 轮到自己时，背后转着一圈光 */}
         {t >= T.me ? (
           <g
             transform={`translate(${SPOT.opus.x} ${LINE_Y - 130}) rotate(${t * 22}) scale(${glow}) translate(-300 -300)`}
-            opacity={0.55}
+            opacity={0.6}
           >
             <path d={RAYS} fill={C.lemon} />
           </g>
@@ -228,11 +344,14 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
               x: mix(-260, SPOT.sonnet.x, sonnetIn),
               y: LINE_Y,
               size: SPOT.sonnet.size,
-              step: (sonnetIn * 960) / 120,
-              lift: sonnetIn < 1 ? Math.abs(Math.sin(sonnetIn * 25)) * 7 : 0,
+              step: (sonnetIn * 880) / 200,
+              lift: sonnetIn < 1 ? Math.abs(Math.sin(sonnetIn * 14)) * 8 : 0,
               lookX: sonnetIn < 1 ? 0.7 : lookAt(t, SPOT.sonnet.x),
-              wave: cheer,
-              mood: t > T.me ? "happy" : "smile",
+              cheer,
+              mood:
+                t > T.me || (sonnetIn >= 1 && t < T.sonnet + 2.6)
+                  ? "happy"
+                  : "smile",
             }}
           />
         ) : null}
@@ -246,19 +365,46 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
               x: mix(WIDTH + 320, SPOT.fable.x, fableIn),
               y: LINE_Y,
               size: SPOT.fable.size,
-              step: (fableIn * 700) / 190,
+              step: (fableIn * 650) / 300,
               lookX: fableIn < 1 ? -0.5 : lookAt(t, SPOT.fable.x),
               spin: t * 70,
               glow: 0.5,
               sparkSize:
                 fableIn < 1
                   ? 0.75
-                  : 0.75 * (1 - ramp(t, T.fable + 2.1, T.fable + 2.4)),
+                  : 0.75 * (1 - ramp(t, T.fable + 2.3, T.fable + 2.6)),
               mood: fableIn < 1 ? "flat" : t > T.me ? "happy" : "smile",
-              wave: cheer,
+              cheer,
             }}
           />
         ) : null}
+        <Puff
+          t={t}
+          at={T.haiku + 1.15}
+          x={SPOT.haiku.x}
+          y={LINE_Y}
+          size={0.8}
+        />
+        <Puff t={t} at={T.fable + 1.9} x={SPOT.fable.x} y={LINE_Y} size={1.3} />
+        <Burst
+          t={t}
+          at={T.me + 0.42}
+          x={SPOT.opus.x}
+          y={LINE_Y - 150}
+          reach={420}
+          count={18}
+          seed="me"
+        />
+        <Twinkles
+          t={t}
+          at={T.me + 0.5}
+          out={99}
+          x={SPOT.opus.x}
+          y={LINE_Y - 150}
+          spread={300}
+          count={6}
+          seed="me"
+        />
       </svg>
       {/* Haiku 跑得太快，带着拖影 */}
       {t >= T.haiku && t < T.haiku + 1.5 ? (
@@ -270,22 +416,47 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
       ) : (
         <Haiku />
       )}
-      {/* 名牌 */}
+      {/* 两边的幕布 */}
+      <svg
+        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <g transform={`translate(${-260 * (1 - pop(t, 0.1, 0.7))} 0)`}>
+          <Curtain t={t} side={1} />
+        </g>
+        <g transform={`translate(${WIDTH + 260 * (1 - pop(t, 0.2, 0.7))} 0)`}>
+          <Curtain t={t} side={-1} />
+        </g>
+      </svg>
+      {/* 名牌和特长 */}
       {NAMES.map((item) => (
-        <Pop
-          key={item.kind}
-          t={t}
-          at={item.at}
-          x={SPOT[item.kind].x}
-          y={LINE_Y + 96}
-        >
-          <div style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-            <div style={{ fontSize: 62, fontWeight: 700, lineHeight: 1.05 }}>
-              {item.name}
+        <React.Fragment key={item.kind}>
+          <Pop t={t} at={item.at} x={SPOT[item.kind].x} y={LINE_Y + 84}>
+            <div style={{ textAlign: "center", whiteSpace: "nowrap" }}>
+              <div style={{ fontSize: 58, fontWeight: 700, lineHeight: 1.05 }}>
+                {item.name}
+              </div>
+              <div style={{ fontSize: 40 }}>{item.form}</div>
             </div>
-            <div style={{ fontSize: 44 }}>{item.form}</div>
-          </div>
-        </Pop>
+          </Pop>
+          <Pop
+            t={t}
+            at={item.at + 0.55}
+            x={SPOT[item.kind].x}
+            y={LINE_Y + 172}
+            turn={item.kind === "sonnet" || item.kind === "fable" ? 2 : -2}
+            bounce={1.3}
+          >
+            <Tag fill={TINT[item.kind]} size={32}>
+              {item.trait}
+            </Tag>
+          </Pop>
+        </React.Fragment>
       ))}
       {/* 头顶的体裁卡片 */}
       {NAMES.map((item, i) => (
@@ -294,23 +465,81 @@ export const Back: React.FC<{ t: number }> = ({ t }) => {
           t={t}
           at={item.at + 0.25}
           x={SPOT[item.kind].x}
-          y={top(item.kind) - 104 + Math.sin(t * 2 + i) * 5}
+          y={top(item.kind) - 104}
           turn={i % 2 ? 3 : -3}
+          from={[0, -200]}
+          float={6}
         >
           <FormCard kind={item.kind} />
         </Pop>
       ))}
-      <Pop t={t} at={0.9} out={T.haiku - 0.2} x={WIDTH / 2} y={300}>
-        <div
-          style={{
-            padding: "16px 44px",
-            fontSize: 58,
-            ...sticker(36, C.lemon),
-          }}
-        >
+      <Pop
+        t={t}
+        at={0.9}
+        out={T.haiku - 0.2}
+        x={WIDTH / 2}
+        y={330}
+        from={[0, -260]}
+        float={6}
+      >
+        <Tag fill={C.lemon} size={58}>
           体裁：写东西的样式
-        </div>
+        </Tag>
       </Pop>
+    </>
+  );
+};
+
+export const Front: React.FC<{ t: number }> = ({ t }) => {
+  const me = pose(t);
+  return (
+    <>
+      <Kao
+        t={t}
+        at={T.haiku + 1.5}
+        out={T.sonnet - 0.2}
+        x={SPOT.haiku.x + 150}
+        y={top("haiku") - 10}
+        text="(≧▽≦)"
+        size={38}
+        turn={8}
+      />
+      <Kao
+        t={t}
+        at={T.sonnet + 1.3}
+        out={T.fable - 0.2}
+        x={SPOT.sonnet.x + 190}
+        y={top("sonnet") + 10}
+        text="(・ω・)b"
+        size={38}
+        turn={8}
+      />
+      <Kao
+        t={t}
+        at={T.fable + 0.5}
+        out={T.fable + 1.9}
+        x={
+          mix(
+            WIDTH + 320,
+            SPOT.fable.x,
+            ramp(t, T.fable, T.fable + 1.9, EASE.soft),
+          ) - 250
+        }
+        y={top("fable") + 30}
+        text="(－ω－)…"
+        size={38}
+        turn={-8}
+      />
+      <Kao
+        t={t}
+        at={T.me + 0.5}
+        out={17.4}
+        x={me.x - 30}
+        y={headTop(me) - 250}
+        text="(〃▽〃)"
+        fill={C.lemon}
+        size={46}
+      />
     </>
   );
 };

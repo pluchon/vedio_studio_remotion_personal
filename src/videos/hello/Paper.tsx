@@ -1,7 +1,7 @@
-// 底：奶油色的纸，几团很淡的色块慢慢漂，散着一些小图形；地面是下方一道弧形的色带
+// 底：奶油色的纸，几团很淡的色块慢慢漂，散着一些小图形；地面是下方一道弧形的色带，上面撒着波点
 import { noise2D } from "@remotion/noise";
 import { makeCircle, makeStar, makeTriangle } from "@remotion/shapes";
-import React from "react";
+import React, { useId } from "react";
 import { random } from "remotion";
 import { C, GROUND, HEIGHT, WIDTH } from "./theme";
 
@@ -18,13 +18,31 @@ export const Paper: React.FC<{
   tint?: string; // 这一段的底色
   floor?: number; // 地面升起来的程度，0 到 1
   floorColor?: string;
+  backColor?: string | null; // 远处再垫一道山坡
   bits?: number; // 小图形的浓淡
-}> = ({ t, tint = C.paper, floor = 1, floorColor = C.floor, bits = 1 }) => {
+  dots?: boolean; // 地面上的波点
+}> = ({
+  t,
+  tint = C.paper,
+  floor = 1,
+  floorColor = C.floor,
+  backColor = null,
+  bits = 1,
+  dots = true,
+}) => {
+  const id = useId();
+  const rise = (1 - floor) * 420;
   return (
     <svg
       viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
       style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
     >
+      <defs>
+        <pattern id={id} width={84} height={84} patternUnits="userSpaceOnUse">
+          <circle cx={20} cy={22} r={9} fill={C.white} opacity={0.3} />
+          <circle cx={62} cy={64} r={6} fill={C.white} opacity={0.22} />
+        </pattern>
+      </defs>
       <rect width={WIDTH} height={HEIGHT} fill={tint} />
       {/* 三团淡淡的色块 */}
       {[C.lemon, C.coralLight, C.mint].map((color, i) => (
@@ -61,15 +79,46 @@ export const Paper: React.FC<{
           </g>
         );
       })}
+      {/* 远处的山坡 */}
+      {floor > 0 && backColor ? (
+        <ellipse
+          cx={WIDTH * 0.3}
+          cy={GROUND + 470 + rise}
+          rx={1300}
+          ry={560}
+          fill={backColor}
+        />
+      ) : null}
       {/* 地面 */}
       {floor > 0 ? (
-        <ellipse
-          cx={WIDTH / 2}
-          cy={GROUND + 520 + (1 - floor) * 420}
-          rx={1500}
-          ry={560}
-          fill={floorColor}
-        />
+        <g>
+          <ellipse
+            cx={WIDTH / 2}
+            cy={GROUND + 520 + rise}
+            rx={1500}
+            ry={560}
+            fill={floorColor}
+          />
+          {dots ? (
+            <ellipse
+              cx={WIDTH / 2}
+              cy={GROUND + 520 + rise}
+              rx={1500}
+              ry={560}
+              fill={`url(#${id})`}
+            />
+          ) : null}
+          <ellipse
+            cx={WIDTH / 2}
+            cy={GROUND + 520 + rise}
+            rx={1496}
+            ry={556}
+            fill="none"
+            stroke={C.white}
+            strokeWidth={6}
+            opacity={0.45}
+          />
+        </g>
       ) : null}
     </svg>
   );

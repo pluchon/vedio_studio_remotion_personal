@@ -5,7 +5,16 @@ import React from "react";
 import { C } from "./theme";
 
 export type Kind = "haiku" | "sonnet" | "opus" | "fable";
-export type Mood = "smile" | "happy" | "wow" | "flat" | "think";
+export type Mood =
+  | "smile"
+  | "happy"
+  | "wow"
+  | "flat"
+  | "think"
+  | "star"
+  | "squint"
+  | "wink"
+  | "sad";
 
 // 一个姿势：除了表情都是数字，方便在两段之间平滑过渡
 export type Pose = {
@@ -19,8 +28,9 @@ export type Pose = {
   lean: number; // 头顶火花偏到哪边，-1 到 1
   lookX: number; // 眼睛看的方向，-1 到 1
   lookY: number;
-  talk: number; // 说话时身体一颠一颠的幅度
+  talk: number; // 说话时身体一点一点的幅度
   wave: number; // 右手举起来挥
+  cheer: number; // 两只手一起举高
   step: number; // 走路的步子：每加 1 是迈完一轮
   spin: number; // 火花转过的角度
   glow: number; // 火花发光
@@ -42,6 +52,7 @@ export const REST: Pose = {
   lookY: 0,
   talk: 0,
   wave: 0,
+  cheer: 0,
   step: 0,
   spin: 0,
   glow: 0,
@@ -62,12 +73,23 @@ const U = 100 / 6;
 const LINE = 6;
 const TOP = -10 * U;
 
+// 头顶在画面上的高度：给表情符号、耳机这些找位置用
+export const headTop = (pose: Pose) =>
+  pose.y - pose.lift - (pose.size / 100) * pose.scale * 10 * U;
+
 // 火花：八个角的圆头星星
 const SPARK = makeStar({
   points: 8,
   innerRadius: 10.5,
   outerRadius: 17,
   cornerRadius: 3.2,
+}).path;
+// 星星眼
+const STAR_EYE = makeStar({
+  points: 4,
+  innerRadius: 7,
+  outerRadius: 21,
+  cornerRadius: 2,
 }).path;
 
 export const Spark: React.FC<{
@@ -110,6 +132,76 @@ const eyeOpen = (t: number, offset: number) => {
 
 type Block = { x: number; y: number; w: number; h: number; turn?: string };
 
+// 一只眼睛，按表情画成不同的样子
+const Eye: React.FC<{
+  side: number;
+  cx: number;
+  cy: number;
+  mood: Mood;
+  open: number;
+}> = ({ side, cx, cy, mood, open }) => {
+  const line = {
+    stroke: C.ink,
+    strokeWidth: 0.62 * U,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    fill: "none",
+  };
+  // 笑眼：一道向上的弧。眨一只眼的时候，只有右眼是这样
+  if (mood === "happy" || (mood === "wink" && side > 0)) {
+    return (
+      <path
+        d={`M ${cx - 0.75 * U} ${cy + 0.5 * U} Q ${cx} ${cy - 1.25 * U} ${cx + 0.75 * U} ${cy + 0.5 * U}`}
+        {...line}
+      />
+    );
+  }
+  if (mood === "star") {
+    return (
+      <g transform={`translate(${cx - 21} ${cy - 21})`}>
+        <path d={STAR_EYE} fill={C.ink} />
+        <circle cx={21} cy={21} r={3.6} fill={C.white} />
+      </g>
+    );
+  }
+  if (mood === "squint") {
+    // 用力闭眼：> <
+    return (
+      <path
+        d={`M ${cx - side * 0.7 * U} ${cy - 0.8 * U} L ${cx + side * 0.6 * U} ${cy} L ${cx - side * 0.7 * U} ${cy + 0.8 * U}`}
+        {...line}
+      />
+    );
+  }
+  const wide = mood === "wow" ? 1.2 : 1;
+  const tall =
+    mood === "wow" ? 2.5 : mood === "flat" ? 1 : mood === "sad" ? 1.6 : 2;
+  const h = tall * U * (mood === "wow" ? 1 : open);
+  return (
+    <>
+      <rect
+        x={cx - (wide * U) / 2}
+        y={
+          cy -
+          h / 2 +
+          (mood === "flat" ? 0.4 * U : mood === "sad" ? 0.2 * U : 0)
+        }
+        width={wide * U}
+        height={h}
+        rx={2.5}
+        fill={C.ink}
+      />
+      {mood === "sad" ? (
+        <path
+          d={`M ${cx - side * 0.95 * U} ${cy - 1.3 * U} L ${cx + side * 0.85 * U} ${cy - 1.9 * U}`}
+          {...line}
+          strokeWidth={0.45 * U}
+        />
+      ) : null}
+    </>
+  );
+};
+
 export const BuddyG: React.FC<{
   pose: Pose;
   t: number;
@@ -120,10 +212,11 @@ export const BuddyG: React.FC<{
   const unit = (pose.size / 100) * pose.scale;
   if (unit <= 0.001 || pose.opacity <= 0.001) return null;
 
-  // 呼吸：身体很轻地一起一伏；说话时每个字颠一下
+  // 呼吸：身体很轻地一起一伏；说话时一点一点
   const breath = Math.sin((t + seed) * 2.1) * 0.012;
-  const squash = pose.squash + breath - pose.talk * 0.035;
-  const bob = pose.talk * 7;
+  const squash = pose.squash + breath - pose.talk * 0.03;
+  const bob = pose.talk * 6;
+  const sway = Math.sin((t + seed * 2) * 1.1) * 0.7;
 
   // 四条腿：走路时一三、二四交替抬起；离地时全放下来
   const walking = pose.lift > 2 ? 0 : 1;
@@ -134,18 +227,26 @@ export const BuddyG: React.FC<{
     return { x: col * U, y: -2 * U - 2, w: U, h: (2 - 0.9 * raised) * U + 2 };
   });
 
-  // 两只手：右手举起来挥，左手平时轻轻晃
+  // 两只手：右手举起来挥；欢呼时两只手一起举；说话时跟着轻轻抬
   const swing = Math.sin(t * Math.PI * 2 * 2.4) * 16 * pose.wave;
-  const rightTurn = `rotate(${-40 * pose.wave + swing} ${6 * U} ${-5 * U})`;
-  const leftTurn = `rotate(${Math.sin((t + seed) * 2.1) * 3} ${-6 * U} ${-5 * U})`;
+  const jig = Math.sin(t * Math.PI * 2 * 3) * 9 * pose.cheer;
+  const up = Math.max(pose.wave, pose.cheer);
+  const rightTurn = `rotate(${-40 * pose.wave - 52 * pose.cheer + swing + jig - pose.talk * 9} ${6 * U} ${-5 * U})`;
+  const leftTurn = `rotate(${52 * pose.cheer - jig + Math.sin((t + seed) * 2.1) * 3 + pose.talk * 9} ${-6 * U} ${-5 * U})`;
   const blocks: Block[] = [
     ...legs,
-    { x: -8 * U, y: -6 * U, w: 2.4 * U, h: 2 * U, turn: leftTurn },
+    {
+      x: (-8 - 1.2 * pose.cheer) * U,
+      y: (-6 + 0.25 * pose.cheer) * U,
+      w: (2.4 + 1.2 * pose.cheer) * U,
+      h: (2 - 0.5 * pose.cheer) * U,
+      turn: leftTurn,
+    },
     {
       x: 5.6 * U,
-      y: (-6 + 0.25 * pose.wave) * U,
-      w: (2.4 + 1.2 * pose.wave) * U,
-      h: (2 - 0.5 * pose.wave) * U,
+      y: (-6 + 0.25 * up) * U,
+      w: (2.4 + 1.2 * up) * U,
+      h: (2 - 0.5 * up) * U,
       turn: rightTurn,
     },
     { x: -6 * U, y: TOP, w: 12 * U, h: 8 * U },
@@ -157,6 +258,8 @@ export const BuddyG: React.FC<{
   const shadow = Math.max(0.35, 1 - pose.lift / 420);
   const sparkX = pose.lean * 24;
   const sparkY = TOP - 44 + Math.sin((t + seed) * 2.6) * 5;
+  const glad =
+    pose.mood === "happy" || pose.mood === "star" || pose.mood === "wink";
 
   return (
     <g opacity={pose.opacity}>
@@ -170,7 +273,7 @@ export const BuddyG: React.FC<{
         opacity={0.13 * shadow}
       />
       <g
-        transform={`translate(${pose.x} ${pose.y - pose.lift - bob * unit}) scale(${unit}) rotate(${pose.tilt}) scale(${1 + squash * 0.8} ${1 - squash})`}
+        transform={`translate(${pose.x} ${pose.y - pose.lift - bob * unit}) scale(${unit}) rotate(${pose.tilt + sway}) scale(${1 + squash * 0.8} ${1 - squash})`}
       >
         {/* 先把每一块描一圈粗边，再整个盖上颜色：留下的只有最外面一圈轮廓 */}
         {blocks.map((b, i) => (
@@ -200,49 +303,60 @@ export const BuddyG: React.FC<{
             fill={fill}
           />
         ))}
+        {/* 一点明暗：头顶一道亮边，肚子底下和腿根暗一些 */}
+        <rect
+          x={-6 * U + 5}
+          y={TOP + 5}
+          width={12 * U - 10}
+          height={0.5 * U}
+          rx={4}
+          fill={C.white}
+          opacity={0.24}
+        />
+        <rect
+          x={-6 * U}
+          y={-2.75 * U}
+          width={12 * U}
+          height={0.75 * U}
+          rx={3}
+          fill={C.ink}
+          opacity={0.08}
+        />
+        {legs.map((leg, i) => (
+          <rect
+            key={`shade-${i}`}
+            x={leg.x}
+            y={-2 * U}
+            width={leg.w}
+            height={0.6 * U}
+            fill={C.ink}
+            opacity={0.1}
+          />
+        ))}
 
         {/* 脸：两只竖长的眼睛，脸颊一点红 */}
         {[-1, 1].map((side) => (
           <rect
             key={`blush-${side}`}
-            x={side * 4.75 * U - 0.7 * U + eyeX * 0.4}
+            x={side * 4.75 * U - (glad ? 0.85 : 0.7) * U + eyeX * 0.4}
             y={-5.1 * U}
-            width={1.4 * U}
+            width={(glad ? 1.7 : 1.4) * U}
             height={0.62 * U}
             rx={0.3 * U}
             fill={C.blush}
-            opacity={0.62}
+            opacity={glad ? 0.9 : 0.62}
           />
         ))}
-        {[-1, 1].map((side) => {
-          const cx = side * 3.5 * U + eyeX;
-          if (pose.mood === "happy") {
-            return (
-              <path
-                key={side}
-                d={`M ${cx - 0.75 * U} ${eyeY + 0.5 * U} Q ${cx} ${eyeY - 1.25 * U} ${cx + 0.75 * U} ${eyeY + 0.5 * U}`}
-                stroke={C.ink}
-                strokeWidth={0.62 * U}
-                strokeLinecap="round"
-                fill="none"
-              />
-            );
-          }
-          const wide = pose.mood === "wow" ? 1.2 : 1;
-          const tall = pose.mood === "wow" ? 2.5 : pose.mood === "flat" ? 1 : 2;
-          const h = tall * U * (pose.mood === "wow" ? 1 : open);
-          return (
-            <rect
-              key={side}
-              x={cx - (wide * U) / 2}
-              y={eyeY - h / 2 + (pose.mood === "flat" ? 0.4 * U : 0)}
-              width={wide * U}
-              height={h}
-              rx={2.5}
-              fill={C.ink}
-            />
-          );
-        })}
+        {[-1, 1].map((side) => (
+          <Eye
+            key={side}
+            side={side}
+            cx={side * 3.5 * U + eyeX}
+            cy={eyeY}
+            mood={pose.mood}
+            open={open}
+          />
+        ))}
 
         {/* 想事情的时候，火花浮在头顶；身体压扁拉长时它保持原样 */}
         {pose.sparkSize > 0.01 ? (
@@ -279,6 +393,7 @@ export const blend = (a: Pose, b: Pose, p: number): Pose => {
     lookY: m(a.lookY, b.lookY),
     talk: m(a.talk, b.talk),
     wave: m(a.wave, b.wave),
+    cheer: m(a.cheer, b.cheer),
     step: m(a.step, b.step),
     spin: m(a.spin, b.spin),
     glow: m(a.glow, b.glow),
