@@ -8,6 +8,7 @@ import { LookingUpCompositions } from "./videos/looking-up/Compositions";
 import { MoeCompositions } from "./videos/moe/Compositions";
 import { MohengOJCompositions } from "./videos/moheng-oj/Compositions";
 import { RainCompositions } from "./videos/rain/Compositions";
+import { ThatDayCompositions } from "./videos/that-day/Compositions";
 import { WindDiaryCompositions } from "./videos/wind-diary/Compositions";
 
 // 所有视频在这里登记，每个视频一个文件夹（src/videos/<名字>/Compositions.tsx）
@@ -23,6 +24,7 @@ export const RemotionRoot: React.FC = () => {
       <MoeCompositions />
       <AmazonCompositions />
       <HanziCompositions />
+      <ThatDayCompositions />
     </>
   );
 };

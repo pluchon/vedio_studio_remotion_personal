@@ -9,6 +9,9 @@ out
 # 每期的原始素材
 refer
 
+# 各期共用的乐器采样库（VCSL、VSCO 2 CE，CC0，共约 6 GB），某一期用到的采样剪好后放进那一期的 public/ 入库
+samples/
+
 # 截图脚本用的登录令牌
 tools/**/tokens.json
 __pycache__
@@ -29,3 +32,5 @@ public/hanzi/data/
 public/hanzi/audio/bgm.wav
 tools/hanzi/whisper.cpp/
 tools/hanzi/whisper.json
+# 那一天：配乐由 tools/that-day/music.py 在本机生成
+public/that-day/audio/bgm.wav

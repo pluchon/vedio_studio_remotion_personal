@@ -16,6 +16,7 @@
 | 6 | `Moe` | 萌系手帐 | 82 秒 | 手帐底图里嵌动漫镜头，换镜头跟着配乐的起音，一格一格动的步进动画 |
 | 7 | `Amazon` | 亚马逊河 | 82 秒 | 真实高程、河网和卫星底图铺成的三维地图，着色器算光影、雾和河面，亮线沿河道画到入海口 |
 | 8 | `Hanzi` | 汉字的演变 | 88 秒 | 人声念白加逐字字幕，八个字从甲骨文一路化成楷书，字形之间靠「离笔画边缘的距离」互相变 |
+| 9 | `ThatDay` | 那一天 | 约 1 分钟，随留言长短变 | 输入一个日期和地点，算出那天的日出日落、星空、月相和地球的位置；一支能换参数的片子，另可导出透明角标、月相动图和单独的配乐 |
 
 ## 目录
 
@@ -87,6 +88,14 @@ src/
       ├─ script.ts          # 念白的时间表，拆成一个字一条的字幕
       ├─ Subtitles.tsx Strip.tsx Sketch.tsx   # 逐字字幕、顶上的年代线、朱砂色的简图
       └─ theme.ts           # 配色、字体、五种字体的名字和年代
+   └─ that-day/             # 那一天 · 给一个日期和地点，演那天的天空、月亮、昼长和地球在轨道上的位置（约 1 分钟）
+      ├─ Compositions.tsx   # 成片 ThatDay，以及导出用的 ThatDay-Badge（透明角标）、ThatDay-Phases（月相动图）；参数表单和片长的计算
+      ├─ Film.tsx           # 整片的总装
+      ├─ astro.ts day.ts    # 天文计算，以及由参数算出整支片子要用的数据
+      ├─ Sky.tsx Moon.tsx   # Skia 画的天空（天色、太阳轨迹、真实星表、月亮）和月亮特写
+      ├─ Year.tsx Orbit.tsx Card.tsx Title.tsx   # 一年的昼长圆环、地球公转（带运动模糊）、留言卡、片头
+      ├─ birds.ts Extras.tsx   # 代码里拼出来的 Lottie 鸟群；两个导出用的小组合
+      └─ theme.ts           # 参数的定义、配色、各段的起止
 public/
 ├─ moheng-oj/               # 截图、底图、配乐
 ├─ wind-diary/              # 照片、字体、配乐
@@ -96,17 +105,21 @@ public/
 ├─ rain/                    # 配乐（画面全部由代码画，没有图片）
 ├─ moe/                     # 手帐底图、Q 版小人的八个姿势；配乐和动漫片段不入库
 ├─ amazon/                  # 低清的世界底图；高程、河网、卫星底图和配乐不入库，由脚本生成
-└─ hanzi/                   # 字形数据、配乐和念白都不入库，由脚本生成或自己录
+├─ hanzi/                   # 字形数据、配乐和念白都不入库，由脚本生成或自己录
+└─ that-day/                # 月面贴图；配乐不入库，由脚本合成
 refer/                      # 用户给的原始素材，每期一个文件夹（不入库）
+samples/                    # 各期共用的乐器采样库（不入库）
 tools/
 ├─ shoot.mjs                # 批量截图（puppeteer-core + 本机 Chrome）
 ├─ stills.mjs               # 批量渲染静帧，自查画面用
 ├─ music.py                 # 纯 Python 合成配乐
+├─ fetch_samples.py         # 从 CC0 采样库里按需下载某一种乐器到 samples/
 ├─ moheng-oj/               # 墨衡 OJ 的截图清单、登录与清理脚本
 ├─ horizon/                 # build_data.py：把 refer/光速_时间/ 里的星表和巡天数据转成 public/horizon/data/
 ├─ moe/                     # prepare.py：把 refer/二次元萌系/ 里的底图、姿势、片段和配乐整理到 public/moe/
 ├─ amazon/                  # build_data.py：把 refer/亚马逊河/ 里的高程、河网和卫星底图整理到 public/amazon/，说明见其 README
-└─ hanzi/                   # build_glyphs.mjs 生成字形数据，music.py 合成配乐，whisper.mjs 在本机转写念白，说明见其 README
+├─ hanzi/                   # build_glyphs.mjs 生成字形数据，music.py 合成配乐，whisper.mjs 在本机转写念白，说明见其 README
+└─ that-day/                # music.py 用乐器采样合成配乐，参数和导出的说明见其 README
 ```
 
 ## 常用命令
@@ -123,6 +136,7 @@ npx remotion render Rain out/rain.mp4
 npx remotion render Moe out/moe.mp4 --color-space=bt709   # 高调的画面要用标准色彩范围，否则不少播放器里会发白
 npx remotion render Amazon out/amazon.mp4 --gl=angle --color-space=bt709 --concurrency=2   # 贴图很大，同时开的页面别太多
 npx remotion render Hanzi out/hanzi.mp4 --color-space=bt709
+npx remotion render ThatDay out/that-day.mp4 --props=<参数.json> --color-space=bt709   # 不给参数就用默认的日期
 npm run lint                                       # ESLint + 类型检查
 ```
 
@@ -145,7 +159,13 @@ npm run lint                                       # ESLint + 类型检查
 
 D 宫五声音阶的拨弦、铺底加低音，经 FFmpeg 混响并归一到 -16 LUFS，需要 PATH 上有 ffmpeg。
 
-**静帧自查**：`node tools/stills.mjs <输出目录> MohengOJ-Tutor:150 MohengOJ:1800`，有 3D 画面时加 `--gl=angle`
+各期自己合成的配乐另有脚本，放在 `tools/<名字>/music.py`，每期用不同的乐器和调式。
+
+**乐器采样**：`python tools/fetch_samples.py <VCSL 或 VSCO-2-CE> "<乐器文件夹>" [--match 字样]`
+
+从两个 CC0 的采样库（Versilian Studios 的 VCSL 和 VSCO 2 CE）里按需只下某一种乐器，放到 `samples/`（不入库）；`--list` 列出库里有哪些乐器。整库共约 6 GB，也可以自己整库下载后解压到 `samples/VCSL/`、`samples/VSCO-2-CE/`。
+
+**静帧自查**：`node tools/stills.mjs <输出目录> MohengOJ-Tutor:150 MohengOJ:1800`，有 3D 画面时加 `--gl=angle`，要给组合传参数时加 `--props=<json 文件>`
 
 ## 不入库的素材
 
@@ -163,7 +183,9 @@ D 宫五声音阶的拨弦、铺底加低音，经 FFmpeg 混响并归一到 -16
 | `public/amazon/audio/green-to-blue.mp3` | 《亚马逊河》配乐 |
 | `public/amazon/data/`、`public/amazon/textures/land.jpg` | 高程、河网和卫星底图，由 `tools/amazon/build_data.py` 生成，原始文件的下载地址见 `tools/amazon/README.md` |
 | `public/hanzi/audio/voice.mp3` | 《汉字的演变》的念白，朋友录的 |
+| `public/that-day/audio/bgm.wav` | 《那一天》的配乐，由 `tools/that-day/music.py` 合成 |
+| `samples/` | 各期共用的乐器采样库，用 `tools/fetch_samples.py` 按需下载 |
 | `public/hanzi/data/`、`public/hanzi/audio/bgm.wav` | 字形数据和配乐，由 `tools/hanzi/` 下的脚本生成，做法见 `tools/hanzi/README.md` |
 | `public/horizon/data/local.bin` | 由 2MRS 星表生成，做法见 `tools/horizon/README.md` |
 
-配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，星表与巡天数据的署名见 `tools/horizon/README.md`，高程、河网与卫星底图的署名见 `tools/amazon/README.md`，古文字字形的来源见 `tools/hanzi/README.md`。
+配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，星表与巡天数据的署名见 `tools/horizon/README.md`，高程、河网与卫星底图的署名见 `tools/amazon/README.md`，古文字字形的来源见 `tools/hanzi/README.md`，月面贴图和乐器采样的来源见 `tools/that-day/README.md`。
