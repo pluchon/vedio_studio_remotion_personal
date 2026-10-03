@@ -18,6 +18,7 @@
 | 8 | `Hanzi` | 汉字的演变 | 88 秒 | 人声念白加逐字字幕，八个字从甲骨文一路化成楷书，字形之间靠「离笔画边缘的距离」互相变 |
 | 9 | `ThatDay` | 那一天 | 约 1 分钟，随留言长短变 | 输入一个日期和地点，算出那天的日出日落、星空、月相和地球的位置；一支能换参数的片子，另可导出透明角标、月相动图和单独的配乐 |
 | 10 | `Hello` | 你好，我是 Claude | 约 130 秒 | Claude 的自我介绍：一只像素小螃蟹从头讲到尾，段与段之间靠转场接起来；镜头跟着推拉，布景按远近分层，角色头顶冒颜文字；字一个一个蹦，每句话开口时一小声「叽咕」，配芯片音乐；把前面用过的工具几乎都用了一遍 |
+| 11 | `Edge` | 宇宙的尽头 | 约 3 分 37 秒 | 朋友录的一段关于宇宙尽头的朗读，配一张不断被重画的老地图：船靠岸，地球有边，一层层拉远到宇宙，哈勃找到最古老的星系，化石、膨胀与到不了的边；古地图的海怪、哈勃和韦伯的真实天文照片；配乐是深空氛围 |
 
 ## 目录
 
@@ -118,7 +119,8 @@ public/
 ├─ amazon/                  # 低清的世界底图；高程、河网、卫星底图和配乐不入库，由脚本生成
 ├─ hanzi/                   # 字形数据、配乐和念白都不入库，由脚本生成或自己录
 ├─ that-day/                # 月面贴图；配乐不入库，由脚本合成
-└─ hello/                   # 四个开放许可的字体；配乐和说话声不入库，由脚本合成
+├─ hello/                   # 四个开放许可的字体；配乐和说话声不入库，由脚本合成
+└─ edge/                    # 古地图海怪的局部、哈勃与韦伯的深空照片；念白和配乐不入库
 refer/                      # 用户给的原始素材，每期一个文件夹（不入库）
 samples/                    # 各期共用的乐器采样库（不入库）
 tools/
@@ -199,8 +201,9 @@ D 宫五声音阶的拨弦、铺底加低音，经 FFmpeg 混响并归一到 -16
 | `public/hanzi/audio/voice.mp3` | 《汉字的演变》的念白，朋友录的 |
 | `public/that-day/audio/bgm.wav` | 《那一天》的配乐，由 `tools/that-day/music.py` 合成 |
 | `public/hello/audio/` | 《你好，我是 Claude》的配乐和说话声，由 `tools/hello/music.py` 合成 |
+| `public/edge/audio/` | 《宇宙的尽头》：念白是朋友录的，配乐由 `tools/edge/music.py` 合成 |
 | `samples/` | 各期共用的乐器采样库，用 `tools/fetch_samples.py` 按需下载 |
 | `public/hanzi/data/`、`public/hanzi/audio/bgm.wav` | 字形数据和配乐，由 `tools/hanzi/` 下的脚本生成，做法见 `tools/hanzi/README.md` |
 | `public/horizon/data/local.bin` | 由 2MRS 星表生成，做法见 `tools/horizon/README.md` |
 
-配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，星表与巡天数据的署名见 `tools/horizon/README.md`，高程、河网与卫星底图的署名见 `tools/amazon/README.md`，古文字字形的来源见 `tools/hanzi/README.md`，月面贴图和乐器采样的来源见 `tools/that-day/README.md`，第十期的字体和资料出处见 `tools/hello/README.md`。
+配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，星表与巡天数据的署名见 `tools/horizon/README.md`，高程、河网与卫星底图的署名见 `tools/amazon/README.md`，古文字字形的来源见 `tools/hanzi/README.md`，月面贴图和乐器采样的来源见 `tools/that-day/README.md`，第十期的字体和资料出处见 `tools/hello/README.md`，第十一期的古地图与天文照片出处见 `tools/edge/README.md`。

@@ -36,3 +36,7 @@ tools/hanzi/whisper.json
 public/that-day/audio/bgm.wav
 # 你好，我是 Claude：配乐和说话声由 tools/hello/music.py 在本机生成
 public/hello/audio/
+# 宇宙的尽头：念白是朋友的录音，配乐由 tools/edge/music.py 在本机生成
+public/edge/audio/
+tools/edge/whisper.json
+tools/edge/whisper.log
