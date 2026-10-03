@@ -34,3 +34,5 @@ tools/hanzi/whisper.cpp/
 tools/hanzi/whisper.json
 # 那一天：配乐由 tools/that-day/music.py 在本机生成
 public/that-day/audio/bgm.wav
+# 你好，我是 Claude：配乐和说话声由 tools/hello/music.py 在本机生成
+public/hello/audio/

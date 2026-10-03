@@ -17,6 +17,7 @@
 | 7 | `Amazon` | 亚马逊河 | 82 秒 | 真实高程、河网和卫星底图铺成的三维地图，着色器算光影、雾和河面，亮线沿河道画到入海口 |
 | 8 | `Hanzi` | 汉字的演变 | 88 秒 | 人声念白加逐字字幕，八个字从甲骨文一路化成楷书，字形之间靠「离笔画边缘的距离」互相变 |
 | 9 | `ThatDay` | 那一天 | 约 1 分钟，随留言长短变 | 输入一个日期和地点，算出那天的日出日落、星空、月相和地球的位置；一支能换参数的片子，另可导出透明角标、月相动图和单独的配乐 |
+| 10 | `Hello` | 你好，我是 Claude | 约 130 秒 | Claude 的自我介绍：一只像素小螃蟹从头讲到尾，段与段之间靠转场接起来；字一个一个蹦，配「叽叽」的说话声和芯片音乐；把前面用过的工具几乎都用了一遍 |
 
 ## 目录
 
@@ -96,6 +97,15 @@ src/
       ├─ Year.tsx Orbit.tsx Card.tsx Title.tsx   # 一年的昼长圆环、地球公转（带运动模糊）、留言卡、片头
       ├─ birds.ts Extras.tsx   # 代码里拼出来的 Lottie 鸟群；两个导出用的小组合
       └─ theme.ts           # 参数的定义、配色、各段的起止
+   └─ hello/                # 你好，我是 Claude · 自我介绍，八段，约 130 秒
+      ├─ Compositions.tsx   # 成片 Hello，以及导出用的 Hello-Sticker（透明底的挥手贴纸）
+      ├─ Film.tsx           # 总装：各段的画面用转场接起来，小家伙贯穿全片，最上面是字幕和两条音轨
+      ├─ script.json        # 各段的长短和每句台词的时刻；配乐脚本读的也是这一份
+      ├─ timeline.ts        # 由 script.json 算出各段起点、逐字字幕和说话的节奏
+      ├─ Buddy.tsx          # 小家伙：照着 Claude Code 的像素小螃蟹画，带姿势、表情和头顶的火花
+      ├─ motion.ts stickers.tsx Paper.tsx Captions.tsx   # 弹跳和跳跃、贴纸式零件、底图、逐字字幕
+      ├─ Books.tsx confetti.ts options.ts   # 三维的一摞书、代码里拼出来的 Lottie 彩纸屑、可调的参数
+      └─ chapters/          # 八段：开场、我是什么、一路长大、一家四口、我、老实交代、这支片子、结尾
 public/
 ├─ moheng-oj/               # 截图、底图、配乐
 ├─ wind-diary/              # 照片、字体、配乐
@@ -106,7 +116,8 @@ public/
 ├─ moe/                     # 手帐底图、Q 版小人的八个姿势；配乐和动漫片段不入库
 ├─ amazon/                  # 低清的世界底图；高程、河网、卫星底图和配乐不入库，由脚本生成
 ├─ hanzi/                   # 字形数据、配乐和念白都不入库，由脚本生成或自己录
-└─ that-day/                # 月面贴图；配乐不入库，由脚本合成
+├─ that-day/                # 月面贴图；配乐不入库，由脚本合成
+└─ hello/                   # 三个开放许可的字体；配乐和说话声不入库，由脚本合成
 refer/                      # 用户给的原始素材，每期一个文件夹（不入库）
 samples/                    # 各期共用的乐器采样库（不入库）
 tools/
@@ -119,7 +130,8 @@ tools/
 ├─ moe/                     # prepare.py：把 refer/二次元萌系/ 里的底图、姿势、片段和配乐整理到 public/moe/
 ├─ amazon/                  # build_data.py：把 refer/亚马逊河/ 里的高程、河网和卫星底图整理到 public/amazon/，说明见其 README
 ├─ hanzi/                   # build_glyphs.mjs 生成字形数据，music.py 合成配乐，whisper.mjs 在本机转写念白，说明见其 README
-└─ that-day/                # music.py 用乐器采样合成配乐，参数和导出的说明见其 README
+├─ that-day/                # music.py 用乐器采样合成配乐，参数和导出的说明见其 README
+└─ hello/                   # music.py 合成芯片音乐和说话声，说明见其 README
 ```
 
 ## 常用命令
@@ -137,6 +149,7 @@ npx remotion render Moe out/moe.mp4 --color-space=bt709   # 高调的画面要�
 npx remotion render Amazon out/amazon.mp4 --gl=angle --color-space=bt709 --concurrency=2   # 贴图很大，同时开的页面别太多
 npx remotion render Hanzi out/hanzi.mp4 --color-space=bt709
 npx remotion render ThatDay out/that-day.mp4 --props=<参数.json> --color-space=bt709   # 不给参数就用默认的日期
+npx remotion render Hello out/hello.mp4 --gl=angle --color-space=bt709   # 先跑 python tools/hello/music.py 合成声音
 npm run lint                                       # ESLint + 类型检查
 ```
 
@@ -184,8 +197,9 @@ D 宫五声音阶的拨弦、铺底加低音，经 FFmpeg 混响并归一到 -16
 | `public/amazon/data/`、`public/amazon/textures/land.jpg` | 高程、河网和卫星底图，由 `tools/amazon/build_data.py` 生成，原始文件的下载地址见 `tools/amazon/README.md` |
 | `public/hanzi/audio/voice.mp3` | 《汉字的演变》的念白，朋友录的 |
 | `public/that-day/audio/bgm.wav` | 《那一天》的配乐，由 `tools/that-day/music.py` 合成 |
+| `public/hello/audio/` | 《你好，我是 Claude》的配乐和说话声，由 `tools/hello/music.py` 合成 |
 | `samples/` | 各期共用的乐器采样库，用 `tools/fetch_samples.py` 按需下载 |
 | `public/hanzi/data/`、`public/hanzi/audio/bgm.wav` | 字形数据和配乐，由 `tools/hanzi/` 下的脚本生成，做法见 `tools/hanzi/README.md` |
 | `public/horizon/data/local.bin` | 由 2MRS 星表生成，做法见 `tools/horizon/README.md` |
 
-配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，星表与巡天数据的署名见 `tools/horizon/README.md`，高程、河网与卫星底图的署名见 `tools/amazon/README.md`，古文字字形的来源见 `tools/hanzi/README.md`，月面贴图和乐器采样的来源见 `tools/that-day/README.md`。
+配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，星表与巡天数据的署名见 `tools/horizon/README.md`，高程、河网与卫星底图的署名见 `tools/amazon/README.md`，古文字字形的来源见 `tools/hanzi/README.md`，月面贴图和乐器采样的来源见 `tools/that-day/README.md`，第十期的字体和资料出处见 `tools/hello/README.md`。
