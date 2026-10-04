@@ -1,4 +1,4 @@
-// 打包一次工程，按「组合ID:帧」批量渲染静帧用于自查：node tools/stills.mjs <输出目录> MohengOJ-Opening:200 MohengOJ:1500 ...
+// 打包一次工程，按「组合ID:帧」批量渲染静帧用于自查：node tools/common/stills.mjs <输出目录> MohengOJ-Opening:200 MohengOJ:1500 ...
 // 有 3D 画面时加 --gl=angle，用显卡出 WebGL；--props=<json 文件> 给组合传参数
 import path from 'node:path'
 import fs from 'node:fs'
@@ -7,7 +7,7 @@ import { bundle } from '@remotion/bundler'
 import { renderStill, selectComposition } from '@remotion/renderer'
 import { enableSkia } from '@remotion/skia/enable'
 
-const PROJECT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const PROJECT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
 
 const args = process.argv.slice(2)
 const gl = args.find((a) => a.startsWith('--gl='))?.slice(5) ?? null
@@ -15,7 +15,7 @@ const propsFile = args.find((a) => a.startsWith('--props='))?.slice(8)
 const inputProps = propsFile ? JSON.parse(fs.readFileSync(propsFile, 'utf8')) : {}
 const [outDir, ...targets] = args.filter((a) => !a.startsWith('--'))
 if (!outDir || !targets.length) {
-  console.error('用法：node tools/stills.mjs <输出目录> <组合ID:帧>...')
+  console.error('用法：node tools/common/stills.mjs <输出目录> <组合ID:帧>...')
   process.exit(1)
 }
 fs.mkdirSync(outDir, { recursive: true })

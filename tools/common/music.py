@@ -1,6 +1,6 @@
 """合成一段安静的配乐：D 宫五声音阶的拨弦（Karplus-Strong）+ 柔和铺底 + 低音，再用 FFmpeg 加混响、响度归一
 
-用法：python tools/music.py <输出.wav> [时长秒数，默认 121] [随机种子，默认 20260928]
+用法：python tools/common/music.py <输出.wav> [时长秒数，默认 121] [随机种子，默认 20260928]
 纯 Python 实现，不依赖 numpy；120 秒约需 1 分钟。需要 PATH 上有 ffmpeg。
 """
 from __future__ import annotations
@@ -15,7 +15,7 @@ import wave
 from array import array
 
 if len(sys.argv) < 2:
-    sys.exit("用法：python tools/music.py <输出.wav> [时长秒数] [随机种子]")
+    sys.exit("用法：python tools/common/music.py <输出.wav> [时长秒数] [随机种子]")
 OUT = sys.argv[1]
 DURATION = float(sys.argv[2]) if len(sys.argv) > 2 else 121.0
 SEED = int(sys.argv[3]) if len(sys.argv) > 3 else 20260928

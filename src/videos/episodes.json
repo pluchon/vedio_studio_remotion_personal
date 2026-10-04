@@ -1,0 +1,15 @@
+[
+  { "n": 0, "id": "MohengOJ", "dir": "moheng-oj", "title": "墨衡 OJ 介绍", "duration": "120 秒", "summary": "项目介绍视频：网页截图做成图版，镜头推拉，朱砂圈注", "render": [] },
+  { "n": 1, "id": "WindDiary", "dir": "wind-diary", "title": "风经过的地方", "duration": "约 90 秒", "summary": "日常生活三则：2D 程序化画面、手写式字幕、拍立得", "render": [] },
+  { "n": 2, "id": "CloudSky", "dir": "cloud-sky", "title": "云走过的地方，天空都记得", "duration": "77 秒", "summary": "一团团叠起来的云与形变", "render": [] },
+  { "n": 3, "id": "LookingUp", "dir": "looking-up", "title": "我们一直在仰望", "duration": "5 分钟", "summary": "人类仰望星空的历史，32 幕，按年代换画法（铜版画、海报、写实深空、光与回路），three.js 3D", "render": ["--gl=angle"] },
+  { "n": 4, "id": "Horizon", "dir": "horizon", "title": "光到不了的地方", "duration": "132 秒", "summary": "一个镜头跨二十多个数量级，真实星表与巡天数据，three.js", "render": ["--gl=angle"] },
+  { "n": 5, "id": "Rain", "dir": "rain", "title": "一场雨", "duration": "30 秒", "summary": "画面由配乐波形驱动，噪声、路径动画、弹簧，首尾循环", "render": [] },
+  { "n": 6, "id": "Moe", "dir": "moe", "title": "萌系手帐", "duration": "82 秒", "summary": "手帐底图里嵌动漫镜头，换镜头跟着配乐的起音，一格一格动的步进动画", "render": ["--color-space=bt709"] },
+  { "n": 7, "id": "Amazon", "dir": "amazon", "title": "亚马逊河", "duration": "82 秒", "summary": "真实高程、河网和卫星底图铺成的三维地图，着色器算光影、雾和河面，亮线沿河道画到入海口", "render": ["--gl=angle", "--color-space=bt709", "--concurrency=2"] },
+  { "n": 8, "id": "Hanzi", "dir": "hanzi", "title": "汉字的演变", "duration": "88 秒", "summary": "人声念白加逐字字幕，八个字从甲骨文化成楷书，字形之间靠「离笔画边缘的距离」互相变", "render": ["--color-space=bt709"] },
+  { "n": 9, "id": "ThatDay", "dir": "that-day", "title": "那一天", "duration": "约 1 分钟，随留言长短变", "summary": "输入日期和地点，算出那天的日出日落、星空、月相和地球的位置；可换参数，另可导出透明角标、月相动图和单独的配乐", "render": ["--color-space=bt709"] },
+  { "n": 10, "id": "Hello", "dir": "hello", "title": "你好，我是 Claude", "duration": "约 130 秒", "summary": "Claude 的自我介绍：像素小螃蟹从头讲到尾，转场、镜头推拉、分层布景、颜文字，芯片音乐", "render": ["--gl=angle", "--color-space=bt709"] },
+  { "n": 11, "id": "Edge", "dir": "edge", "title": "宇宙的尽头", "duration": "约 3 分 37 秒", "summary": "朋友的朗读配一张不断被重画的老地图（全 SVG 墨线）；古地图海怪、哈勃和韦伯的真实照片；深空氛围配乐", "render": ["--color-space=bt709"] },
+  { "n": 12, "id": "Nebula", "dir": "nebula", "title": "星云", "duration": "约 5 分 48 秒", "summary": "朋友的朗读，放松助眠的科普：体积渲染把地球的云一路画成宇宙的云，目镜、光谱、行星状星云、极光；全是自己算的 3D；摇篮曲配乐", "render": ["--gl=angle", "--color-space=bt709", "--concurrency=3"] }
+]

@@ -1,4 +1,21 @@
-# 《星云》这一期
+# 《星云》（成片 ID `Nebula`）
+
+> 朋友的朗读，放松助眠的科普：体积渲染把地球的云一路画成宇宙的云，目镜、光谱、行星状星云、极光；全是自己算的 3D；摇篮曲配乐
+> 第 12 期 · 约 5 分 48 秒 · 渲染：`npm run render -- Nebula`（带 `--gl=angle --color-space=bt709 --concurrency=3`）
+
+## 文件
+
+- `Compositions.tsx`、`Film.tsx`：成片 `Nebula`，以及风格样帧 `Nebula-Style`；总装：各幕、字幕、片名、结尾
+- `Volume.tsx`：体积渲染的着色器：地球的云、星云、行星状星云、极光，半分辨率画再放大
+- `Stars.tsx`、`Spectrum.tsx`：银河、星系群、星团、拉普拉斯的气体云（Points）；按真实波长画的光谱条
+- `script.json`、`script.ts`、`Subtitles.tsx`、`time.tsx`、`labels.tsx`、`theme.ts`：念白时间表与字幕、关键帧和时间轴、小标签与目镜、各幕起止
+- `scenes/`：`Sky`、`Gallery`、`Messier`、`Debate`、`Spectra`、`Light`、`Flowers` 七个文件，共十三幕
+
+## 素材与不入库的东西
+
+- 降噪后的念白和合成的配乐在 `public/nebula/audio/`，不入库。没有图片素材。
+
+---
 
 朋友录的一段关于星云的朗读（5 分 41 秒），放松助眠的科普：语气平缓，画面慢，配乐是摇篮曲。
 和前几期不同，这一期的画面是一个连续的 3D 世界，全部是代码算出来的，没有照片、没有图片素材。

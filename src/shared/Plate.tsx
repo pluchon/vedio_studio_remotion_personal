@@ -4,7 +4,7 @@ import React from "react";
 import { Img, interpolate, staticFile, useCurrentFrame } from "remotion";
 import { EASE_IN_OUT, enter } from "./motion";
 
-// 截图的 CSS 尺寸（tools/shoot.mjs 按 1600×900 视口、2 倍像素截取，实际图片是 3200×1800）
+// 截图的 CSS 尺寸（tools/common/shoot.mjs 按 1600×900 视口、2 倍像素截取，实际图片是 3200×1800）
 export const SHOT_W = 1600;
 export const SHOT_H = 900;
 

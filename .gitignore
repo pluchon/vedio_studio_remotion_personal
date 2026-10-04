@@ -15,6 +15,11 @@ refer
 # 各期共用的乐器采样库（VCSL、VSCO 2 CE，CC0，共约 6 GB），某一期用到的采样剪好后放进那一期的 public/ 入库
 samples/
 
+# 公共资料库：只有说明和目录入库，里面的图片、文章、音乐只留本机
+library/*
+!library/README.md
+!library/INDEX.md
+
 # 截图脚本用的登录令牌
 tools/**/tokens.json
 __pycache__
@@ -22,7 +27,7 @@ __pycache__
 # 2MRS 的使用条款不允许再分发，由 tools/horizon/build_data.py 从 refer/ 生成
 public/horizon/data/local.bin
 
-# 仓库是公开的：有版权的配乐和个人照片不入库（墨衡 OJ 的 bgm.wav 是 tools/music.py 合成的，照常入库）
+# 仓库是公开的：有版权的配乐和个人照片不入库（墨衡 OJ 的 bgm.wav 是 tools/common/music.py 合成的，照常入库）
 public/**/*.mp3
 public/*/photos/
 # 从网上摘的动漫片段同样不入库，由 tools/moe/prepare.py 在本机生成

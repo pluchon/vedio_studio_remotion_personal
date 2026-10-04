@@ -46,7 +46,9 @@
     "dev": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "lint": "eslint src && tsc",
+    "render": "node tools/common/render.mjs",
+    "docs": "node tools/common/docs.mjs"
   },
   "sideEffects": [
     "*.css"

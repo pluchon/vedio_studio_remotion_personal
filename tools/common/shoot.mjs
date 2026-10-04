@@ -1,4 +1,4 @@
-// 批量截图：node tools/shoot.mjs <site.json> <shots.json> <输出目录> [只拍的名字...]
+// 批量截图：node tools/common/shoot.mjs <site.json> <shots.json> <输出目录> [只拍的名字...]
 // site.json 描述站点：各端地址、登录 Cookie 名、令牌文件（相对 site.json）、视口；shots.json 描述要拍的页面与操作步骤
 import fs from 'node:fs'
 import path from 'node:path'
@@ -6,7 +6,7 @@ import puppeteer from 'puppeteer-core'
 
 const [sitePath, shotsPath, outDir, ...only] = process.argv.slice(2)
 if (!sitePath || !shotsPath || !outDir) {
-  console.error('用法：node tools/shoot.mjs <site.json> <shots.json> <输出目录> [只拍的名字...]')
+  console.error('用法：node tools/common/shoot.mjs <site.json> <shots.json> <输出目录> [只拍的名字...]')
   process.exit(1)
 }
 const site = JSON.parse(fs.readFileSync(sitePath, 'utf8'))

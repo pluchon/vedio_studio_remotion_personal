@@ -1,4 +1,23 @@
-# 亚马逊河这一期的数据
+# 《亚马逊河》（成片 ID `Amazon`）
+
+> 真实高程、河网和卫星底图铺成的三维地图，着色器算光影、雾和河面，亮线沿河道画到入海口
+> 第 7 期 · 82 秒 · 渲染：`npm run render -- Amazon`（带 `--gl=angle --color-space=bt709 --concurrency=2`）
+
+## 文件
+
+- `Compositions.tsx`：成片 `Amazon`，以及这趟旅程的时间表和旁白
+- `Film.tsx`：整片的总装：地面、河网、大气，叠上地名、旁白、读数和水系小图
+- `plan.ts`：主河道这条线怎么走、镜头怎么跟
+- `sites.ts`：标在地图上的城市、支流和停靠点
+- `Places.tsx`、`Chart.tsx`、`Overlay.tsx`：地名、右上角同步勾勒的水系小图、旁白和读数
+- `theme.ts`：数据范围、经纬度和球面的换算、机位
+- `three/`：着色器：按高程起伏的地面（山影、云、晨雾、河面）、河网的线、大气
+
+## 素材与不入库的东西
+
+- 配乐 `public/amazon/audio/green-to-blue.mp3` 不入库。`public/amazon/data/` 和 `public/amazon/textures/land.jpg` 不入库，由 `tools/amazon/build_data.py` 生成（下载地址见下面）。
+
+---
 
 `build_data.py` 把下面四个文件整理成视频直接读的数据。原始文件放在 `refer/亚马逊河/`（不入库），不用解压。
 

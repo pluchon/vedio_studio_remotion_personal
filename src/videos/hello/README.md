@@ -1,4 +1,25 @@
-# 《你好，我是 Claude》这一期
+# 《你好，我是 Claude》（成片 ID `Hello`）
+
+> Claude 的自我介绍：像素小螃蟹从头讲到尾，转场、镜头推拉、分层布景、颜文字，芯片音乐
+> 第 10 期 · 约 130 秒 · 渲染：`npm run render -- Hello`（带 `--gl=angle --color-space=bt709`）
+
+## 文件
+
+- `Compositions.tsx`：成片 `Hello`，以及导出用的 `Hello-Sticker`（透明底的挥手贴纸）
+- `Film.tsx`：总装：各段的画面用转场接起来，小家伙贯穿全片，最上面是字幕和两条音轨
+- `script.json`：各段的长短和每句台词的时刻；配乐脚本读的也是这一份
+- `timeline.ts`：由 `script.json` 算出各段起点、逐字字幕和说话的节奏
+- `Buddy.tsx`：小家伙：照着 Claude Code 的像素小螃蟹画，带姿势、表情和头顶的火花
+- `motion.ts`、`stickers.tsx`、`Paper.tsx`、`Captions.tsx`：弹跳、跳跃和镜头的关键帧，贴纸式零件，底图，会变回对话框的字幕条
+- `scenery.tsx`、`emotes.tsx`、`scallop.tsx`：布景（树、花、云、书架、彩旗……）、颜文字气泡和彩色碎片、自己写的花边转场
+- `Books.tsx`、`confetti.ts`、`options.ts`：三维的一摞书、代码里拼出来的 Lottie 彩纸屑、可调的参数
+- `chapters/`：八段：开场、我是什么、一路长大、一家四口、我、老实交代、这支片子、结尾
+
+## 素材与不入库的东西
+
+- 配乐和说话声 `public/hello/audio/` 不入库，由 `tools/hello/music.py` 合成。四个开放许可的字体在 `public/hello/fonts/`（入库）。
+
+---
 
 Claude 的自我介绍，由 Claude Opus 5.5 自己写文案、画画面、编配乐。画面全部是代码画的，没有图片素材。
 

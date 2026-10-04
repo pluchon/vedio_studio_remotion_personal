@@ -5,7 +5,7 @@
 用法：python tools/that-day/music.py [片长秒数，默认 68]
 片长随留言的字数变（见 theme.ts 的 totalSeconds）：留言卡那一段按片长排小节数，收尾的三下落在片子结束前三秒。
 
-乐器采样来自 VCSL 和 VSCO 2 CE（都是 CC0），放在 samples/ 下（整库解压，或用 tools/fetch_samples.py 按需下载）。
+乐器采样来自 VCSL 和 VSCO 2 CE（都是 CC0），放在 samples/ 下（整库解压，或用 tools/common/fetch_samples.py 按需下载）。
 纯 Python 实现，不依赖 numpy；需要 PATH 上有 ffmpeg。输出 public/that-day/audio/bgm.wav
 """
 from __future__ import annotations

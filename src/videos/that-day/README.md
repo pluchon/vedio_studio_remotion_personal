@@ -1,4 +1,22 @@
-# 《那一天》这一期
+# 《那一天》（成片 ID `ThatDay`）
+
+> 输入日期和地点，算出那天的日出日落、星空、月相和地球的位置；可换参数，另可导出透明角标、月相动图和单独的配乐
+> 第 9 期 · 约 1 分钟，随留言长短变 · 渲染：`npm run render -- ThatDay`（带 `--color-space=bt709`）
+
+## 文件
+
+- `Compositions.tsx`：成片 `ThatDay`，以及导出用的 `ThatDay-Badge`（透明角标）、`ThatDay-Phases`（月相动图）；参数表单和片长的计算
+- `Film.tsx`：整片的总装
+- `astro.ts`、`day.ts`：天文计算，以及由参数算出整支片子要用的数据
+- `Sky.tsx`、`Moon.tsx`：Skia 画的天空（天色、太阳轨迹、真实星表、月亮）和月亮特写
+- `Year.tsx`、`Orbit.tsx`、`Card.tsx`、`Title.tsx`：一年的昼长圆环、地球公转（带运动模糊）、留言卡、片头
+- `birds.ts`、`Extras.tsx`：代码里拼出来的 Lottie 鸟群；两个导出用的小组合
+
+## 素材与不入库的东西
+
+- 配乐 `public/that-day/audio/bgm.wav` 不入库，由 `tools/that-day/music.py` 用乐器采样合成。月面贴图 `public/that-day/textures/moon.jpg` 入库。
+
+---
 
 输入一个日期和一个地方，片子算出那天天上的样子。所有天象都由 `src/videos/that-day/astro.ts` 现算，不需要下载数据。
 
@@ -34,7 +52,7 @@ python tools/that-day/music.py 68
 
 参数是片长（秒），留言卡那一段会按片长排小节数。合成到 `public/that-day/audio/bgm.wav`（不入库）。
 
-乐器采样来自 Versilian Studios 的两个 CC0 采样库 VCSL 和 VSCO 2 CE，放在仓库根目录的 `samples/`（不入库）。可以整库下载后解压到 `samples/VCSL/`、`samples/VSCO-2-CE/`，也可以用 `tools/fetch_samples.py` 只下用到的乐器：VSCO 的低音提琴、大提琴、小提琴的拨弦，长笛断奏，竖琴，吊镲；VCSL 的马林巴、木琴、卡林巴、钟琴、沙锤、拍手、木鱼、三角铁、铃鼓。
+乐器采样来自 Versilian Studios 的两个 CC0 采样库 VCSL 和 VSCO 2 CE，放在仓库根目录的 `samples/`（不入库）。可以整库下载后解压到 `samples/VCSL/`、`samples/VSCO-2-CE/`，也可以用 `tools/common/fetch_samples.py` 只下用到的乐器：VSCO 的低音提琴、大提琴、小提琴的拨弦，长笛断奏，竖琴，吊镲；VCSL 的马林巴、木琴、卡林巴、钟琴、沙锤、拍手、木鱼、三角铁、铃鼓。
 
 ## 素材与算法的来源
 

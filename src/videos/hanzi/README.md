@@ -1,4 +1,23 @@
-# 《汉字的演变》这一期的素材
+# 《汉字的演变》（成片 ID `Hanzi`）
+
+> 人声念白加逐字字幕，八个字从甲骨文化成楷书，字形之间靠「离笔画边缘的距离」互相变
+> 第 8 期 · 88 秒 · 渲染：`npm run render -- Hanzi`（带 `--color-space=bt709`）
+
+## 文件
+
+- `Compositions.tsx`：成片 `Hanzi`
+- `Film.tsx`：整片的总装：每个字在什么时候、什么位置、变到哪一种字体
+- `Ink.tsx`：一个墨写的字：混合两个字形的距离表，让一个化成另一个
+- `glyphs.ts`：载入字形数据，把两个字拼进一格
+- `script.ts`：念白的时间表，拆成一个字一条的字幕
+- `Subtitles.tsx`、`Strip.tsx`、`Sketch.tsx`：逐字字幕、顶上的年代线、朱砂色的简图
+- `theme.ts`：配色、字体、五种字体的名字和年代
+
+## 素材与不入库的东西
+
+- `public/hanzi/data/`（字形数据）、`public/hanzi/audio/bgm.wav`（配乐）、`public/hanzi/audio/voice.mp3`（朋友录的念白）都不入库，生成方法见下面。
+
+---
 
 三样东西都不入库，克隆后按下面的顺序在本机生成。
 

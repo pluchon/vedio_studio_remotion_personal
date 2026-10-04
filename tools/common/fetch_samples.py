@@ -1,9 +1,9 @@
 """按需下载乐器采样：只拉某个采样库里的某一个乐器文件夹，放到 samples/<库名>/ 下的同一路径
 
 用法：
-  python tools/fetch_samples.py VCSL "Idiophones/Struck Idiophones/Glockenspiel"
-  python tools/fetch_samples.py VCSL "Chordophones/Zithers/Upright Piano, Yamaha" --match vl2
-  python tools/fetch_samples.py VCSL --list Idiophones        # 只列出有哪些文件夹和大小，不下载
+  python tools/common/fetch_samples.py VCSL "Idiophones/Struck Idiophones/Glockenspiel"
+  python tools/common/fetch_samples.py VCSL "Chordophones/Zithers/Upright Piano, Yamaha" --match vl2
+  python tools/common/fetch_samples.py VCSL --list Idiophones        # 只列出有哪些文件夹和大小，不下载
 
 两个库（VCSL、VSCO-2-CE）都是 Versilian Studios 以 CC0 发布的，整库有几个 GB，所以不整库下。
 已经下过且大小对得上的文件会跳过。需要 PATH 上有 curl。
@@ -22,7 +22,7 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 SAMPLES = ROOT / "samples"
 
 
