@@ -2,6 +2,7 @@ import "./index.css";
 import React from "react";
 import { AmazonCompositions } from "./videos/amazon/Compositions";
 import { EdgeCompositions } from "./videos/edge/Compositions";
+import { NebulaCompositions } from "./videos/nebula/Compositions";
 import { CloudSkyCompositions } from "./videos/cloud-sky/Compositions";
 import { HanziCompositions } from "./videos/hanzi/Compositions";
 import { HelloCompositions } from "./videos/hello/Compositions";
@@ -29,6 +30,7 @@ export const RemotionRoot: React.FC = () => {
       <ThatDayCompositions />
       <HelloCompositions />
       <EdgeCompositions />
+      <NebulaCompositions />
     </>
   );
 };

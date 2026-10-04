@@ -34,8 +34,8 @@ python tools/hello/music.py
 
 ```bash
 npx remotion render Hello out/hello.mp4 --gl=angle --color-space=bt709
-npx remotion render Hello-Sticker out/hello-sticker.webm --codec=vp9 --image-format=png --pixel-format=yuva420p
-npx remotion render Hello-Sticker out/hello-sticker.gif --codec=gif --every-nth-frame=2
+npx remotion render Hello-Sticker exports/hello-sticker.webm --codec=vp9 --image-format=png --pixel-format=yuva420p
+npx remotion render Hello-Sticker exports/hello-sticker.gif --codec=gif --every-nth-frame=2
 ```
 
 第一条是成片（里面有一段三维的书堆，要走显卡）。后两条是透明底的挥手贴纸，分别导出成带透明通道的视频和动图。

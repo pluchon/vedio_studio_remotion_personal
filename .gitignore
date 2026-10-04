@@ -6,6 +6,9 @@ dist
 # Ignore the output video from Git but not videos you import into src/.
 out
 
+# 成片以外的导出（透明角标、动图、单独的配乐、风格样图）
+exports/
+
 # 每期的原始素材
 refer
 
@@ -40,3 +43,9 @@ public/hello/audio/
 public/edge/audio/
 tools/edge/whisper.json
 tools/edge/whisper.log
+
+# 星云：念白是朋友的录音（降噪后的成品放在 public/nebula/audio/），配乐由 tools/nebula/music.py 在本机生成
+public/nebula/audio/
+tools/nebula/whisper-seg.json
+tools/nebula/whisper.log
+tools/nebula/music.log

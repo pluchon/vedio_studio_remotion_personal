@@ -17,9 +17,9 @@ npx remotion render ThatDay out/that-day.mp4 --props=refer/那一天/props.json 
 ## 另外导出的三样
 
 ```bash
-npx remotion render ThatDay-Badge out/that-day-badge.webm --props=<参数文件> --codec=vp9 --image-format=png --pixel-format=yuva420p
-npx remotion render ThatDay-Phases out/that-day-phases.gif --props=<参数文件> --codec=gif --every-nth-frame=2
-npx remotion render ThatDay out/that-day-music.mp3 --props=<参数文件> --codec=mp3
+npx remotion render ThatDay-Badge exports/that-day-badge.webm --props=<参数文件> --codec=vp9 --image-format=png --pixel-format=yuva420p
+npx remotion render ThatDay-Phases exports/that-day-phases.gif --props=<参数文件> --codec=gif --every-nth-frame=2
+npx remotion render ThatDay exports/that-day-music.mp3 --props=<参数文件> --codec=mp3
 ```
 
 依次是透明底的日期角标、循环的月相动图、单独的配乐。

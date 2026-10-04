@@ -4,6 +4,8 @@
 
 公用的 Remotion 视频工作室。无论是项目介绍还是自己的想法，视频都放在这一个工程里，共用一份依赖（Remotion 4.0.529）和通用组件，不必每次重装一遍。
 
+**每一期的风格都不固定**：线稿、手帐、像素、2D 着色器、3D 建模、体积渲染都用过，一期里也可以几种混着来，由这一期的主题和素材决定，不必追求统一。
+
 ## 已有的视频
 
 | 期 | 成片 ID | 片名 | 时长 | 用到的做法 |
@@ -19,6 +21,7 @@
 | 9 | `ThatDay` | 那一天 | 约 1 分钟，随留言长短变 | 输入一个日期和地点，算出那天的日出日落、星空、月相和地球的位置；一支能换参数的片子，另可导出透明角标、月相动图和单独的配乐 |
 | 10 | `Hello` | 你好，我是 Claude | 约 130 秒 | Claude 的自我介绍：一只像素小螃蟹从头讲到尾，段与段之间靠转场接起来；镜头跟着推拉，布景按远近分层，角色头顶冒颜文字；字一个一个蹦，每句话开口时一小声「叽咕」，配芯片音乐；把前面用过的工具几乎都用了一遍 |
 | 11 | `Edge` | 宇宙的尽头 | 约 3 分 37 秒 | 朋友录的一段关于宇宙尽头的朗读，配一张不断被重画的老地图：船靠岸，地球有边，一层层拉远到宇宙，哈勃找到最古老的星系，化石、膨胀与到不了的边；古地图的海怪、哈勃和韦伯的真实天文照片；配乐是深空氛围 |
+| 12 | `Nebula` | 星云 | 约 5 分 50 秒 | 朋友录的一段讲星云的朗读，放松助眠的科普：用体积渲染（着色器里沿视线走过一团密度场）把地球的云一路画成宇宙的云，梅西耶的目镜、哈金斯的光谱、行星状星云、极光；全部是自己算的 3D，没有天文照片；配乐是降 B 大调的摇篮曲 |
 
 ## 目录
 
@@ -98,6 +101,17 @@ src/
       ├─ Year.tsx Orbit.tsx Card.tsx Title.tsx   # 一年的昼长圆环、地球公转（带运动模糊）、留言卡、片头
       ├─ birds.ts Extras.tsx   # 代码里拼出来的 Lottie 鸟群；两个导出用的小组合
       └─ theme.ts           # 参数的定义、配色、各段的起止
+   ├─ edge/                 # 宇宙的尽头 · 一张不断被重画的老地图，九幕，约 3 分 37 秒（全是 SVG 墨线）
+   │  ├─ Compositions.tsx Film.tsx   # 成片 Edge，总装：纸、各幕、字幕
+   │  ├─ ink.tsx Paper.tsx labels.tsx Subtitles.tsx   # 墨线一笔笔画出来、纸与图框、标签、飘带字幕
+   │  ├─ script.json script.ts time.tsx theme.ts      # 念白的时间表与字幕、念白秒数的时间轴、各幕起止
+   │  └─ scenes/            # 海与山、地球、越拉越远、皮毛上的尘埃、哈勃、化石、到不了的边、膨胀、越走越远
+   ├─ nebula/               # 星云 · 连续的 3D 夜空，十三幕，约 5 分 48 秒
+   │  ├─ Compositions.tsx Film.tsx   # 成片 Nebula，以及风格样帧 Nebula-Style；总装：各幕、字幕、片名、结尾
+   │  ├─ Volume.tsx         # 体积渲染的着色器：地球的云、星云、行星状星云、极光，半分辨率画再放大
+   │  ├─ Stars.tsx Spectrum.tsx   # 银河、星系群、星团、拉普拉斯的气体云（Points）；按真实波长画的光谱条
+   │  ├─ script.json script.ts Subtitles.tsx time.tsx labels.tsx theme.ts   # 念白时间表与字幕、关键帧和时间轴、小标签与目镜、各幕起止
+   │  └─ scenes/            # Sky Gallery Messier Debate Spectra Light Flowers 七个文件，共十三幕
    └─ hello/                # 你好，我是 Claude · 自我介绍，八段，约 130 秒
       ├─ Compositions.tsx   # 成片 Hello，以及导出用的 Hello-Sticker（透明底的挥手贴纸）
       ├─ Film.tsx           # 总装：各段的画面用转场接起来，小家伙贯穿全片，最上面是字幕和两条音轨
@@ -120,8 +134,11 @@ public/
 ├─ hanzi/                   # 字形数据、配乐和念白都不入库，由脚本生成或自己录
 ├─ that-day/                # 月面贴图；配乐不入库，由脚本合成
 ├─ hello/                   # 四个开放许可的字体；配乐和说话声不入库，由脚本合成
-└─ edge/                    # 古地图海怪的局部、哈勃与韦伯的深空照片；念白和配乐不入库
+├─ edge/                    # 古地图海怪的局部、哈勃与韦伯的深空照片；念白和配乐不入库
+└─ nebula/                  # 没有图片素材；降噪后的念白和配乐不入库，由脚本生成
 refer/                      # 用户给的原始素材，每期一个文件夹（不入库）
+out/                        # 只放渲染好的成片视频（含 720p 等小尺寸版本），不入库
+exports/                    # 成片以外的导出：透明角标、动图、单独的配乐、风格样图等，不入库
 samples/                    # 各期共用的乐器采样库（不入库）
 tools/
 ├─ shoot.mjs                # 批量截图（puppeteer-core + 本机 Chrome）
@@ -134,7 +151,9 @@ tools/
 ├─ amazon/                  # build_data.py：把 refer/亚马逊河/ 里的高程、河网和卫星底图整理到 public/amazon/，说明见其 README
 ├─ hanzi/                   # build_glyphs.mjs 生成字形数据，music.py 合成配乐，whisper.mjs 在本机转写念白，说明见其 README
 ├─ that-day/                # music.py 用乐器采样合成配乐，参数和导出的说明见其 README
-└─ hello/                   # music.py 合成芯片音乐和说话声，说明见其 README
+├─ hello/                   # music.py 合成芯片音乐和说话声，说明见其 README
+├─ edge/                    # whisper.mjs、align.py 量念白的时间，music.py 合成深空氛围，说明见其 README
+└─ nebula/                  # 念白降噪、whisper.mjs 与 align.py 量时间、music.py 合成摇篮曲，校对稿 script.md，说明见其 README
 ```
 
 ## 常用命令
@@ -153,14 +172,21 @@ npx remotion render Amazon out/amazon.mp4 --gl=angle --color-space=bt709 --concu
 npx remotion render Hanzi out/hanzi.mp4 --color-space=bt709
 npx remotion render ThatDay out/that-day.mp4 --props=<参数.json> --color-space=bt709   # 不给参数就用默认的日期
 npx remotion render Hello out/hello.mp4 --gl=angle --color-space=bt709   # 先跑 python tools/hello/music.py 合成声音
+npx remotion render Nebula out/nebula.mp4 --gl=angle --color-space=bt709 --concurrency=3   # 先按 tools/nebula/README.md 处理念白、合成配乐
 npm run lint                                       # ESLint + 类型检查
 ```
+
+## 渲染和导出放哪里
+
+- `out/` 里只放渲染好的成片视频（`npx remotion render ... out/<名字>.mp4`，小尺寸的版本也放这里）。
+- 成片以外的导出（透明角标、GIF、单独的配乐、风格样图……）放 `exports/`，同样不入库。
+- 自查用的静帧、测试渲染、日志放仓库外的临时目录，用完删掉，不要留在仓库里。
 
 ## 新增一个视频
 
 1. 在 `src/videos/<名字>/` 下建 `Compositions.tsx`，外层用 `<Folder name="...">` 包住；组合 ID 带上视频前缀，避免与其他视频重名。
 2. 在 `src/Root.tsx` 里加上这个组件。
-3. 素材放 `public/<名字>/`，在 `theme.ts` 里写一个 `asset()` 拼路径。
+3. 素材放 `public/<名字>/`，在 `theme.ts` 里写一个 `asset()` 拼路径。风格按这一期的主题定，可以和之前的完全不同。
 4. 需要网页截图时，在 `tools/<名字>/` 放 `site.json`（各端地址、登录 Cookie、视口）和截图清单，用 `tools/shoot.mjs` 拍。不涉及网页的视频用不到这一步。
 
 截图统一按 1600×900 视口、2 倍像素拍，`shared/Plate.tsx` 里的镜头与叠加层都用这套 CSS 坐标。
@@ -202,8 +228,9 @@ D 宫五声音阶的拨弦、铺底加低音，经 FFmpeg 混响并归一到 -16
 | `public/that-day/audio/bgm.wav` | 《那一天》的配乐，由 `tools/that-day/music.py` 合成 |
 | `public/hello/audio/` | 《你好，我是 Claude》的配乐和说话声，由 `tools/hello/music.py` 合成 |
 | `public/edge/audio/` | 《宇宙的尽头》：念白是朋友录的，配乐由 `tools/edge/music.py` 合成 |
+| `public/nebula/audio/` | 《星云》：念白是朋友录的（降噪后的成品），配乐由 `tools/nebula/music.py` 合成 |
 | `samples/` | 各期共用的乐器采样库，用 `tools/fetch_samples.py` 按需下载 |
 | `public/hanzi/data/`、`public/hanzi/audio/bgm.wav` | 字形数据和配乐，由 `tools/hanzi/` 下的脚本生成，做法见 `tools/hanzi/README.md` |
 | `public/horizon/data/local.bin` | 由 2MRS 星表生成，做法见 `tools/horizon/README.md` |
 
-配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，星表与巡天数据的署名见 `tools/horizon/README.md`，高程、河网与卫星底图的署名见 `tools/amazon/README.md`，古文字字形的来源见 `tools/hanzi/README.md`，月面贴图和乐器采样的来源见 `tools/that-day/README.md`，第十期的字体和资料出处见 `tools/hello/README.md`，第十一期的古地图与天文照片出处见 `tools/edge/README.md`。
+配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，星表与巡天数据的署名见 `tools/horizon/README.md`，高程、河网与卫星底图的署名见 `tools/amazon/README.md`，古文字字形的来源见 `tools/hanzi/README.md`，月面贴图和乐器采样的来源见 `tools/that-day/README.md`，第十期的字体和资料出处见 `tools/hello/README.md`，第十一期的古地图与天文照片出处见 `tools/edge/README.md`，第十二期没有外来素材，做法和几处科学上的说明见 `tools/nebula/README.md`。
