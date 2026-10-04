@@ -8,9 +8,9 @@ const episodes = JSON.parse(fs.readFileSync(path.join(ROOT, 'src', 'videos', 'ep
 
 const rows = episodes.map((e) => {
   const flags = e.render.length ? `\`${e.render.join(' ')}\`` : '—'
-  return `| ${e.n} | [\`${e.id}\`](src/videos/${e.dir}/README.md) | ${e.title} | ${e.duration} | ${e.summary} | ${flags} |`
+  return `| ${e.n} | [\`${e.id}\`](src/videos/${e.dir}/README.md) | ${e.title} | ${e.duration} | ${e.summary} | ${e.tags.join('、')} | ${flags} |`
 })
-const table = ['| 期 | 成片 ID | 片名 | 时长 | 一句话 | 渲染参数 |', '| --- | --- | --- | --- | --- | --- |', ...rows].join('\n')
+const table = ['| 期 | 成片 ID | 片名 | 时长 | 一句话 | 标签 | 渲染参数 |', '| --- | --- | --- | --- | --- | --- | --- |', ...rows].join('\n')
 
 const readmePath = path.join(ROOT, 'README.md')
 const readme = fs.readFileSync(readmePath, 'utf8')

@@ -48,7 +48,8 @@
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
     "render": "node tools/common/render.mjs",
-    "docs": "node tools/common/docs.mjs"
+    "docs": "node tools/common/docs.mjs",
+    "check": "node tools/common/check.mjs"
   },
   "sideEffects": [
     "*.css"

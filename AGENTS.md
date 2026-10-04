@@ -9,7 +9,7 @@
 ## 先读哪里（按需深入，不要一次读完）
 
 1. 本文件：规矩和地图。
-2. `src/videos/episodes.json`：所有视频的登记表（成片 ID、片名、时长、一句话、渲染参数）。
+2. `src/videos/episodes.json`：所有视频的登记表（成片 ID、片名、时长、一句话、标签、渲染参数）；按标签 `grep` 就能找到"用过某种做法"的那几期。
 3. `src/videos/<名字>/README.md`：要改或参考某一期时读这一份——文件地图、素材与不入库的东西、做法、来源、已知局限。
 4. 根 `README.md`：给人看的总览和命令。
 
@@ -46,7 +46,7 @@
 
 ## 新增或改动视频时同步
 
-改了 `episodes.json` 之后跑 `npm run docs`；每期的 `README.md` 跟着代码改，别让它过时。
+改了 `episodes.json` 之后跑 `npm run docs`；往 `library/` 放了东西要登记 INDEX；收尾跑一遍 `npm run check`（登记表、README、成片注册、资料库目录是否对得上）。每期的 `README.md` 跟着代码改，别让它过时。
 
 ## 不要做的事
 
