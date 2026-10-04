@@ -17,6 +17,9 @@
 | If I Should Return - Marcus Warner.flac | 第三期《我们一直在仰望》用的曲子 | 版权所有，待查 | 无损，64 MB |
 | Sappheiros - Fading.flac | 第十一期《宇宙的尽头》的参考曲 | 版权所有，待查 | 治愈白噪音，90 秒 |
 | 花暦 arr. piano & viola.mp3 | 第一期《风经过的地方》用的曲子 | 版权所有，待查 | 钢琴和中提琴 |
+| 深邃静谧旋律 (Inst.).flac | 用户加入，标签只有「纯音乐」；第十三期《巨引源》的主配乐 | 作者与授权没查到（2026-10-04 核过） | 无损，2:21，−19.2 LUFS，很平稳，适合垫在念白下 |
+| Evening Fall (Harp).flac | Kevin MacLeod，专辑 Atlantean Twilight | CC BY 4.0（Incompetech 曲目页已核），用时按官网给的文字署名 | 竖琴，2:25 |
+| Universe Sandbox 2 Official Soundtrack.mp3 | 游戏《Universe Sandbox 2》原声合辑 | 版权所有，待查 | 20 分钟，只作参考，不用在公开成片 |
 
 ## images/
 

@@ -54,3 +54,14 @@ public/nebula/audio/
 tools/nebula/whisper-seg.json
 tools/nebula/whisper.log
 tools/nebula/music.log
+
+# 巨引源：续长的配乐是原曲拼的，不入库；数据由 tools/attractor/ 的脚本在本机生成
+public/attractor/audio/
+public/attractor/data/
+
+# sfizz 的 Windows 命令行（BSD-2，从 github.com/sfztools/sfizz 的 1.2.3 发布页下载 win64 包，只留 sfizz_render.exe 和 sfizz.dll）
+tools/sfizz/
+tools/attractor/whisper-*.json
+tools/attractor/whisper.log
+public/attractor/img/
+public/attractor/video/

@@ -21,7 +21,7 @@
 | `src/Root.tsx` | 只负责登记各视频 | 是 |
 | `src/shared/` | 跨视频复用的组件：颜色和样式通过参数传入，不引用某个视频的 `theme.ts` | 是 |
 | `public/<名字>/` | 这一期渲染要读的素材；视频里通过自己 `theme.ts` 的 `asset()` 拼路径 | 能公开的是 |
-| `tools/common/` | 通用工具：渲染、静帧、截图、通用配乐、采样下载、人声分离 | 是 |
+| `tools/common/` | 通用工具：渲染、静帧、截图、通用配乐、采样下载、人声分离、MIDI 用真实采样渲染 | 是 |
 | `tools/<名字>/` | 只属于某一期的脚本和配置 | 是 |
 | `refer/<期名>/` | 用户给的原始素材，一期一个文件夹；开新一期先读这里 | 否 |
 | `library/` | 跨期复用的图片、音乐（只收真实来源的，不收 AI 生成的、念白、文章）。开新一期先看 `library/INDEX.md`，有现成的就**复制一份**到这一期自己的文件夹用，不直接读；放进去的要在 INDEX 登记 | 只有 README 和 INDEX |
@@ -35,14 +35,14 @@
 
 - 风格不固定，每一期按主题和素材自己定，一期里也可以几种混着用（线稿、手帐、像素、2D 着色器、3D、体积渲染都用过）。
 - 网页素材用截图，不录屏；截图登录令牌只写入已忽略的 `tools/**/tokens.json`，不打印、不入库。细节见 `src/videos/moheng-oj/README.md`。
-- 配乐优先自己合成：通用的 `tools/common/music.py`，各期自己的 `tools/<名字>/music.py`（每期用不同的乐器和调式；本机 pip 装不上 numpy，纯 Python）。要把现成音频里的人声去掉用 `tools/common/separate.py`。
+- 配乐：优先用有授权的现成曲子（先看 `library/INDEX.md`，续长见 `tools/attractor/loop_music.py`）；需要原创时写 MIDI，用 `tools/common/midi_render.py`（sfizz + `samples/` 里的 CC0 真实采样）渲染。用户 2026-10-04 起不要纯 Python 手算波形的合成配乐（早期几期的 `tools/<名字>/music.py` 留作历史）。要把现成音频里的人声去掉用 `tools/common/separate.py`。念白压低沉用 `tools/attractor/voice.py`；念白对齐字幕用 `tools/attractor/align.py`（比第十二期那份稳，做法写在文件开头）。
 - 仓库是公开的：有版权的配乐（`public/**/*.mp3`）、个人照片（`public/*/photos/`）、朋友录的念白不入库；提交邮箱用 GitHub 的 noreply 邮箱。
 
 ## 验证
 
 - `npm run lint`（ESLint + tsc）必须通过。
 - 改了画面就用 `node tools/common/stills.mjs <输出目录> <组合ID:帧>...` 渲染关键帧，亲自看过再交付；有 3D 画面时加 `--gl=angle`。
-- 渲染成片：`npm run render -- <成片ID>`，参数在 `episodes.json`。渲完看一眼日志有没有着色器的 ERROR。
+- 渲染成片：`npm run render -- <成片ID>`，参数在 `episodes.json`。渲完看一眼日志有没有着色器的 ERROR。**整片渲染前先问用户**：这台是核显，三维片子要十几二十分钟，期间机器很卡；先出样帧。Remotion 会把单声道念白原样复制到左右两路（比单声道文件响 3 dB），配乐和念白的响度差要按这个算。
 
 ## 新增或改动视频时同步
 

@@ -38,6 +38,7 @@ npm run check                  # 体检：登记表、各期 README、成片注�
 | 10 | [`Hello`](src/videos/hello/README.md) | 你好，我是 Claude | 约 130 秒 | Claude 的自我介绍：像素小螃蟹从头讲到尾，转场、镜头推拉、分层布景、颜文字，芯片音乐 | 角色、像素、转场、芯片音乐、颜文字 | `--gl=angle --color-space=bt709` |
 | 11 | [`Edge`](src/videos/edge/README.md) | 宇宙的尽头 | 约 3 分 37 秒 | 朋友的朗读配一张不断被重画的老地图（全 SVG 墨线）；古地图海怪、哈勃和韦伯的真实照片；深空氛围配乐 | 天文、人声念白、SVG、古地图、真实照片 | `--color-space=bt709` |
 | 12 | [`Nebula`](src/videos/nebula/README.md) | 星云 | 约 5 分 48 秒 | 朋友的朗读，放松助眠的科普：体积渲染把地球的云一路画成宇宙的云，目镜、光谱、行星状星云、极光；全是自己算的 3D；摇篮曲配乐 | 天文、人声念白、体积渲染、three.js、着色器、助眠 | `--gl=angle --color-space=bt709 --concurrency=3` |
+| 13 | [`Attractor`](src/videos/attractor/README.md) | 巨引源 | 约 6 分 44 秒 | 放松助眠的科普：从床上的夜空升到银河系，用真实的微波背景、2MRS 和 Cosmicflows-4 数据自己建模，论文页上划线标注，讲「巨引源」这三十多年的追寻；你自己录的念白（压低压沉），深邃静谧配乐循环续长 | 天文、真实数据、论文标注、three.js、着色器、助眠 | `--gl=angle --color-space=bt709 --concurrency=3` |
 <!-- episodes:end -->
 
 ## 目录
@@ -69,6 +70,7 @@ exports/           成片以外的导出：透明角标、动图、单独的配�
 | `shoot.mjs` | `node tools/common/shoot.mjs <site.json> <清单.json> <输出目录> [名字...]`，批量截图（puppeteer + 本机 Chrome），用法见 `src/videos/moheng-oj/README.md` |
 | `music.py` | `python tools/common/music.py <输出.wav> [秒数] [种子]`，D 宫五声拨弦配乐，归一到 -16 LUFS；需要 ffmpeg。各期自己的配乐在 `tools/<名字>/music.py` |
 | `fetch_samples.py` | `python tools/common/fetch_samples.py <VCSL 或 VSCO-2-CE> "<乐器文件夹>" [--match 字样]`，按需下 CC0 乐器采样到 `samples/`；`--list` 看有哪些 |
+| `midi_render.py` | `python tools/common/midi_render.py demo <输出.wav>`；自己写 MIDI（`write_midi`），用 `samples/` 里的 CC0 真实乐器采样渲染成声音（`sfz_from_notes` / `sfz_from_chart` 把采样文件夹写成 `.sfz`，`render` 逐轨渲染再混音）。渲染器是 sfizz，装在仓库里的 `tools/sfizz/`（不入库）：从 `github.com/sfztools/sfizz` 的 1.2.3 发布页下 `sfizz-1.2.3-win64.zip`，只留里面 `bin/Release/` 的 `sfizz_render.exe` 和 `sfizz.dll` |
 | `separate.py` | `python tools/common/separate.py <音频> [输出目录] [--keep-vocals]`，用 Demucs 去掉人声留下配乐；Demucs 装在仓库外，安装命令写在文件开头，换了位置设 `DEMUCS_PYTHON` |
 
 ## 新增一个视频

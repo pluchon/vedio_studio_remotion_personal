@@ -1,0 +1,975 @@
+{
+ "duration": 391.18,
+ "sections": [
+  {
+   "id": "sky",
+   "start": 1.15,
+   "end": 38.55
+  },
+  {
+   "id": "cmb",
+   "start": 39.9,
+   "end": 83.15
+  },
+  {
+   "id": "leaves",
+   "start": 84.75,
+   "end": 120.95
+  },
+  {
+   "id": "paper",
+   "start": 122.15,
+   "end": 157.9
+  },
+  {
+   "id": "zone",
+   "start": 159.2,
+   "end": 192.7
+  },
+  {
+   "id": "norma",
+   "start": 193.8,
+   "end": 232.6
+  },
+  {
+   "id": "laniakea",
+   "start": 234.1,
+   "end": 266.7
+  },
+  {
+   "id": "pushpull",
+   "start": 267.85,
+   "end": 314.45
+  },
+  {
+   "id": "maybe",
+   "start": 315.5,
+   "end": 363.85
+  },
+  {
+   "id": "night",
+   "start": 365.05,
+   "end": 390.35
+  }
+ ],
+ "phrases": [
+  {
+   "start": 1.15,
+   "end": 2.4,
+   "text": "你现在躺在床上，",
+   "section": "sky"
+  },
+  {
+   "start": 3.05,
+   "end": 3.75,
+   "text": "一动不动。",
+   "section": "sky"
+  },
+  {
+   "start": 4.6,
+   "end": 5.3,
+   "text": "但其实，",
+   "section": "sky"
+  },
+  {
+   "start": 5.8,
+   "end": 7.15,
+   "text": "你从来没有真正停下来过。",
+   "section": "sky"
+  },
+  {
+   "start": 8.65,
+   "end": 9.55,
+   "text": "地球正带着你，",
+   "section": "sky"
+  },
+  {
+   "start": 10.2,
+   "end": 11.3,
+   "text": "绕着太阳飞驰。",
+   "section": "sky"
+  },
+  {
+   "start": 12.4,
+   "end": 13.45,
+   "text": "太阳带着地球，",
+   "section": "sky"
+  },
+  {
+   "start": 14.1,
+   "end": 15.65,
+   "text": "绕着银河系的中心旋转。",
+   "section": "sky"
+  },
+  {
+   "start": 16.8,
+   "end": 18.4,
+   "text": "而在更广阔的虚空里，",
+   "section": "sky"
+  },
+  {
+   "start": 19.2,
+   "end": 20.15,
+   "text": "整个银河系，",
+   "section": "sky"
+  },
+  {
+   "start": 20.85,
+   "end": 23.2,
+   "text": "连同周围的几十个星系邻居，",
+   "section": "sky"
+  },
+  {
+   "start": 24.05,
+   "end": 25.65,
+   "text": "正朝着深空的某个方向，",
+   "section": "sky"
+  },
+  {
+   "start": 26.25,
+   "end": 27.15,
+   "text": "沉稳地前行。",
+   "section": "sky"
+  },
+  {
+   "start": 28.1,
+   "end": 28.5,
+   "text": "速度，",
+   "section": "sky"
+  },
+  {
+   "start": 29.1,
+   "end": 30.6,
+   "text": "是每秒六百多公里。",
+   "section": "sky"
+  },
+  {
+   "start": 32.0,
+   "end": 34.45,
+   "text": "你安安静静睡上八个小时，",
+   "section": "sky"
+  },
+  {
+   "start": 35.4,
+   "end": 38.55,
+   "text": "就已经在宇宙里穿行了一千八百万公里。",
+   "section": "sky"
+  },
+  {
+   "start": 39.9,
+   "end": 41.85,
+   "text": "我们之所以能察觉到这场远行，",
+   "section": "cmb"
+  },
+  {
+   "start": 42.6,
+   "end": 44.2,
+   "text": "是因为漫天古老的光。",
+   "section": "cmb"
+  },
+  {
+   "start": 45.3,
+   "end": 47.55,
+   "text": "宇宙诞生之初留下的余晖，",
+   "section": "cmb"
+  },
+  {
+   "start": 48.4,
+   "end": 49.9,
+   "text": "历经百亿年演化，",
+   "section": "cmb"
+  },
+  {
+   "start": 50.85,
+   "end": 53.2,
+   "text": "化作了均匀铺满天穹的微波背景。",
+   "section": "cmb"
+  },
+  {
+   "start": 54.25,
+   "end": 54.6,
+   "text": "然而，",
+   "section": "cmb"
+  },
+  {
+   "start": 55.3,
+   "end": 58.15,
+   "text": "精密卫星捕捉到了一个极微弱的温差——",
+   "section": "cmb"
+  },
+  {
+   "start": 59.15,
+   "end": 60.85,
+   "text": "在我们迎面而去的方向，",
+   "section": "cmb"
+  },
+  {
+   "start": 61.7,
+   "end": 63.6,
+   "text": "背景微波被轻微压缩，",
+   "section": "cmb"
+  },
+  {
+   "start": 64.45,
+   "end": 66.25,
+   "text": "温度高出千分之三度；",
+   "section": "cmb"
+  },
+  {
+   "start": 67.5,
+   "end": 68.7,
+   "text": "在我们身后的方向，",
+   "section": "cmb"
+  },
+  {
+   "start": 69.2,
+   "end": 70.1,
+   "text": "则略微偏冷。",
+   "section": "cmb"
+  },
+  {
+   "start": 71.1,
+   "end": 72.7,
+   "text": "这个微小的偶极差，",
+   "section": "cmb"
+  },
+  {
+   "start": 73.4,
+   "end": 74.65,
+   "text": "就像迎面吹来的风，",
+   "section": "cmb"
+  },
+  {
+   "start": 75.45,
+   "end": 77.25,
+   "text": "精确指明了我们前行的方向。",
+   "section": "cmb"
+  },
+  {
+   "start": 78.7,
+   "end": 79.85,
+   "text": "在那个方向的深处，",
+   "section": "cmb"
+  },
+  {
+   "start": 80.95,
+   "end": 81.75,
+   "text": "究竟有什么，",
+   "section": "cmb"
+  },
+  {
+   "start": 82.35,
+   "end": 83.15,
+   "text": "在牵引着我们？",
+   "section": "cmb"
+  },
+  {
+   "start": 84.75,
+   "end": 85.65,
+   "text": "宇宙在膨胀。",
+   "section": "leaves"
+  },
+  {
+   "start": 86.6,
+   "end": 88.8,
+   "text": "所有星系本该像顺流而下的落叶，",
+   "section": "leaves"
+  },
+  {
+   "start": 89.4,
+   "end": 90.45,
+   "text": "彼此缓缓散开。",
+   "section": "leaves"
+  },
+  {
+   "start": 91.15,
+   "end": 92.0,
+   "text": "这叫哈勃流。",
+   "section": "leaves"
+  },
+  {
+   "start": 93.05,
+   "end": 94.95,
+   "text": "但在大尺度的水流之上，",
+   "section": "leaves"
+  },
+  {
+   "start": 95.65,
+   "end": 97.65,
+   "text": "如果某处聚集了巨大的质量，",
+   "section": "leaves"
+  },
+  {
+   "start": 98.5,
+   "end": 101.25,
+   "text": "那里的引力就会像一个看不见的漩涡，",
+   "section": "leaves"
+  },
+  {
+   "start": 102.05,
+   "end": 103.75,
+   "text": "轻轻扯动附近的星系。",
+   "section": "leaves"
+  },
+  {
+   "start": 105.05,
+   "end": 107.7,
+   "text": "这种叠加在膨胀之上的额外漂移，",
+   "section": "leaves"
+  },
+  {
+   "start": 108.45,
+   "end": 110.15,
+   "text": "天文学家称之为“特殊速度”。",
+   "section": "leaves"
+  },
+  {
+   "start": 111.35,
+   "end": 113.8,
+   "text": "测出成千上万个星系的特殊速度，",
+   "section": "leaves"
+  },
+  {
+   "start": 114.35,
+   "end": 116.45,
+   "text": "就像在宇宙中撒下一把把树叶。",
+   "section": "leaves"
+  },
+  {
+   "start": 117.65,
+   "end": 118.9,
+   "text": "顺着叶子的漂向，",
+   "section": "leaves"
+  },
+  {
+   "start": 119.3,
+   "end": 120.95,
+   "text": "就能看清引力之河的流向。",
+   "section": "leaves"
+  },
+  {
+   "start": 122.15,
+   "end": 123.2,
+   "text": "一九八七年，",
+   "section": "paper"
+  },
+  {
+   "start": 124.0,
+   "end": 127.7,
+   "text": "七位天文学家发表了一项耗时多年的测量结果。",
+   "section": "paper"
+  },
+  {
+   "start": 128.85,
+   "end": 131.3,
+   "text": "他们分析了数百个椭圆星系的距离与速度，",
+   "section": "paper"
+  },
+  {
+   "start": 131.7,
+   "end": 132.55,
+   "text": "惊讶地发现，",
+   "section": "paper"
+  },
+  {
+   "start": 133.35,
+   "end": 135.6,
+   "text": "方圆上亿光年内的庞大星系群，",
+   "section": "paper"
+  },
+  {
+   "start": 136.35,
+   "end": 139.2,
+   "text": "竟然整齐划一地朝着南天深处奔流。",
+   "section": "paper"
+  },
+  {
+   "start": 140.4,
+   "end": 141.75,
+   "text": "速度接近每秒六百公里，",
+   "section": "paper"
+  },
+  {
+   "start": 142.75,
+   "end": 144.45,
+   "text": "方向直指南天的矩尺座。",
+   "section": "paper"
+  },
+  {
+   "start": 145.45,
+   "end": 146.5,
+   "text": "这七位天文学家，",
+   "section": "paper"
+  },
+  {
+   "start": 147.0,
+   "end": 149.3,
+   "text": "后来被学界称为“七武士”。",
+   "section": "paper"
+  },
+  {
+   "start": 150.3,
+   "end": 154.45,
+   "text": "而那片潜藏在深空、牵引着万千星系的未知源头，",
+   "section": "paper"
+  },
+  {
+   "start": 155.05,
+   "end": 156.2,
+   "text": "从此有了一个名字——",
+   "section": "paper"
+  },
+  {
+   "start": 156.95,
+   "end": 157.9,
+   "text": "巨引源。",
+   "section": "paper"
+  },
+  {
+   "start": 159.2,
+   "end": 159.7,
+   "text": "然而，",
+   "section": "zone"
+  },
+  {
+   "start": 160.4,
+   "end": 162.3,
+   "text": "想要看清巨引源的真容，",
+   "section": "zone"
+  },
+  {
+   "start": 162.6,
+   "end": 163.25,
+   "text": "异常艰难。",
+   "section": "zone"
+  },
+  {
+   "start": 164.15,
+   "end": 165.95,
+   "text": "当我们顺着引力的方向望去，",
+   "section": "zone"
+  },
+  {
+   "start": 166.45,
+   "end": 169.45,
+   "text": "视线恰好被银河系自己的盘面挡了个正着。",
+   "section": "zone"
+  },
+  {
+   "start": 170.45,
+   "end": 173.75,
+   "text": "数以千亿计的恒星、厚重的星际尘埃与气体，",
+   "section": "zone"
+  },
+  {
+   "start": 174.7,
+   "end": 176.7,
+   "text": "遮蔽了近五分之一的天空。",
+   "section": "zone"
+  },
+  {
+   "start": 177.55,
+   "end": 179.5,
+   "text": "天文学家把这片观测盲区，",
+   "section": "zone"
+  },
+  {
+   "start": 180.0,
+   "end": 180.95,
+   "text": "称为“隐匿带”。",
+   "section": "zone"
+  },
+  {
+   "start": 181.9,
+   "end": 183.35,
+   "text": "隐匿带遮住了可见光，",
+   "section": "zone"
+  },
+  {
+   "start": 184.1,
+   "end": 186.9,
+   "text": "却遮不住穿透力更强的红外线与射电电波。",
+   "section": "zone"
+  },
+  {
+   "start": 187.85,
+   "end": 190.25,
+   "text": "天文学家开始换用更敏锐的波段，",
+   "section": "zone"
+  },
+  {
+   "start": 190.85,
+   "end": 192.7,
+   "text": "一点点穿透银河的迷雾。",
+   "section": "zone"
+  },
+  {
+   "start": 193.8,
+   "end": 194.6,
+   "text": "一九九六年，",
+   "section": "norma"
+  },
+  {
+   "start": 195.45,
+   "end": 198.8,
+   "text": "射电与红外巡天终于刺破尘埃，",
+   "section": "norma"
+  },
+  {
+   "start": 199.4,
+   "end": 200.95,
+   "text": "在两亿多光年外，",
+   "section": "norma"
+  },
+  {
+   "start": 201.7,
+   "end": 203.65,
+   "text": "清点出了大量被遮蔽的星系。",
+   "section": "norma"
+  },
+  {
+   "start": 204.55,
+   "end": 206.0,
+   "text": "在矩尺座的核心位置，",
+   "section": "norma"
+  },
+  {
+   "start": 206.6,
+   "end": 210.6,
+   "text": "盘踞着一个重得出奇的星系团——Abell 3627。",
+   "section": "norma"
+  },
+  {
+   "start": 211.65,
+   "end": 213.0,
+   "text": "它聚集了数百个星系，",
+   "section": "norma"
+  },
+  {
+   "start": 214.0,
+   "end": 215.8,
+   "text": "质量相当于一千万亿个太阳，",
+   "section": "norma"
+  },
+  {
+   "start": 216.5,
+   "end": 219.3,
+   "text": "是附近宇宙中最沉重的引力枢纽之一。",
+   "section": "norma"
+  },
+  {
+   "start": 220.15,
+   "end": 221.15,
+   "text": "然而，",
+   "section": "norma"
+  },
+  {
+   "start": 221.5,
+   "end": 222.7,
+   "text": "经过细致的轨道计算，",
+   "section": "norma"
+  },
+  {
+   "start": 223.2,
+   "end": 223.9,
+   "text": "人们发现，",
+   "section": "norma"
+  },
+  {
+   "start": 224.5,
+   "end": 225.8,
+   "text": "单凭这一个星系团，",
+   "section": "norma"
+  },
+  {
+   "start": 226.15,
+   "end": 228.15,
+   "text": "根本拉不动整片星系洪流。",
+   "section": "norma"
+  },
+  {
+   "start": 229.15,
+   "end": 230.35,
+   "text": "巨引源的真正轮廓，",
+   "section": "norma"
+  },
+  {
+   "start": 231.0,
+   "end": 232.6,
+   "text": "比一个星系团还要宏大得多。",
+   "section": "norma"
+  },
+  {
+   "start": 234.1,
+   "end": 236.25,
+   "text": "随着观测数据积累到数万个星系，",
+   "section": "laniakea"
+  },
+  {
+   "start": 237.05,
+   "end": 239.4,
+   "text": "宇宙的立体流场被完整重构出来。",
+   "section": "laniakea"
+  },
+  {
+   "start": 240.5,
+   "end": 243.6,
+   "text": "就像地理学家根据水流走向划定大陆水系一样，",
+   "section": "laniakea"
+  },
+  {
+   "start": 244.5,
+   "end": 247.1,
+   "text": "天文学家也勾勒出星系奔流的引力边界。",
+   "section": "laniakea"
+  },
+  {
+   "start": 248.05,
+   "end": 249.9,
+   "text": "我们所在的这一片浩瀚水系，",
+   "section": "laniakea"
+  },
+  {
+   "start": 250.5,
+   "end": 251.65,
+   "text": "横跨五亿光年，",
+   "section": "laniakea"
+  },
+  {
+   "start": 252.4,
+   "end": 253.65,
+   "text": "包容了十万个大星系。",
+   "section": "laniakea"
+  },
+  {
+   "start": 254.8,
+   "end": 256.7,
+   "text": "它被命名为——拉尼亚凯亚。",
+   "section": "laniakea"
+  },
+  {
+   "start": 257.65,
+   "end": 259.2,
+   "text": "在夏威夷语中，",
+   "section": "laniakea"
+  },
+  {
+   "start": 259.45,
+   "end": 260.85,
+   "text": "意为“无量的天空”。",
+   "section": "laniakea"
+  },
+  {
+   "start": 261.5,
+   "end": 262.2,
+   "text": "银河系，",
+   "section": "laniakea"
+  },
+  {
+   "start": 262.75,
+   "end": 264.4,
+   "text": "只是这片辽阔流域中，",
+   "section": "laniakea"
+  },
+  {
+   "start": 264.75,
+   "end": 266.7,
+   "text": "顺流而下的一叶扁舟。",
+   "section": "laniakea"
+  },
+  {
+   "start": 267.85,
+   "end": 270.15,
+   "text": "视线如果再往更深处延伸，",
+   "section": "pushpull"
+  },
+  {
+   "start": 270.95,
+   "end": 273.15,
+   "text": "宇宙的图景还会进一步展开。",
+   "section": "pushpull"
+  },
+  {
+   "start": 274.3,
+   "end": 276.4,
+   "text": "在巨引源后方三倍远的地方，",
+   "section": "pushpull"
+  },
+  {
+   "start": 277.1,
+   "end": 280.35,
+   "text": "沉睡着更为庞大的沙普利超星系团；",
+   "section": "pushpull"
+  },
+  {
+   "start": 281.45,
+   "end": 282.75,
+   "text": "在隐匿带更深处，",
+   "section": "pushpull"
+  },
+  {
+   "start": 283.3,
+   "end": 286.1,
+   "text": "还有八亿光年外的船帆座超星系团。",
+   "section": "pushpull"
+  },
+  {
+   "start": 287.25,
+   "end": 290.0,
+   "text": "它们都在施加着远方的拉力。",
+   "section": "pushpull"
+  },
+  {
+   "start": 290.95,
+   "end": 292.45,
+   "text": "而在我们身后的相反方向，",
+   "section": "pushpull"
+  },
+  {
+   "start": 293.3,
+   "end": 296.9,
+   "text": "却横亘着一片数亿光年宽的广袤空洞。",
+   "section": "pushpull"
+  },
+  {
+   "start": 297.85,
+   "end": 299.3,
+   "text": "那里星系极其稀疏，",
+   "section": "pushpull"
+  },
+  {
+   "start": 300.5,
+   "end": 302.1,
+   "text": "引力远低于平均水平。",
+   "section": "pushpull"
+  },
+  {
+   "start": 303.4,
+   "end": 305.6,
+   "text": "四周更强的引力将物质向外拉扯，",
+   "section": "pushpull"
+  },
+  {
+   "start": 306.6,
+   "end": 307.8,
+   "text": "在相对效应上，",
+   "section": "pushpull"
+  },
+  {
+   "start": 308.3,
+   "end": 309.75,
+   "text": "就像有一股无形的力量，",
+   "section": "pushpull"
+  },
+  {
+   "start": 310.55,
+   "end": 311.95,
+   "text": "在背后轻轻推着我们。",
+   "section": "pushpull"
+  },
+  {
+   "start": 312.45,
+   "end": 313.2,
+   "text": "一边在拉，",
+   "section": "pushpull"
+  },
+  {
+   "start": 313.75,
+   "end": 314.45,
+   "text": "一边在推。",
+   "section": "pushpull"
+  },
+  {
+   "start": 315.5,
+   "end": 316.0,
+   "text": "近年来，",
+   "section": "maybe"
+  },
+  {
+   "start": 316.5,
+   "end": 319.1,
+   "text": "随着更高精度的宇宙模拟与星系测距，",
+   "section": "maybe"
+  },
+  {
+   "start": 319.85,
+   "end": 321.45,
+   "text": "故事又有了新的反思。",
+   "section": "maybe"
+  },
+  {
+   "start": 322.2,
+   "end": 324.05,
+   "text": "最新的动力学重构显示，",
+   "section": "maybe"
+  },
+  {
+   "start": 324.75,
+   "end": 327.5,
+   "text": "即便把附近能找到的所有大质量结构加在一起，",
+   "section": "maybe"
+  },
+  {
+   "start": 328.2,
+   "end": 330.15,
+   "text": "也只能解释我们速度的七成多，",
+   "section": "maybe"
+  },
+  {
+   "start": 330.8,
+   "end": 332.85,
+   "text": "引力方向仍有三十多度的偏差。",
+   "section": "maybe"
+  },
+  {
+   "start": 333.65,
+   "end": 335.0,
+   "text": "甚至有学者提出：",
+   "section": "maybe"
+  },
+  {
+   "start": 335.6,
+   "end": 339.2,
+   "text": "宇宙中或许从来就不存在一个孤立的、具象的“巨引源”。",
+   "section": "maybe"
+  },
+  {
+   "start": 340.35,
+   "end": 343.2,
+   "text": "我们所感受到的漫长奔流，",
+   "section": "maybe"
+  },
+  {
+   "start": 344.1,
+   "end": 349.35,
+   "text": "其实是近处、远处、明处、暗处……无数引力与空洞共同交织出的合力。",
+   "section": "maybe"
+  },
+  {
+   "start": 350.15,
+   "end": 350.6,
+   "text": "当然，",
+   "section": "maybe"
+  },
+  {
+   "start": 351.0,
+   "end": 352.45,
+   "text": "也有最新的测距研究，",
+   "section": "maybe"
+  },
+  {
+   "start": 353.15,
+   "end": 356.0,
+   "text": "依然在观测中看到了汇聚向前的引力流。",
+   "section": "maybe"
+  },
+  {
+   "start": 357.0,
+   "end": 357.75,
+   "text": "巨引源，",
+   "section": "maybe"
+  },
+  {
+   "start": 358.35,
+   "end": 361.0,
+   "text": "也许只是站在我们这个特定位置望去时，",
+   "section": "maybe"
+  },
+  {
+   "start": 362.0,
+   "end": 363.85,
+   "text": "恰好重叠的一道引力剪影。",
+   "section": "maybe"
+  },
+  {
+   "start": 365.05,
+   "end": 365.65,
+   "text": "夜深了。",
+   "section": "night"
+  },
+  {
+   "start": 366.3,
+   "end": 367.0,
+   "text": "你的房间，",
+   "section": "night"
+  },
+  {
+   "start": 367.8,
+   "end": 368.5,
+   "text": "窗外的树影，",
+   "section": "night"
+  },
+  {
+   "start": 369.3,
+   "end": 370.05,
+   "text": "整座城市，",
+   "section": "night"
+  },
+  {
+   "start": 370.95,
+   "end": 372.6,
+   "text": "乃至这颗蔚蓝的星球，",
+   "section": "night"
+  },
+  {
+   "start": 373.4,
+   "end": 375.5,
+   "text": "都在这片广袤的引力之网中，",
+   "section": "night"
+  },
+  {
+   "start": 375.65,
+   "end": 376.4,
+   "text": "安稳地前行。",
+   "section": "night"
+  },
+  {
+   "start": 377.5,
+   "end": 378.75,
+   "text": "在这样的尺度面前，",
+   "section": "night"
+  },
+  {
+   "start": 379.2,
+   "end": 380.45,
+   "text": "没有什么需要你操心。",
+   "section": "night"
+  },
+  {
+   "start": 381.35,
+   "end": 382.75,
+   "text": "不管前方由谁牵引，",
+   "section": "night"
+  },
+  {
+   "start": 383.35,
+   "end": 384.45,
+   "text": "身后由谁推动，",
+   "section": "night"
+  },
+  {
+   "start": 385.25,
+   "end": 386.85,
+   "text": "在漫长而宁静的旅途里，",
+   "section": "night"
+  },
+  {
+   "start": 387.45,
+   "end": 388.95,
+   "text": "今夜都会平稳地过去。",
+   "section": "night"
+  },
+  {
+   "start": 389.6,
+   "end": 389.88,
+   "text": "睡吧。",
+   "section": "night"
+  },
+  {
+   "start": 389.95,
+   "end": 390.35,
+   "text": "晚安。",
+   "section": "night"
+  }
+ ]
+}
