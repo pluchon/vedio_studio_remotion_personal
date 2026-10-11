@@ -1,28 +1,51 @@
-# vedio_studio_remotion_personal
+![视频工作室封面](https://zlhimage.oss-cn-guangzhou.aliyuncs.com/20261011195744118.png)
 
 用代码生成视频的仓库，记录每一次想法。
 
-公用的 Remotion 视频工作室（Remotion 4.0.529，React 19）。无论是项目介绍还是自己的想法，视频都放在这一个工程里，共用一份依赖和通用组件。
+项目介绍、日常片段、天文科普，都在这个 Remotion 工程里做。每一期有自己的代码和素材，共用依赖、组件和工具。
 
-**每一期的风格都不固定**：线稿、手帐、像素、2D 着色器、3D 建模、体积渲染都用过，一期里也可以几种混着来，由这一期的主题和素材决定。
+画法跟着主题走：线稿、手帐、像素、2D 着色器、3D、体积渲染都试过，也会在一支片子里混着用。当前使用 Remotion 4.0.529、React 19 和 rspack。
+
+## 一支视频怎么做
+
+```mermaid
+flowchart LR
+    A[想法与原始素材] --> B[分镜、画法与声音]
+    B --> C[写场景与动画]
+    C --> D[Studio 预览]
+    D --> E[渲染关键帧]
+    E --> F{画面与节奏合适吗}
+    F -->|再调一遍| C
+    F -->|可以了| G[检查代码与登记信息]
+    G --> H[渲染成片到 out/]
+```
 
 ## 快速开始
 
 ```bash
-npm i                          # 首次安装
-npm run dev                    # 打开 Studio 预览
-npm run render -- Nebula       # 渲染成片到 out/，参数按 src/videos/episodes.json 里登记的带上
-npm run render -- --list       # 列出所有成片
-npm run lint                   # ESLint + 类型检查
-npm run docs                   # 由 episodes.json 重写下面的视频列表
-npm run check                  # 体检：登记表、各期 README、成片注册、资料库目录是否对得上
+npm install
+npm run dev
 ```
+
+克隆后先看目标视频的 README，按里面的说明补齐本机素材。公开仓库不包含所有配乐、照片和念白。
+
+```bash
+npm run render -- --list       # 列出成片 ID
+npm run lint                  # ESLint + 类型检查
+npm run check                 # 检查登记、文档与素材目录
+npm run render -- Hello       # 按登记参数渲染到 out/hello.mp4
+```
+
+渲染脚本会自动读取 `episodes.json` 中的参数。三维片子先看样帧，整片渲染会占用较多时间和机器资源。
 
 ## 视频列表
 
-每期的做法、素材来源、不入库的东西怎么生成，都写在它自己的 `src/videos/<名字>/README.md` 里，点成片 ID 进去。列表由 `src/videos/episodes.json` 生成，要改请改那份 JSON 再 `npm run docs`。每条带 `tags`（题材和技术），按标签找：`grep -i 体积渲染 src/videos/episodes.json`。
+点成片 ID 可以看这一期的做法、来源和素材补齐说明。列表来自 [episodes.json](src/videos/episodes.json)，修改登记后运行 `npm run docs`。
+
+按题材或技术找片子：`rg -i '体积渲染' src/videos/episodes.json`。
 
 <!-- episodes:start -->
+
 | 期 | 成片 ID | 片名 | 时长 | 一句话 | 标签 | 渲染参数 |
 | --- | --- | --- | --- | --- | --- | --- |
 | 0 | [`MohengOJ`](src/videos/moheng-oj/README.md) | 墨衡 OJ 介绍 | 120 秒 | 项目介绍视频：网页截图做成图版，镜头推拉，朱砂圈注 | 项目介绍、网页截图、图版推拉 | — |
@@ -41,23 +64,35 @@ npm run check                  # 体检：登记表、各期 README、成片注�
 | 13 | [`Attractor`](src/videos/attractor/README.md) | 巨引源 | 约 6 分 44 秒 | 放松助眠的科普：从床上的夜空升到银河系，用真实的微波背景、2MRS 和 Cosmicflows-4 数据自己建模，论文页上划线标注，讲「巨引源」这三十多年的追寻；你自己录的念白（压低压沉），深邃静谧配乐循环续长 | 天文、真实数据、论文标注、three.js、着色器、助眠 | `--gl=angle --color-space=bt709 --concurrency=3` |
 <!-- episodes:end -->
 
-## 目录
+## 代码和素材放哪里
 
-```
-src/Root.tsx       登记所有视频
-src/shared/        跨视频复用的组件（颜色、字体通过参数传入）
-src/videos/<名字>/  一期一个文件夹：代码 + README.md；episodes.json 是所有视频的登记表
-public/<名字>/      这一期用到的素材，渲染时读
-tools/common/      通用工具（见下）
-tools/<名字>/       只属于某一期的脚本（合成配乐、对齐念白、转数据……）
-library/           公共资料库：跨期的图片、音乐（本体不入库，目录见 library/INDEX.md）
-refer/             用户给的原始素材，一期一个文件夹（不入库）
-samples/           乐器采样库（不入库）
-out/               渲染好的成片视频，只放视频（不入库）
-exports/           成片以外的导出：透明角标、动图、单独的配乐等（不入库）
+```mermaid
+flowchart TD
+    Root["src/Root.tsx · 注册视频"] --> Episode["src/videos/名字/ · 本期代码与 README"]
+    Shared["src/shared/ · 共用组件"] --> Episode
+    Registry["episodes.json · 片名、标签与渲染参数"] --> Render["tools/common/render.mjs"]
+    Episode --> Render
+    Public["public/名字/ · 本期渲染素材"] --> Render
+    Render --> Out["out/ · 成片视频"]
+    Registry --> Docs["npm run docs"]
+    Docs --> List[README 视频列表]
 ```
 
-素材的流向：`refer/`（原始）→ `library/`（挑出可复用的）→ 复制一份到 `public/<名字>/`（这一期用）。`out/` 和 `exports/` 是产出。自查静帧、测试渲染、日志放仓库外的临时目录，用完删掉。
+```mermaid
+flowchart LR
+    Refer["refer/期名/ · 原始素材"] --> Public["public/名字/ · 本期使用"]
+    Refer -->|适合复用的图片与音乐| Library["library/ · 公共资料库"]
+    Library -->|复制一份| Public
+    Samples["samples/ · CC0 乐器采样"] --> MIDI[写 MIDI 并渲染配乐]
+    MIDI --> Public
+    Public --> Video[本期视频]
+    Video --> Out["out/ · 成片"]
+    Video --> Exports["exports/ · 角标、动图、单独配乐"]
+```
+
+开新一期先看 [library/INDEX.md](library/INDEX.md)。资料库只收有真实来源的图片与音乐，不收生成图片、念白或文章；使用时复制到本期目录。静帧、测试渲染和日志放仓库外的临时目录。
+
+本期脚本放 `tools/<名字>/`，跨期工具放 `tools/common/`。共用组件的颜色和样式通过参数传入。
 
 ## 通用工具（`tools/common/`）
 
@@ -65,23 +100,38 @@ exports/           成片以外的导出：透明角标、动图、单独的配�
 | --- | --- |
 | `render.mjs` | `npm run render -- <成片ID> [额外参数]`；参数来自 `episodes.json`；要传参数的片子（如 `ThatDay`）追加 `--props=<json>` |
 | `docs.mjs` | `npm run docs`：重写上面的视频列表 |
-| `check.mjs` | `npm run check`：体检——每个视频文件夹都登记了、有 README、成片 ID 在 `Compositions.tsx` 里注册、视频列表是最新的、`library/` 的文件都登记在 INDEX 里（反过来本机缺的只提醒） |
+| `check.mjs` | `npm run check`：检查视频登记、各期 README、组合 ID、视频列表与资料库目录 |
 | `stills.mjs` | `node tools/common/stills.mjs <输出目录> <组合ID:帧>... [--gl=angle] [--props=<json>]`，批量渲染静帧自查 |
 | `shoot.mjs` | `node tools/common/shoot.mjs <site.json> <清单.json> <输出目录> [名字...]`，批量截图（puppeteer + 本机 Chrome），用法见 `src/videos/moheng-oj/README.md` |
-| `music.py` | `python tools/common/music.py <输出.wav> [秒数] [种子]`，D 宫五声拨弦配乐，归一到 -16 LUFS；需要 ffmpeg。各期自己的配乐在 `tools/<名字>/music.py` |
 | `fetch_samples.py` | `python tools/common/fetch_samples.py <VCSL 或 VSCO-2-CE> "<乐器文件夹>" [--match 字样]`，按需下 CC0 乐器采样到 `samples/`；`--list` 看有哪些 |
-| `midi_render.py` | `python tools/common/midi_render.py demo <输出.wav>`；自己写 MIDI（`write_midi`），用 `samples/` 里的 CC0 真实乐器采样渲染成声音（`sfz_from_notes` / `sfz_from_chart` 把采样文件夹写成 `.sfz`，`render` 逐轨渲染再混音）。渲染器是 sfizz，装在仓库里的 `tools/sfizz/`（不入库）：从 `github.com/sfztools/sfizz` 的 1.2.3 发布页下 `sfizz-1.2.3-win64.zip`，只留里面 `bin/Release/` 的 `sfizz_render.exe` 和 `sfizz.dll` |
+| `midi_render.py` | `python tools/common/midi_render.py demo <输出.wav>`；用 sfizz 和 `samples/` 中的 CC0 乐器采样渲染 MIDI，具体接口见脚本 |
 | `separate.py` | `python tools/common/separate.py <音频> [输出目录] [--keep-vocals]`，用 Demucs 去掉人声留下配乐；Demucs 装在仓库外，安装命令写在文件开头，换了位置设 `DEMUCS_PYTHON` |
 
 ## 新增一个视频
 
-1. 在 `src/videos/<名字>/` 下建 `Compositions.tsx`，外层用 `<Folder name="...">` 包住；组合 ID 带视频前缀，避免与其他视频重名。
-2. 在 `src/Root.tsx` 里登记。
-3. 素材放 `public/<名字>/`，在 `theme.ts` 里写一个 `asset()` 拼路径。
-4. 在 `src/videos/episodes.json` 加一条（期数、成片 ID、片名、时长、一句话、标签、渲染参数），写 `src/videos/<名字>/README.md`（文件、素材与不入库的东西、要点），跑一遍 `npm run docs` 和 `npm run check`。
+```mermaid
+flowchart TD
+    A[查看 refer/ 与 library/INDEX.md] --> B[新建本期代码、素材与脚本目录]
+    B --> C[Compositions.tsx 注册组合]
+    C --> D[src/Root.tsx 接入本期视频]
+    D --> E[episodes.json 登记成片信息]
+    E --> F[写本期 README：做法、来源与素材补齐]
+    F --> G[npm run docs 更新视频列表]
+    G --> H[lint、check 与关键帧自查]
+```
+
+`Compositions.tsx` 用 `<Folder>` 包住本期组合，组合 ID 带视频前缀。素材通过本期 `theme.ts` 的 `asset()` 拼路径。
+
+关键帧示例，输出目录放在仓库外；三维画面加 `--gl=angle`：
+
+```bash
+node tools/common/stills.mjs <输出目录> Hello:120 --gl=angle
+```
+
+配乐先找有授权的现成曲子，需要原创时写 MIDI，用 CC0 真实采样和 sfizz 渲染。早期的 `music.py` 波形合成脚本保留作历史，后续不沿用。
 
 ## 不入库的东西
 
-仓库是公开的：有版权的配乐、个人照片、朋友录的念白、本机合成的配乐、`refer/`、`samples/`、`library/` 里的内容、`out/`、`exports/` 都不入库。每一期具体有哪些、克隆后怎么补齐，写在那一期自己的 README 的「素材与不入库的东西」里。
+仓库是公开的。有版权的配乐、个人照片、朋友录的念白和本机生成的配乐不入库；`refer/`、`samples/`、成片与其他导出也不入库。`library/` 只提交 README 和 INDEX。
 
-配乐版权归原作者所有，照片是个人照片。代码按 MIT 许可，素材各有来源和许可，署名写在各期 README 里。
+每一期缺哪些素材、克隆后怎么补齐，都写在本期 README 里。素材的来源、许可和署名也放在那里。
