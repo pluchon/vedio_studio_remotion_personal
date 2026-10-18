@@ -65,3 +65,7 @@ tools/attractor/whisper-*.json
 tools/attractor/whisper.log
 public/attractor/img/
 public/attractor/video/
+
+# 萌部落：截图、角色图、贴纸是同人二创，配乐在本机渲染，都不入库（字体入库）
+public/meng-center/img/
+public/meng-center/audio/

@@ -9,6 +9,7 @@ import { HanziCompositions } from "./videos/hanzi/Compositions";
 import { HelloCompositions } from "./videos/hello/Compositions";
 import { HorizonCompositions } from "./videos/horizon/Compositions";
 import { LookingUpCompositions } from "./videos/looking-up/Compositions";
+import { MengCenterCompositions } from "./videos/meng-center/Compositions";
 import { MoeCompositions } from "./videos/moe/Compositions";
 import { MohengOJCompositions } from "./videos/moheng-oj/Compositions";
 import { RainCompositions } from "./videos/rain/Compositions";
@@ -33,6 +34,7 @@ export const RemotionRoot: React.FC = () => {
       <EdgeCompositions />
       <NebulaCompositions />
       <AttractorCompositions />
+      <MengCenterCompositions />
     </>
   );
 };
