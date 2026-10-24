@@ -62,6 +62,7 @@ npm run render -- Hello       # 按登记参数渲染到 out/hello.mp4
 | 12 | [`Nebula`](src/videos/nebula/README.md) | 星云 | 约 5 分 48 秒 | 朋友的朗读，放松助眠的科普：体积渲染把地球的云一路画成宇宙的云，目镜、光谱、行星状星云、极光；全是自己算的 3D；摇篮曲配乐 | 天文、人声念白、体积渲染、three.js、着色器、助眠 | `--gl=angle --color-space=bt709 --concurrency=3` |
 | 13 | [`Attractor`](src/videos/attractor/README.md) | 巨引源 | 约 6 分 44 秒 | 放松助眠的科普：从床上的夜空升到银河系，用真实的微波背景、2MRS 和 Cosmicflows-4 数据自己建模，论文页上划线标注，讲「巨引源」这三十多年的追寻；你自己录的念白（压低压沉），深邃静谧配乐循环续长 | 天文、真实数据、论文标注、three.js、着色器、助眠 | `--gl=angle --color-space=bt709 --concurrency=3` |
 | 14 | [`MengCenter`](src/videos/meng-center/README.md) | 萌部落 | 92 秒 | 萌部落社区的项目演示：网页截图装进会弹的浏览器窗口，琪露诺贴纸踩着拍子蹦，萌萌的三个 AI 角色、记忆和架构都画成小动画；日系可爱配乐用真实乐器采样渲染 | 项目介绍、网页截图、配乐驱动、贴纸、真实采样配乐 | `--color-space=bt709` |
+| 15 | [`Wander`](src/videos/wander/README.md) | 宇宙漫游 | 约 4 分 56 秒 | 一个文明从海里的一团分子到点亮半条旋臂，再在意识之海里安静熄灭：没有念白，文字上屏，跟着作者自己的曲子走；Skia 着色器画的插画动画约 70 个镜头，泛光、颗粒、视差和粒子，首尾是同一张真实的哈勃超深场，资料小字标注真实研究 | 天文、文字上屏、配乐驱动、插画动画、Skia、着色器、粒子 | `--gl=angle --color-space=bt709 --concurrency=3` |
 <!-- episodes:end -->
 
 ## 代码和素材放哪里

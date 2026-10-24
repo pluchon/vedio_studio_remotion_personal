@@ -69,3 +69,7 @@ public/attractor/video/
 # 萌部落：截图、角色图、贴纸是同人二创，配乐在本机渲染，都不入库（字体入库）
 public/meng-center/img/
 public/meng-center/audio/
+
+# 宇宙漫游：超深场原图和配乐由 tools/wander/prepare.py 从 refer/ 生成，不入库（字体入库）
+public/wander/img/
+public/wander/audio/
