@@ -73,3 +73,6 @@ public/meng-center/audio/
 # 宇宙漫游：超深场原图和配乐由 tools/wander/prepare.py 从 refer/ 生成，不入库（字体入库）
 public/wander/img/
 public/wander/audio/
+# 宇宙漫游重制版：超深场原图、配乐和合成的音效由 tools/ember/ 的脚本生成，不入库（字体入库）
+public/ember/img/
+public/ember/audio/

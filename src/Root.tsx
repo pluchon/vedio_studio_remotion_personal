@@ -3,6 +3,7 @@ import React from "react";
 import { AmazonCompositions } from "./videos/amazon/Compositions";
 import { AttractorCompositions } from "./videos/attractor/Compositions";
 import { EdgeCompositions } from "./videos/edge/Compositions";
+import { EmberCompositions } from "./videos/ember/Compositions";
 import { NebulaCompositions } from "./videos/nebula/Compositions";
 import { CloudSkyCompositions } from "./videos/cloud-sky/Compositions";
 import { HanziCompositions } from "./videos/hanzi/Compositions";
@@ -37,6 +38,7 @@ export const RemotionRoot: React.FC = () => {
       <AttractorCompositions />
       <MengCenterCompositions />
       <WanderCompositions />
+      <EmberCompositions />
     </>
   );
 };
