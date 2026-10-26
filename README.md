@@ -1,4 +1,4 @@
-![视频工作室封面](https://zlhimage.oss-cn-guangzhou.aliyuncs.com/20261011195744118.png)
+![视频工作室封面](https://zlhimage.oss-cn-guangzhou.aliyuncs.com/item_picture/video-studio/20261011195744118.png)
 
 用代码生成视频的仓库，记录每一次想法。
 
