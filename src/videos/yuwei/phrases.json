@@ -1,0 +1,371 @@
+{
+ "duration": 111.48,
+ "sections": [
+  {
+   "id": "window",
+   "start": 0.86,
+   "end": 12.05
+  },
+  {
+   "id": "sound",
+   "start": 13.3,
+   "end": 45.35
+  },
+  {
+   "id": "light",
+   "start": 46.75,
+   "end": 56.0
+  },
+  {
+   "id": "refuge",
+   "start": 57.7,
+   "end": 67.9
+  },
+  {
+   "id": "permit",
+   "start": 69.15,
+   "end": 76.7
+  },
+  {
+   "id": "tempo",
+   "start": 78.3,
+   "end": 81.7
+  },
+  {
+   "id": "truth",
+   "start": 83.3,
+   "end": 98.95
+  },
+  {
+   "id": "close",
+   "start": 99.5,
+   "end": 110.08
+  }
+ ],
+ "phrases": [
+  {
+   "start": 0.86,
+   "end": 1.95,
+   "text": "外面在下雨。",
+   "section": "window"
+  },
+  {
+   "start": 3.05,
+   "end": 3.35,
+   "text": "不大，",
+   "section": "window"
+  },
+  {
+   "start": 4.0,
+   "end": 4.3,
+   "text": "也不停。",
+   "section": "window"
+  },
+  {
+   "start": 5.75,
+   "end": 6.85,
+   "text": "屋里没开大灯，",
+   "section": "window"
+  },
+  {
+   "start": 7.75,
+   "end": 8.8,
+   "text": "只有一盏小台灯。",
+   "section": "window"
+  },
+  {
+   "start": 9.9,
+   "end": 10.7,
+   "text": "然后你发现，",
+   "section": "window"
+  },
+  {
+   "start": 11.6,
+   "end": 12.05,
+   "text": "自己困了。",
+   "section": "window"
+  },
+  {
+   "start": 13.3,
+   "end": 13.95,
+   "text": "很多人说，",
+   "section": "sound"
+  },
+  {
+   "start": 14.55,
+   "end": 15.75,
+   "text": "雨声是白噪音。",
+   "section": "sound"
+  },
+  {
+   "start": 16.6,
+   "end": 17.25,
+   "text": "其实不是。",
+   "section": "sound"
+  },
+  {
+   "start": 18.15,
+   "end": 19.65,
+   "text": "白噪音又尖又硬。",
+   "section": "sound"
+  },
+  {
+   "start": 20.45,
+   "end": 21.6,
+   "text": "雨的力气在低处，",
+   "section": "sound"
+  },
+  {
+   "start": 22.25,
+   "end": 22.9,
+   "text": "听起来厚，",
+   "section": "sound"
+  },
+  {
+   "start": 23.65,
+   "end": 24.0,
+   "text": "软，",
+   "section": "sound"
+  },
+  {
+   "start": 24.6,
+   "end": 25.35,
+   "text": "像一层毯子。",
+   "section": "sound"
+  },
+  {
+   "start": 26.7,
+   "end": 27.65,
+   "text": "毯子盖住的，",
+   "section": "sound"
+  },
+  {
+   "start": 28.15,
+   "end": 28.7,
+   "text": "是突然。",
+   "section": "sound"
+  },
+  {
+   "start": 29.75,
+   "end": 30.55,
+   "text": "一声关门，",
+   "section": "sound"
+  },
+  {
+   "start": 31.05,
+   "end": 31.8,
+   "text": "一声喇叭。",
+   "section": "sound"
+  },
+  {
+   "start": 32.95,
+   "end": 34.1,
+   "text": "雨把背景垫高，",
+   "section": "sound"
+  },
+  {
+   "start": 34.7,
+   "end": 35.6,
+   "text": "落差就平了。",
+   "section": "sound"
+  },
+  {
+   "start": 36.7,
+   "end": 37.65,
+   "text": "没有人在说话，",
+   "section": "sound"
+  },
+  {
+   "start": 38.8,
+   "end": 40.5,
+   "text": "没有要你回应的东西。",
+   "section": "sound"
+  },
+  {
+   "start": 42.2,
+   "end": 42.7,
+   "text": "听了一会儿，",
+   "section": "sound"
+  },
+  {
+   "start": 43.2,
+   "end": 43.95,
+   "text": "大脑就认定：",
+   "section": "sound"
+  },
+  {
+   "start": 44.75,
+   "end": 45.35,
+   "text": "这里没事。",
+   "section": "sound"
+  },
+  {
+   "start": 46.75,
+   "end": 49.4,
+   "text": "阴天常常只有大晴天的几十分之一亮。",
+   "section": "light"
+  },
+  {
+   "start": 50.55,
+   "end": 51.6,
+   "text": "天替你关了灯。",
+   "section": "light"
+  },
+  {
+   "start": 52.3,
+   "end": 53.85,
+   "text": "桌上那一小圈暖黄，",
+   "section": "light"
+  },
+  {
+   "start": 54.7,
+   "end": 56.0,
+   "text": "注意力就缩进去了。",
+   "section": "light"
+  },
+  {
+   "start": 57.7,
+   "end": 58.35,
+   "text": "有人说，",
+   "section": "refuge"
+  },
+  {
+   "start": 58.85,
+   "end": 62.75,
+   "text": "人喜欢看得见外面、外面却碰不到自己的地方。",
+   "section": "refuge"
+  },
+  {
+   "start": 64.2,
+   "end": 65.05,
+   "text": "你看得见雨，",
+   "section": "refuge"
+  },
+  {
+   "start": 65.55,
+   "end": 66.3,
+   "text": "雨碰不到你。",
+   "section": "refuge"
+  },
+  {
+   "start": 67.1,
+   "end": 67.9,
+   "text": "被子也一样。",
+   "section": "refuge"
+  },
+  {
+   "start": 69.15,
+   "end": 69.75,
+   "text": "下雨天，",
+   "section": "permit"
+  },
+  {
+   "start": 70.35,
+   "end": 71.2,
+   "text": "计划取消了。",
+   "section": "permit"
+  },
+  {
+   "start": 72.15,
+   "end": 73.65,
+   "text": "世界暂时不来找你。",
+   "section": "permit"
+  },
+  {
+   "start": 74.6,
+   "end": 75.25,
+   "text": "什么都不做，",
+   "section": "permit"
+  },
+  {
+   "start": 75.95,
+   "end": 76.7,
+   "text": "也不用愧疚。",
+   "section": "permit"
+  },
+  {
+   "start": 78.3,
+   "end": 79.15,
+   "text": "雨是匀速的。",
+   "section": "tempo"
+  },
+  {
+   "start": 80.6,
+   "end": 81.7,
+   "text": "呼吸跟着慢下来。",
+   "section": "tempo"
+  },
+  {
+   "start": 83.3,
+   "end": 84.05,
+   "text": "说句实话：",
+   "section": "truth"
+  },
+  {
+   "start": 84.95,
+   "end": 87.0,
+   "text": "雨声到底能不能让人睡得更好，",
+   "section": "truth"
+  },
+  {
+   "start": 87.85,
+   "end": 88.65,
+   "text": "并没有定论。",
+   "section": "truth"
+  },
+  {
+   "start": 89.75,
+   "end": 90.75,
+   "text": "它确定能做的，",
+   "section": "truth"
+  },
+  {
+   "start": 91.7,
+   "end": 93.7,
+   "text": "只是替你挡住那些突然。",
+   "section": "truth"
+  },
+  {
+   "start": 94.7,
+   "end": 95.25,
+   "text": "剩下的，",
+   "section": "truth"
+  },
+  {
+   "start": 95.9,
+   "end": 97.45,
+   "text": "是灰天、小灯、一扇窗、一床被子，",
+   "section": "truth"
+  },
+  {
+   "start": 98.3,
+   "end": 98.95,
+   "text": "一起做的。",
+   "section": "truth"
+  },
+  {
+   "start": 99.5,
+   "end": 101.35,
+   "text": "让人安心的，",
+   "section": "close"
+  },
+  {
+   "start": 102.8,
+   "end": 104.9,
+   "text": "也许不是雨。",
+   "section": "close"
+  },
+  {
+   "start": 105.85,
+   "end": 108.2,
+   "text": "是雨把世界关小了。",
+   "section": "close"
+  },
+  {
+   "start": 109.7,
+   "end": 110.08,
+   "text": "晚安。",
+   "section": "close"
+  }
+ ]
+}

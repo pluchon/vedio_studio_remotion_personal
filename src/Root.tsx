@@ -17,6 +17,7 @@ import { RainCompositions } from "./videos/rain/Compositions";
 import { ThatDayCompositions } from "./videos/that-day/Compositions";
 import { WanderCompositions } from "./videos/wander/Compositions";
 import { WindDiaryCompositions } from "./videos/wind-diary/Compositions";
+import { YuweiCompositions } from "./videos/yuwei/Compositions";
 
 // 所有视频在这里登记，每个视频一个文件夹（src/videos/<名字>/Compositions.tsx）
 export const RemotionRoot: React.FC = () => {
@@ -39,6 +40,7 @@ export const RemotionRoot: React.FC = () => {
       <MengCenterCompositions />
       <WanderCompositions />
       <EmberCompositions />
+      <YuweiCompositions />
     </>
   );
 };

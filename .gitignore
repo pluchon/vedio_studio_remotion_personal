@@ -76,3 +76,6 @@ public/wander/audio/
 # 宇宙漫游重制版：超深场原图、配乐和合成的音效由 tools/ember/ 的脚本生成，不入库（字体入库）
 public/ember/img/
 public/ember/audio/
+
+# 雨未愁眠：念白是作者录音，配乐与雨声、音效在本机生成，都不入库（字体入库）
+public/yuwei/audio/
