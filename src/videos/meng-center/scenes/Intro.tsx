@@ -10,7 +10,7 @@ const CHIPS = [
   { text: "社区", color: C.pink },
   { text: "创作", color: C.blue },
   { text: "成长", color: C.mint },
-  { text: "AI 萌萌", color: C.lemon },
+  { text: "AI 奶糖", color: C.lemon },
 ];
 
 export const Intro: React.FC = () => {
@@ -111,10 +111,10 @@ export const Outro: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          left: 960 - 640,
-          top: 120,
-          width: 1280,
-          height: 640,
+          left: 960 - 740,
+          top: 200,
+          width: 1480,
+          height: 493,
           borderRadius: 30,
           overflow: "hidden",
           border: `10px solid ${C.white}`,
@@ -123,12 +123,12 @@ export const Outro: React.FC = () => {
           rotate: `${-2 + (1 - card) * -12}deg`,
         }}
       >
-        <Img src={cover.src} style={{ width: 1260, height: 630, scale: `${1 + f / 3000}` }} />
+        <Img src={cover.src} style={{ width: 1460, height: 487, objectFit: "cover", scale: `${1 + f / 3000}` }} />
       </div>
       {/* 纸胶带 */}
       {[
-        [370, 110, -18, C.pink],
-        [1540, 116, 16, C.blue],
+        [270, 190, -18, C.pink],
+        [1640, 196, 16, C.blue],
       ].map(([x, y, r, c], i) => (
         <div key={i} style={{ position: "absolute", left: (x as number) - 90, top: (y as number) - 22, width: 180, height: 46, background: `repeating-linear-gradient(45deg, ${c} 0 14px, ${c}aa 14px 28px)`, rotate: `${r}deg`, opacity: 0.92 * lerp(f, 10 + i * 4, 18 + i * 4) }} />
       ))}

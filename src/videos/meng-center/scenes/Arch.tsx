@@ -12,7 +12,7 @@ const NODES: Node[] = [
   { id: "content", x: 650, y: 510, t: "content", sub: "8102 · 帖子", c: C.blue, beat: 1.5 },
   { id: "growth", x: 970, y: 510, t: "growth", sub: "8103 · 成长", c: C.blue, beat: 2 },
   { id: "im", x: 1290, y: 510, t: "im", sub: "8104 · 消息", c: C.blue, beat: 2.5 },
-  { id: "companion", x: 1610, y: 510, t: "companion", sub: "8107 · 萌萌", c: C.blue, beat: 3 },
+  { id: "companion", x: 1610, y: 510, t: "companion", sub: "8107 · 奶糖", c: C.blue, beat: 3 },
   { id: "mq", x: 560, y: 730, t: "RabbitMQ", sub: "跨服务事件", c: C.lemon, beat: 4, w: 300 },
   { id: "ai", x: 1180, y: 730, t: "ai", sub: "8106 · Python", c: C.mint, beat: 4.5, w: 300 },
 ];

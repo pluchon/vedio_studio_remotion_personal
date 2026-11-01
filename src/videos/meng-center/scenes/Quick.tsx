@@ -7,7 +7,7 @@ import { img, shot } from "../shots";
 // ---------------------------------------------------------------- 创作中心
 const STATS = [
   { t: "帖子", v: 25, c: C.blue },
-  { t: "浏览", v: 10607, c: C.mint },
+  { t: "浏览", v: 10608, c: C.mint },
   { t: "喜欢", v: 47, c: C.pink },
   { t: "评论", v: 37, c: C.lilac },
   { t: "收藏", v: 48, c: C.lemon },
@@ -160,7 +160,7 @@ export const Profile: React.FC = () => {
           {m.t}
         </div>
       ))}
-      {/* 铃鼓滚奏：贴纸从天上掉下来，接进萌萌 */}
+      {/* 铃鼓滚奏：贴纸从天上掉下来，接进奶糖 */}
       {["emo-hooray", "emo-love", "emo-headpat", "emo-cheer", "emo-popsicle"].map((n, i) => {
         const start = at(6 + i * 0.4);
         if (f < start) return null;

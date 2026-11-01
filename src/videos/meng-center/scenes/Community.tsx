@@ -78,14 +78,14 @@ export const Home: React.FC = () => {
   const zoom = 1 + 0.22 * lerp(f, at(8), at(9.5), 0, 1);
   const focusY = 450 + (640 - 450) * lerp(f, at(8), at(9.5), 0, 1);
   const k = scaleOf(w, s.imgW, zoom);
-  const tabs = [1348, 1409, 1469];
+  const tabs = [1324, 1383, 1444];
   return (
     <AbsoluteFill>
       <Background f={f} tint="#EFF8FC" />
       <Window f={f} {...s} x={1000} y={600} w={w} h={h} zoom={zoom} focus={[1000, focusY]}>
         {tabs.map((x, i) => {
           const start = at(11 + i);
-          return f >= start && f < start + 12 ? <Ring key={x} f={f} at={start} x={x} y={671} w={78} h={52} scale={k} color={[C.lilac, C.blue, C.pink][i]} /> : null;
+          return f >= start && f < start + 12 ? <Ring key={x} f={f} at={start} x={x} y={662} w={78} h={52} scale={k} color={[C.lilac, C.blue, C.pink][i]} /> : null;
         })}
       </Window>
       <Tape f={f} at={2} x={70} y={50} title="逛一逛主页" sub="分类浏览 · 推荐 / 最新 / 热门" color={C.pink} rot={-3} />
@@ -113,9 +113,9 @@ export const Create: React.FC = () => {
   const h = Math.round((w * s.imgH) / s.imgW);
   const k = scaleOf(w, s.imgW);
   const rings: [number, number, number][] = [
-    [346, 241, 150],
-    [1408, 424, 165],
-    [1413, 629, 150],
+    [370, 239, 150],
+    [1382, 441, 165],
+    [1387, 660, 165],
   ];
   return (
     <AbsoluteFill>
@@ -143,7 +143,7 @@ const REACT = [
   { kind: "star" as const, label: "收藏", color: C.lemon },
   { kind: "bubble" as const, label: "评论", color: C.blue },
 ];
-const COMMENTS = ["好可爱的云！", "@云朵收藏家 下次一起拍~", "收藏啦 (｡･ω･｡)"];
+const COMMENTS = ["好想喝冰汽水！", "@云朵收藏家 下次一起拍~", "收藏啦 (｡･ω･｡)"];
 
 export const Detail: React.FC = () => {
   const f = useCurrentFrame();
@@ -181,7 +181,7 @@ export const Detail: React.FC = () => {
 
 // ---------------------------------------------------------------- 语义搜索
 const NODES = [
-  { t: "搜索词", sub: "「蓝色」", c: C.blue },
+  { t: "搜索词", sub: "「夏日」", c: C.blue },
   { t: "向量召回", sub: "最多 20 篇候选", c: C.lilac },
   { t: "AI 把关", sub: "哪些真的相关", c: C.pink },
   { t: "排好返回", sub: "按相关度", c: C.mint },
@@ -190,7 +190,7 @@ const NODES = [
 export const Search: React.FC = () => {
   const f = useCurrentFrame();
   const s = shot("search");
-  const typed = (f >= at(1) ? "蓝" : "") + (f >= at(2) ? "色" : "");
+  const typed = (f >= at(1) ? "夏" : "") + (f >= at(2) ? "日" : "");
   const flow = 1 - lerp(f, at(12) - 3, at(12) + 6, 0, 1);
   const xs = [270, 720, 1180, 1640];
   // 小球沿着箭头一拍走半格
