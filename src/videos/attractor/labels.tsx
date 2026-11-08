@@ -92,7 +92,7 @@ export const Box: React.FC<{ x: number; y: number; w: number; h: number; p: numb
 );
 
 // 来源小字，贴在画面右下角
-export const Credit: React.FC<{ children: React.ReactNode; p?: number; x?: number; y?: number; align?: "left" | "right" }> = ({ children, p = 1, x = 1880, y = 1030, align = "right" }) => (
+export const Credit: React.FC<{ children: React.ReactNode; p?: number; x?: number; y?: number; align?: "left" | "right" }> = ({ children, p = 1, x = 1880, y = 36, align = "right" }) => (
   <div style={{ position: "absolute", left: align === "right" ? undefined : x, right: align === "right" ? 1920 - x : undefined, top: y, fontFamily: FONT, fontSize: 17, letterSpacing: 1.6, color: COLORS.soft, opacity: 0.7 * p, textShadow: "0 0 8px rgba(2,4,11,0.95)", whiteSpace: "pre", textAlign: align }}>
     {children}
   </div>

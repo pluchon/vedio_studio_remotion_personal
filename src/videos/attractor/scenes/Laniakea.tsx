@@ -8,6 +8,7 @@ import { Canvas, Galaxies, Rig, dir, project, rad } from "../space";
 import { COLORS, asset } from "../theme";
 import { ease, ramp, track, useT } from "../time";
 import type { V3 } from "../time";
+import { PAPER_FILTER } from "./Paper";
 
 const UNIT = 0.01;
 const RADIUS = 0.8; // 80 Mpc：直径 160 Mpc
@@ -81,9 +82,9 @@ export const Laniakea: React.FC = () => {
         同一片天的另一种画法 · Galaxies3D（CC BY-SA 4.0）
       </Tag>
       <div style={{ position: "absolute", left: 90, top: 560, width: 300, opacity: ramp(t, 316, 319) * (1 - ramp(t, 327, 329.5)) }}>
-        <Img src={staticFile(asset("img/paper_tully2014.jpg"))} style={{ width: 300, boxShadow: "0 0 30px rgba(0,0,0,0.7)", filter: "brightness(0.9)" }} />
+        <Img src={staticFile(asset("img/paper_tully2014.jpg"))} style={{ width: 300, boxShadow: "0 0 30px rgba(0,0,0,0.7)", filter: PAPER_FILTER }} />
       </div>
-      <Credit x={90} y={1012} align="left" p={ramp(t, 316, 319) * (1 - ramp(t, 327, 329.5))}>
+      <Credit x={90} y={36} align="left" p={ramp(t, 316, 319) * (1 - ramp(t, 327, 329.5))}>
         Tully 等，Nature 513, 71（2014）· Hawaiian: lani 天 + akea 广阔、无量
       </Credit>
     </>

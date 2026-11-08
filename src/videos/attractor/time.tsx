@@ -40,15 +40,41 @@ export const track3 = (t: number, keys: [number, V3][]): V3 => [
 // 一段「淡出再淡入」：在 t0 处最暗，两头各 half 秒
 export const dip = (t: number, t0: number, half = 0.5) => 1 - Math.max(0, 1 - Math.abs(t - t0) / half);
 
-// 设计时间 ↔ 放映时间：按各幕在念白里的真实起止分段线性地映射（两头外推）
-const piecewise = (x: number, from: number[], to: number[]) => {
-  let i = 1;
-  while (i < from.length - 1 && x > from[i]) i++;
-  const p = (x - from[i - 1]) / (from[i] - from[i - 1]);
-  return to[i - 1] + (to[i] - to[i - 1]) * p;
+// 设计时间 ↔ 放映时间：每句念白一个节点，节点之间用单调三次插值（Fritsch–Carlson），
+// 这样画面的快慢在节点处是连续变化的，镜头运动不会一顿一顿；两头按端点的斜率线性外推
+const monotone = (xs: number[], ys: number[]) => {
+  const n = xs.length;
+  const d = xs.slice(1).map((x, i) => (ys[i + 1] - ys[i]) / (x - xs[i]));
+  const m = xs.map((_, i) => (i === 0 ? d[0] : i === n - 1 ? d[n - 2] : d[i - 1] * d[i] <= 0 ? 0 : (2 * d[i - 1] * d[i]) / (d[i - 1] + d[i])));
+  return (x: number) => {
+    if (x <= xs[0]) return ys[0] + (x - xs[0]) * m[0];
+    if (x >= xs[n - 1]) return ys[n - 1] + (x - xs[n - 1]) * m[n - 1];
+    let lo = 0;
+    let hi = n - 1;
+    while (hi - lo > 1) {
+      const mid = (lo + hi) >> 1;
+      if (xs[mid] <= x) lo = mid;
+      else hi = mid;
+    }
+    const h = xs[hi] - xs[lo];
+    const s = (x - xs[lo]) / h;
+    const s2 = s * s;
+    const s3 = s2 * s;
+    return (2 * s3 - 3 * s2 + 1) * ys[lo] + (s3 - 2 * s2 + s) * h * m[lo] + (-2 * s3 + 3 * s2) * ys[hi] + (s3 - s2) * h * m[hi];
+  };
 };
-export const toReal = (design: number) => piecewise(design, DESIGN_KNOTS, REAL_KNOTS);
-export const toDesign = (real: number) => piecewise(real, REAL_KNOTS, DESIGN_KNOTS);
+export const toDesign = monotone(REAL_KNOTS, DESIGN_KNOTS);
+// 反过来求：toDesign 单调递增，二分即可
+export const toReal = (design: number) => {
+  let lo = -60;
+  let hi = REAL_KNOTS[REAL_KNOTS.length - 1] + 60;
+  for (let i = 0; i < 50; i++) {
+    const mid = (lo + hi) / 2;
+    if (toDesign(mid) < design) lo = mid;
+    else hi = mid;
+  }
+  return (lo + hi) / 2;
+};
 
 // 当前幕从放映时间的第几秒开始
 const Offset = createContext(0);

@@ -3,12 +3,13 @@ export const FPS = 30;
 export const WIDTH = 1920;
 export const HEIGHT = 1080;
 
-// 时间轴跟着念白走：片名先占前 LEAD 秒，念白之后再留 TAIL 秒；配乐按这个长度拼（tools/attractor/loop_music.py）
-import phrases from "./phrases.json";
+// 时间轴跟着念白走：片名先占前 LEAD 秒，念白之后再留 TAIL 秒；配乐按这个长度拼（tools/attractor/loop_music.py 18 个乐句 = 476.5 秒）
+// 念白是 ElevenLabs 逐句生成的（tools/common/tts.py），narration.json 由 tools/attractor/tts_timing.py 生成
+import narration from "./narration.json";
 
 export const LEAD = 5.5;
-export const TAIL = 7.8;
-export const VOICE_SECONDS = phrases.duration;
+export const TAIL = 7.2;
+export const VOICE_SECONDS = narration.duration;
 export const DURATION = LEAD + VOICE_SECONDS + TAIL;
 export const TOTAL_FRAMES = Math.round(DURATION * FPS);
 
@@ -46,9 +47,8 @@ export const SCENES = {
   night: [410, DESIGN_END],
 } as const;
 
-// 每一幕在放映时间里的起点：念白里相邻两幕的交界（再加上片名的 LEAD），首尾接 0 和片尾
-const SECTION_ORDER = ["sky", "cmb", "leaves", "paper", "zone", "norma", "laniakea", "pushpull", "maybe", "night"] as const;
-export const REAL_KNOTS: number[] = [0, ...SECTION_ORDER.slice(1).map((id) => LEAD + (phrases.sections.find((s) => s.id === id)?.start ?? 0)), DURATION];
-export const DESIGN_KNOTS: number[] = [0, ...SECTION_ORDER.slice(1).map((id) => SCENES[id][0]), DESIGN_END];
+// 设计时间 ↔ 放映时间的节点：每一句念白一个（这句在旧念白里对应的设计时间，它在新念白里开始的放映时间），首尾接 0 和片尾
+export const DESIGN_KNOTS: number[] = [...narration.knots.map((k) => k[0]), DESIGN_END];
+export const REAL_KNOTS: number[] = [...narration.knots.map((k) => k[1]), DURATION];
 
 export type SceneId = keyof typeof SCENES;

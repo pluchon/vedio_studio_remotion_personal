@@ -1,13 +1,29 @@
-// 第二幕「光里的线索」：宇宙微波背景的全天图；再加上我们运动造成的偶极——前方偏暖，后方偏凉。
+// 第二幕「光里的线索」：微波背景，再加上我们运动造成的偶极——前方偏暖，后方偏凉。
+// 不用普朗克的全天图（太亮，不适合助眠片）：起伏用三维噪声在球面上算，压得很暗，只留细碎的纹理。
 // 前半从球里面看（环顾），后半摊成一张椭圆的全天图（Mollweide 投影），这样暖的一头和凉的一头能同时看到
 import React from "react";
 import * as THREE from "three";
-import { useTextures } from "../../looking-up/three/useTextures";
 import { Tag } from "../labels";
 import { Canvas, Rig, dir } from "../space";
-import { asset } from "../theme";
 import { ease, ramp, track, useT } from "../time";
 import type { V3 } from "../time";
+
+// 球面上的「起伏」：三维值噪声叠几层，按方向取样，球面上没有接缝；颜色暗蓝到暗琥珀
+const SPECKLE = /* glsl */ `
+  float hash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+  float noise(vec3 x) {
+    vec3 i = floor(x); vec3 f = fract(x); f = f * f * (3.0 - 2.0 * f);
+    return mix(mix(mix(hash(i), hash(i + vec3(1,0,0)), f.x), mix(hash(i + vec3(0,1,0)), hash(i + vec3(1,1,0)), f.x), f.y),
+               mix(mix(hash(i + vec3(0,0,1)), hash(i + vec3(1,0,1)), f.x), mix(hash(i + vec3(0,1,1)), hash(i + vec3(1,1,1)), f.x), f.y), f.z);
+  }
+  vec3 speckle(vec3 d) {
+    float n = 0.45 * noise(d * 16.0) + 0.35 * noise(d * 38.0 + 3.1) + 0.2 * noise(d * 85.0 + 7.7);
+    n = smoothstep(0.3, 0.7, n);
+    vec3 cold = vec3(0.02, 0.035, 0.08);
+    vec3 warm = vec3(0.1, 0.055, 0.025);
+    return mix(cold, warm, n);
+  }
+`;
 
 const INSIDE_VERTEX = /* glsl */ `
   varying vec3 vDir;
@@ -18,14 +34,11 @@ const INSIDE_VERTEX = /* glsl */ `
   }
 `;
 const INSIDE_FRAGMENT = /* glsl */ `
-  uniform sampler2D map;
   varying vec3 vDir;
-  const float PI = 3.14159265;
+  ${SPECKLE}
   void main() {
     vec3 d = normalize(vDir);
-    float l = atan(-d.z, d.x);
-    float b = asin(clamp(d.y, -1.0, 1.0));
-    gl_FragColor = vec4(texture2D(map, vec2(0.5 - l / (2.0 * PI), 0.5 + b / PI)).rgb * 0.92, 1.0);
+    gl_FragColor = vec4(speckle(d), 1.0);
     #include <colorspace_fragment>
   }
 `;
@@ -39,11 +52,11 @@ const MOLL_VERTEX = /* glsl */ `
   }
 `;
 const MOLL_FRAGMENT = /* glsl */ `
-  uniform sampler2D map;
   uniform vec3 motion;
   uniform float dip;
   varying vec2 vUv;
   const float PI = 3.14159265;
+  ${SPECKLE}
   void main() {
     float nx = (vUv.x - 0.5) / (780.0 / 1920.0);
     float ny = (vUv.y - 0.5) / (390.0 / 1080.0);
@@ -54,15 +67,15 @@ const MOLL_FRAGMENT = /* glsl */ `
     float lon = PI * nx / max(cos(th), 1e-4);
     float l = -lon;
     vec3 d = vec3(cos(lat) * cos(l), sin(lat), -cos(lat) * sin(l));
-    vec3 cmb = texture2D(map, vec2(0.5 - l / (2.0 * PI), 0.5 + lat / PI)).rgb;
+    vec3 cmb = speckle(d);
     float c = dot(d, normalize(motion));
-    vec3 mid = vec3(0.04, 0.04, 0.06);
-    vec3 warm = vec3(0.95, 0.42, 0.12);
-    vec3 cold = vec3(0.1, 0.3, 0.85);
+    vec3 mid = vec3(0.03, 0.03, 0.05);
+    vec3 warm = vec3(0.17, 0.08, 0.03);
+    vec3 cold = vec3(0.02, 0.05, 0.15);
     float k = pow(abs(c), 0.8);
     vec3 dc = c > 0.0 ? mix(mid, warm, k) : mix(mid, cold, k);
     // 偶极盖上去以后，原来的起伏只剩一点点纹理
-    vec3 col = mix(cmb, dc * (0.9 + 0.5 * (cmb - 0.5)), dip);
+    vec3 col = mix(cmb, dc * (0.8 + 3.0 * (cmb - 0.05)), dip);
     float edge = smoothstep(1.0, 0.985, sqrt(r2));
     gl_FragColor = vec4(col * edge, 1.0);
     #include <colorspace_fragment>
@@ -83,7 +96,6 @@ const moll = (l: number, b: number): [number, number] => {
 
 export const Cmb: React.FC = () => {
   const t = useT();
-  const tex = useTextures({ cmb: asset("img/cmb.jpg") });
   const lon = track(t, [[48, 70], [62, 150], [70, 190]]);
   const lat = track(t, [[48, 8], [62, 12], [70, 14]]);
   const fov = track(t, [[48, 92], [70, 82]]);
@@ -96,7 +108,7 @@ export const Cmb: React.FC = () => {
   const hold = ramp(t, 82, 85.5) * (1 - ramp(t, 95, 98));
   return (
     <>
-      {tex ? (
+      {(
         <>
           {inside > 0.003 ? (
             <div style={{ position: "absolute", inset: 0, opacity: inside }}>
@@ -104,7 +116,7 @@ export const Cmb: React.FC = () => {
                 <Rig pos={[0, 0, 0]} look={look} fov={fov} far={100} />
                 <mesh frustumCulled={false}>
                   <sphereGeometry args={[20, 64, 32]} />
-                  <shaderMaterial vertexShader={INSIDE_VERTEX} fragmentShader={INSIDE_FRAGMENT} uniforms={{ map: { value: tex.cmb } }} side={THREE.BackSide} depthTest={false} depthWrite={false} />
+                  <shaderMaterial vertexShader={INSIDE_VERTEX} fragmentShader={INSIDE_FRAGMENT} uniforms={{}} side={THREE.BackSide} depthTest={false} depthWrite={false} />
                 </mesh>
               </Canvas>
             </div>
@@ -117,7 +129,7 @@ export const Cmb: React.FC = () => {
                   <shaderMaterial
                     vertexShader={MOLL_VERTEX}
                     fragmentShader={MOLL_FRAGMENT}
-                    uniforms={{ map: { value: tex.cmb }, motion: { value: new THREE.Vector3(...MOTION) }, dip: { value: dip } }}
+                    uniforms={{ motion: { value: new THREE.Vector3(...MOTION) }, dip: { value: dip } }}
                     depthTest={false}
                     depthWrite={false}
                   />
@@ -126,8 +138,8 @@ export const Cmb: React.FC = () => {
             </div>
           ) : null}
         </>
-      ) : null}
-      <Tag x={960} y={120} p={ramp(t, 50, 52.5) * (1 - ramp(t, 62, 64))} size={36} sub="2.725 K · 普朗克卫星 2018 · 图上的起伏只有十万分之几，已放大显示">
+      )}
+      <Tag x={960} y={120} p={ramp(t, 50, 52.5) * (1 - ramp(t, 62, 64))} size={36} sub="2.725 K · 起伏只有十万分之几 · 图为示意">
         宇宙微波背景
       </Tag>
       <Tag x={960} y={96} p={ramp(t, 72, 75) * (1 - ramp(t, 98, 100))} size={34} sub="示意：偶极比图上的起伏大三十倍左右，这里用颜色表示方向">

@@ -4,8 +4,9 @@
 前奏 0–11.97 s（4 小节），中段取 11.97–107.80 s（4 个乐句），107.80 s 之后是原曲的收尾。
 所有切点都落在乐句边界上，所以接缝处相位一致。
 
-用法：python tools/attractor/loop_music.py [中段放几个乐句，默认 15] [输出，默认 public/attractor/audio/bgm.wav]
-总长 ≈ 12 + 乐句数 × 23.96 + 33.2 秒；念白 391 秒加片名 4 秒、片尾 9 秒，是 404 秒，所以用 15 个乐句。
+用法：python tools/attractor/loop_music.py [中段放几个乐句，默认 18] [输出，默认 public/attractor/audio/bgm.wav]
+总长 ≈ 12 + 乐句数 × 23.96 + 33.2 秒；ElevenLabs 念白 463.8 秒加片名 5.5 秒、片尾 7.2 秒，是 476.5 秒，所以用 18 个乐句
+（朋友录的旧念白 391 秒时是 15 个乐句）。
 需要 ffmpeg。原曲在 library/music/，版权属于原作者，输出不入库。
 """
 from __future__ import annotations
@@ -62,7 +63,7 @@ def build(phrases: int, out: Path) -> None:
 
 
 if __name__ == "__main__":
-    n = int(sys.argv[1]) if len(sys.argv) > 1 else 15
+    n = int(sys.argv[1]) if len(sys.argv) > 1 else 18
     dest = Path(sys.argv[2]) if len(sys.argv) > 2 else ROOT / "public" / "attractor" / "audio" / "bgm.wav"
     build(n, dest)
     print(dest)

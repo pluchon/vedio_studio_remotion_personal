@@ -1,4 +1,4 @@
-// 《巨引源》整片：无配音版，画面按配乐的时间走；字幕先按字数摊在每一幕里
+// 《巨引源》整片：画面按设计时间写，经 time.tsx 逐句映射到念白；字幕逐句
 import { Audio } from "@remotion/media";
 import React from "react";
 import { AbsoluteFill, Sequence, staticFile } from "remotion";
@@ -16,6 +16,7 @@ import { Norma } from "./scenes/Norma";
 import { Dressler, Lss, Montage, VelMap } from "./scenes/Paper";
 import { PushPull } from "./scenes/PushPull";
 import { Galaxy, Ground, Title } from "./scenes/Sky";
+import { Inserts, SHOTS } from "./scenes/Inserts";
 import { Dust, DustWide, Radio, SkyGap } from "./scenes/Zone";
 
 loadLocalFont(FONT, staticFile("looking-up/fonts/NotoSerifSC-Regular.otf"));
@@ -28,12 +29,13 @@ const Captions: React.FC = () => {
   return <Subtitles t={t} />;
 };
 
-// 配乐：原曲约 −19 LUFS。念白底下压到 0.22，比念白轻约 10 dB；片名和片尾没有念白时推到 0.40。
-// 注意 Remotion 把单声道的念白原样复制到左右两路，所以念白实际比单声道文件的响度高 3 dB（0.65 → 约 −21.5 LUFS）
+// 念白文件是 −20 LUFS 的单声道；Remotion 把它原样复制到左右两路，实际响度高 3 dB，乘 0.56 后约 −22 LUFS，助眠片不宜更响。
+// 配乐原曲约 −19 LUFS：念白底下压到 0.17（约 −34 LUFS，比念白轻约 12 dB），片名和片尾没有念白时推到 0.34
+const VOICE_VOLUME = 0.56;
 const musicVolume = (frame: number) => {
   const t = frame / FPS;
   const talking = Math.min(ramp(t, LEAD - 1.5, LEAD + 0.5), 1 - ramp(t, LEAD + VOICE_SECONDS - 0.5, LEAD + VOICE_SECONDS + 3));
-  return 0.4 - 0.18 * Math.max(0, talking);
+  return 0.34 - 0.17 * Math.max(0, talking);
 };
 
 export const Film: React.FC = () => (
@@ -90,12 +92,13 @@ export const Film: React.FC = () => (
       <Scene from={SCENES.night[0]} to={SCENES.night[1]} pad={1.5}>
         <Night />
       </Scene>
+      <Inserts shots={SHOTS} />
       <Title />
       <Grain opacity={0.04} vignette={0.3} />
-      <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 230, background: "linear-gradient(rgba(2,4,11,0), rgba(2,4,11,0.72))", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 290, background: "linear-gradient(rgba(2,4,11,0), rgba(2,4,11,0.78))", pointerEvents: "none" }} />
       <Captions />
       <Sequence from={LEAD * FPS} layout="none">
-        <Audio src={staticFile(VOICE)} volume={0.65} />
+        <Audio src={staticFile(VOICE)} volume={VOICE_VOLUME} />
       </Sequence>
       <Audio src={staticFile(MUSIC)} volume={musicVolume} />
     </AbsoluteFill>

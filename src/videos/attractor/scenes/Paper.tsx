@@ -12,6 +12,9 @@ import { ease, ramp, track, useT } from "../time";
 export const PAGE = { w: 1500, h: 1941 };
 
 // 一页论文：focus 是图片上要放在 (ax, ay) 屏幕位置的那一点，zoom 是放大倍数
+// 论文页反相成深色底、浅色字：白纸在助眠片里太亮
+export const PAPER_FILTER = "invert(0.9) hue-rotate(180deg) brightness(0.85) contrast(0.92)";
+
 export const Page: React.FC<{ src: string; ax: number; ay: number; fx: number; fy: number; zoom: number; opacity?: number; children?: React.ReactNode }> = ({
   src,
   ax,
@@ -23,7 +26,7 @@ export const Page: React.FC<{ src: string; ax: number; ay: number; fx: number; f
   children,
 }) => (
   <div style={{ position: "absolute", left: 0, top: 0, width: PAGE.w, height: PAGE.h, transformOrigin: "0 0", transform: `translate(${ax - fx * zoom}px, ${ay - fy * zoom}px) scale(${zoom})`, opacity, boxShadow: "0 0 60px rgba(0,0,0,0.6)" }}>
-    <Img src={staticFile(asset(src))} style={{ width: PAGE.w, height: PAGE.h, filter: "brightness(0.93)" }} />
+    <Img src={staticFile(asset(src))} style={{ width: PAGE.w, height: PAGE.h, filter: PAPER_FILTER }} />
     {children}
   </div>
 );

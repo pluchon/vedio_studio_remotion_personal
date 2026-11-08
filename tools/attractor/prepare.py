@@ -35,7 +35,6 @@ IMAGES = [
     ("earth_day.jpg", LIB / "8k_earth_daymap.jpg", "scale=4096:-2"),
     ("earth_night.jpg", LIB / "8k_earth_nightmap.jpg", "scale=4096:-2"),
     ("milkyway.jpg", LIB / "8k_stars_milky_way.jpg", "scale=4096:-2"),
-    ("cmb.jpg", LIB / "1567213932682-ESA_Planck_CMB2018_equirectangular_HR.png", "scale=4096:-2"),
     ("paper_dressler1987.jpg", REFER / "论文" / "页" / "Dressler1987_streaming_p1.png", "scale=1500:-2"),
     ("paper_stiskalek2026.jpg", REFER / "论文" / "页" / "Stiskalek2026_RevisitingGA_p1.png", "scale=1500:-2"),
     ("paper_woudt2008.jpg", REFER / "论文" / "页" / "Woudt2008_NormaCluster_p1.png", "scale=1500:-2"),
@@ -77,6 +76,15 @@ VIDEOS = [
     ("meerkat.mp4", REFER / "素材" / "视频" / "meerkat_night_timelapse.webm", 0, 14, "scale=1920:1080"),
     ("earth_iss.mp4", REFER / "素材" / "视频" / "esa_gerst_earth_clip.webm", 0, 24, "scale=1920:1080"),
     ("supercl.mp4", REFER / "素材" / "视频" / "nearby_superclusters.webm", 0, 40, "scale=1280:720"),
+    # 穿插镜头（scenes/Inserts.tsx）
+    # ESA/Hubble heic1404b：从银河带一路推近矩尺座星系团里的 ESO 137-001（CC BY 4.0）
+    ("gal_band.mp4", REFER / "素材" / "视频" / "esahubble_heic1404b_zoom_eso137.mp4", 3, 12, "scale=1920:1080,setpts=1.6*PTS"),
+    ("eso137.mp4", REFER / "素材" / "视频" / "esahubble_heic1404b_zoom_eso137.mp4", 16, 38, "scale=1920:1080"),
+    # NASA SVS 30687：哈勃超深场三维飞越（前 25 秒是小方块，取后面满屏的部分）
+    ("hudf.mp4", REFER / "素材" / "视频" / "svs_hudf_flythrough.m4v", 27, 34, "scale=1920:1080"),
+    # NASA SVS 球幕宇宙网：裁出中间的圆
+    ("web.mp4", REFER / "素材" / "视频" / "svs_cruising_cosmic_web_dome.webm", 0, 60, "crop=720:720,scale=940:940"),
+    ("night_b.mp4", REFER / "素材" / "视频" / "milkyway_oasis_of_mara.webm", 0, 6.7, "scale=1920:1080,setpts=2*PTS"),
 ]
 
 

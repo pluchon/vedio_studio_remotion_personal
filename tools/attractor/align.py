@@ -13,7 +13,7 @@
     node tools/attractor/whisper.mjs              # 先量一遍
     python tools/attractor/align.py [--diff]
 输入：src/videos/attractor/script.json（make_script.py 从文案生成）、public/attractor/audio/voice.wav
-输出：src/videos/attractor/phrases.json
+输出：tools/attractor/phrases-friend.json（朋友录的旧念白；现在的念白是 ElevenLabs 生成的，时间表见 tts_timing.py）
 """
 from __future__ import annotations
 
@@ -30,7 +30,7 @@ ORIGINAL = ROOT / "tools" / "hanzi" / "whisper.cpp" / "attractor.wav"
 WHISPER = ROOT / "tools" / "attractor" / "whisper-seg.json"
 WINDOWS = ROOT / "tools" / "attractor" / "whisper-words.json"
 SCRIPT = ROOT / "src" / "videos" / "attractor" / "script.json"
-OUT = ROOT / "src" / "videos" / "attractor" / "phrases.json"
+OUT = ROOT / "tools" / "attractor" / "phrases-friend.json"
 
 MARKS = "，。？！、；：——…"
 STRIP = "，。？！、；：—…“”\"'（） \t\n"

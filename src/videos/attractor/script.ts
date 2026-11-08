@@ -1,6 +1,7 @@
-// 念白的字幕：每一小句从哪一秒念到哪一秒（tools/attractor/align.py 对着录音量出来的，存在 phrases.json）。
-// 字幕一页一句（过长的在逗号处拆开），整页一起淡入淡出。时间是放映时间，即念白的秒数加上片名占的 LEAD
-import phrases from "./phrases.json";
+// 念白的字幕：每一小句从哪一秒念到哪一秒（tools/attractor/tts_timing.py 从逐句生成的时间和波形里的停顿算出来，存在 narration.json）。
+// 字幕一页一句（过长的在逗号处拆开），整页一起淡入淡出，句末不带标点。时间是放映时间，即念白的秒数加上片名占的 LEAD
+import phrases from "./narration.json";
+import english from "./script-en.json";
 import { LEAD } from "./theme";
 
 export type Phrase = { start: number; end: number; text: string };
@@ -62,3 +63,8 @@ const build = (): Page[] => {
 };
 
 export const PAGES: Page[] = build();
+
+// 英文字幕：逐句（中文一句拆成两页时，英文整句跨两页一直留着），时间同样加上片名的 LEAD
+
+export type EnLine = { start: number; end: number; text: string };
+export const EN_LINES: EnLine[] = phrases.lines.map((l, i) => ({ start: l.start + LEAD, end: l.end + LEAD, text: english[i] }));
