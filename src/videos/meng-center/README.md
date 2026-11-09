@@ -9,6 +9,7 @@
 - `theme.ts`：帧率、节拍（一拍 12 帧、一小节 48 帧）、颜色、字体、`SCENES`（每一幕的起止小节）
 - `kit.tsx`：字体载入、跟拍子的动效（`pop` 弹出、`hop` 每拍跳一下、`thump` 每拍鼓一下、`at(拍)` 拍点帧，后半拍按配乐的摇摆推迟）、背景、浏览器窗口（截图、镜头放大、截图坐标里的圈注）、胶带标题、贴纸、颜文字、闪光、卡片、小图标
 - `shots.ts`：截图文件名和像素尺寸
+- `NaitangDemo.tsx`：竖屏小样 `MengCenter-NaitangDemo`（1080×1920，40 帧/秒，9 秒）：标题牌、星标数字滚动、彩纸，下层是会动的奶糖。奶糖动图 `public/meng-center/naitang/star.webm` 由 ElevenLabs「图片生成/GIF动图生成」工作流出绿幕 GIF，再用 `tools/common/sprite_gif.py` 补帧抠图；念白（Lulu 声音）在 `public/meng-center/naitang/voice/`，不入库。星标数是占位
 - `scenes/`：`Intro`（片名、结尾封面和彩纸）、`Community`（注册审核、主页、发帖、详情、语义搜索）、`Quick`（创作中心、成长、消息、个人中心）、`Meng`（奶糖助手、聊天、五层记忆、气泡语音与桌宠）、`Arch`（服务、一次发帖的事件、技术栈）
 
 ## 素材与不入库的东西

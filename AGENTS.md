@@ -36,6 +36,7 @@
 - 风格不固定，每一期按主题和素材自己定，一期里也可以几种混着用（线稿、手帐、像素、2D 着色器、3D、体积渲染都用过）。
 - 网页素材用截图，不录屏；截图登录令牌只写入已忽略的 `tools/**/tokens.json`，不打印、不入库。细节见 `src/videos/moheng-oj/README.md`。
 - 配乐：优先用有授权的现成曲子（先看 `library/INDEX.md`，续长见 `tools/attractor/loop_music.py`）；需要原创时写 MIDI，用 `tools/common/midi_render.py`（sfizz + `samples/` 里的 CC0 真实采样）渲染。用户 2026-10-04 起不要纯 Python 手算波形的合成配乐（早期几期的 `tools/<名字>/music.py` 留作历史）。要把现成音频里的人声去掉用 `tools/common/separate.py`。念白压低沉用 `tools/attractor/voice.py`；念白对齐字幕用 `tools/attractor/align.py`（比第十二期那份稳，做法写在文件开头）。
+- 念白：用 ElevenLabs v4 生成，全片走 `tools/common/tts.py`（逐句生成、自动查重重念、统一响度、输出每句时间表；用法写在文件开头）。ElevenLabs 网页上的工作流「视频配音」只用来试音、试稿，定下音色和语气标签后再交给脚本。
 - 仓库是公开的：有版权的配乐（`public/**/*.mp3`）、个人照片（`public/*/photos/`）、朋友录的念白不入库；提交邮箱用 GitHub 的 noreply 邮箱。
 
 ## 验证

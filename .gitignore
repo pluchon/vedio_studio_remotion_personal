@@ -79,3 +79,7 @@ public/ember/audio/
 
 # 雨未愁眠：念白是作者录音，配乐与雨声、音效在本机生成，都不入库（字体入库）
 public/yuwei/audio/
+# RIFE 插帧程序（rife-ncnn-vulkan，MIT）体积大，按 tools/common/sprite_gif.py 开头的说明下载
+tools/common/rife/
+# 奶糖小样的念白（ElevenLabs 生成，和其他念白一样不入库）
+public/meng-center/naitang/voice/
