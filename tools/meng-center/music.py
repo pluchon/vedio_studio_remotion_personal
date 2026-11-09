@@ -340,24 +340,21 @@ def active_rms(x: np.ndarray, rate: int) -> float:
     return float(20 * np.log10(np.sqrt((rms[keep] ** 2).mean())))
 
 
-def main(out: Path) -> None:
-    out.parent.mkdir(parents=True, exist_ok=True)
-    work = out.parent / (out.stem + "_build")
-    work.mkdir(exist_ok=True)
-    sfz = instruments(work)
-    tracks = compose()
+def mixdown(tracks: dict[str, list[Note]], sfz: dict[str, Path], levels: dict[str, tuple[float, float, float]], bpm: float,
+            total: float, out: Path, work: Path, lufs: float = -16.0, fade: float = 1.2) -> dict:
+    """逐轨用 sfizz 渲染、高通、按「有声音的时刻」配平响度和声像，混在一起加一点房间混响，整体拉到 lufs。"""
     rate = 48000
-    n = int(TOTAL * rate)
+    n = int(total * rate)
     mix = np.zeros((n, 2))
     report = {}
     for name, notes in tracks.items():
         if not notes:
             continue
-        mid = write_midi(work / f"{name}.mid", BPM, [notes])
+        mid = write_midi(work / f"{name}.mid", bpm, [notes])
         wav = work / f"{name}.wav"
         subprocess.run([str(SFIZZ), "--sfz", str(sfz[name]), "--midi", str(mid), "--wav", str(wav),
                         "--samplerate", str(rate), "--quality", "3", "--polyphony", "128"], check=True, capture_output=True)
-        level, pan, hp = LEVEL[name]
+        level, pan, hp = levels[name]
         cut = work / f"{name}_hp.wav"
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(wav), "-af", f"highpass=f={hp},highpass=f={hp}", "-c:a", "pcm_f32le", str(cut)], check=True)
         x, sr = sf.read(cut)
@@ -371,20 +368,28 @@ def main(out: Path) -> None:
         mix[: len(x), 0] += x[:, 0] * gain * left
         mix[: len(x), 1] += x[:, 1] * gain * right
         report[name] = {"notes": len(notes), "measured_db": round(got, 1), "gain_db": round(level - got, 1)}
-    # 结尾 1.2 秒淡出
-    fade = int(1.2 * rate)
-    mix[-fade:] *= np.linspace(1, 0, fade)[:, None]
+    f = int(fade * rate)
+    mix[-f:] *= np.linspace(1, 0, f)[:, None]
     raw = work / "mix.wav"
     sf.write(raw, mix.astype(np.float32), rate, subtype="FLOAT")
-    # 小房间的一点混响，再把整体响度拉到 -16 LUFS（没有念白，配乐就是主角）
+    # 小房间的一点混响，再把整体响度拉到目标
     room = "aecho=0.85:0.85:45|83|131:0.2|0.14|0.08"
-    measure = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(raw), "-af", f"{room},loudnorm=I=-16:TP=-1.5:print_format=json", "-f", "null", "-"],
+    measure = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(raw), "-af", f"{room},loudnorm=I={lufs}:TP=-1.5:print_format=json", "-f", "null", "-"],
                              capture_output=True, text=True, encoding="utf8", errors="replace")
     err = measure.stderr
     info = json.loads(err[err.rindex("{"): err.rindex("}") + 1])
-    gain_db = -16 - float(info["input_i"])
+    gain_db = lufs - float(info["input_i"])
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(raw), "-af", f"{room},volume={gain_db:.2f}dB,alimiter=limit=0.84:level=false",
                     "-ar", str(rate), "-c:a", "pcm_s16le", str(out)], check=True)
+    return report
+
+
+def main(out: Path) -> None:
+    out.parent.mkdir(parents=True, exist_ok=True)
+    work = out.parent / (out.stem + "_build")
+    work.mkdir(exist_ok=True)
+    # 没有念白，配乐就是主角：-16 LUFS
+    report = mixdown(compose(), instruments(work), LEVEL, BPM, TOTAL, out, work)
     for f in work.iterdir():
         f.unlink()
     work.rmdir()

@@ -1,0 +1,250 @@
+{
+ "fps": 40,
+ "bpm": 150,
+ "beat": 16,
+ "bar": 64,
+ "bars": 75,
+ "frames": 4840,
+ "scenes": [
+  {
+   "id": "intro",
+   "section": "intro",
+   "bar": 0,
+   "bars": 7,
+   "from": 0,
+   "frames": 448,
+   "lines": [
+    {
+     "i": 0,
+     "at": 128,
+     "dur": 74
+    },
+    {
+     "i": 1,
+     "at": 216,
+     "dur": 173
+    }
+   ]
+  },
+  {
+   "id": "account",
+   "section": "verse",
+   "bar": 7,
+   "bars": 4,
+   "from": 448,
+   "frames": 256,
+   "lines": [
+    {
+     "i": 2,
+     "at": 464,
+     "dur": 180
+    }
+   ]
+  },
+  {
+   "id": "home",
+   "section": "verse",
+   "bar": 11,
+   "bars": 4,
+   "from": 704,
+   "frames": 256,
+   "lines": [
+    {
+     "i": 3,
+     "at": 720,
+     "dur": 183
+    }
+   ]
+  },
+  {
+   "id": "editor",
+   "section": "verse",
+   "bar": 15,
+   "bars": 7,
+   "from": 960,
+   "frames": 448,
+   "lines": [
+    {
+     "i": 4,
+     "at": 976,
+     "dur": 146
+    },
+    {
+     "i": 5,
+     "at": 1136,
+     "dur": 227
+    }
+   ]
+  },
+  {
+   "id": "detail",
+   "section": "verse",
+   "bar": 22,
+   "bars": 4,
+   "from": 1408,
+   "frames": 256,
+   "lines": [
+    {
+     "i": 6,
+     "at": 1424,
+     "dur": 198
+    }
+   ]
+  },
+  {
+   "id": "search",
+   "section": "verse",
+   "bar": 26,
+   "bars": 4,
+   "from": 1664,
+   "frames": 256,
+   "lines": [
+    {
+     "i": 7,
+     "at": 1680,
+     "dur": 223
+    }
+   ]
+  },
+  {
+   "id": "growth",
+   "section": "verse",
+   "bar": 30,
+   "bars": 4,
+   "from": 1920,
+   "frames": 256,
+   "lines": [
+    {
+     "i": 8,
+     "at": 1936,
+     "dur": 186
+    }
+   ]
+  },
+  {
+   "id": "creator",
+   "section": "verse",
+   "bar": 34,
+   "bars": 4,
+   "from": 2176,
+   "frames": 256,
+   "lines": [
+    {
+     "i": 9,
+     "at": 2192,
+     "dur": 164
+    }
+   ]
+  },
+  {
+   "id": "messages",
+   "section": "verse",
+   "bar": 38,
+   "bars": 4,
+   "from": 2432,
+   "frames": 256,
+   "lines": [
+    {
+     "i": 10,
+     "at": 2448,
+     "dur": 178
+    }
+   ]
+  },
+  {
+   "id": "profile",
+   "section": "verse",
+   "bar": 42,
+   "bars": 5,
+   "from": 2688,
+   "frames": 320,
+   "lines": [
+    {
+     "i": 11,
+     "at": 2704,
+     "dur": 248
+    }
+   ]
+  },
+  {
+   "id": "naitang",
+   "section": "chorus",
+   "bar": 47,
+   "bars": 10,
+   "from": 3008,
+   "frames": 640,
+   "lines": [
+    {
+     "i": 12,
+     "at": 3024,
+     "dur": 61
+    },
+    {
+     "i": 13,
+     "at": 3096,
+     "dur": 209
+    },
+    {
+     "i": 14,
+     "at": 3320,
+     "dur": 180
+    },
+    {
+     "i": 15,
+     "at": 3512,
+     "dur": 92
+    }
+   ]
+  },
+  {
+   "id": "resilience",
+   "section": "chorus",
+   "bar": 57,
+   "bars": 4,
+   "from": 3648,
+   "frames": 256,
+   "lines": [
+    {
+     "i": 16,
+     "at": 3664,
+     "dur": 224
+    }
+   ]
+  },
+  {
+   "id": "arch",
+   "section": "break",
+   "bar": 61,
+   "bars": 5,
+   "from": 3904,
+   "frames": 320,
+   "lines": [
+    {
+     "i": 17,
+     "at": 3920,
+     "dur": 270
+    }
+   ]
+  },
+  {
+   "id": "outro",
+   "section": "outro",
+   "bar": 66,
+   "bars": 9,
+   "from": 4224,
+   "frames": 576,
+   "lines": [
+    {
+     "i": 18,
+     "at": 4240,
+     "dur": 134
+    },
+    {
+     "i": 19,
+     "at": 4384,
+     "dur": 48
+    }
+   ]
+  }
+ ]
+}
